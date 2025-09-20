@@ -1,0 +1,104 @@
+﻿@model AMS.Models.UserMasterModel
+
+
+<div class="modal-header bg-light p-3">
+    @* <h5 class="modal-title">@(Model.IsEdit ? "Edit" : "Add New") User</h5> *@
+    <button type="button" class="btn-close" data-bs-dismiss="modal"
+            aria-label="Close" id="close-modal"></button>
+</div>
+<form class="validation-wizard form-horizontal form-material needs-validation" id="AddUserform" autocomplete="off">
+    <div class="modal-body">
+        <div class="row">
+            <input asp-for="EncryptUserMasterId" type="hidden" />
+            <div class="col-6">
+                <label class="form-label" asp-for="FirstName"></label> <span class="text-danger"> *</span>
+                <input asp-for="FirstName" class="form-control" required>
+                <span class="text-danger" asp-validation-for="FirstName"></span>
+            </div>
+            <div class="col-6">
+                <label class="form-label" asp-for="LastName"></label> <span class="text-danger"> *</span>
+                <input asp-for="LastName" class="form-control" required>
+                <span class="text-danger" asp-validation-for="LastName"></span>
+            </div>
+        </div>
+        <div class="row mt-2">
+          @*   <div class="col-6">
+                <div>
+                    <label for="iconInput" class="form-label" asp-for="RoleId"></label> <span class="text-danger"> *</span>
+                    <select class="form-select req-border text-uppercase" asp-for="RoleId" asp-items="Model.RoleList" required>
+                        <option value="">Select Role</option>
+                    </select>
+                </div>
+                <span class="text-danger" asp-validation-for="RoleId"></span>
+            </div> *@
+          
+        </div>
+       @*  <div class="row mt-2">
+            <div class="col-6">
+                <div>
+                    <label for="iconInput" class="form-label" asp-for="usermaster.Email"></label> <span class="text-danger"> *</span>
+                    <div class="form-icon">
+                        <input type="email" asp-for="usermaster.Email" class="form-control form-control-icon email-inputmask"
+                               id="iconInput" placeholder="example@gmail.com" required>
+                        <i class="ri-mail-unread-line"></i>
+                    </div>
+                </div>
+                <span class="text-danger" asp-validation-for="usermaster.Email"></span>
+            </div>
+            <div class="col-6">
+                <div>
+                    <label for="iconInput" class="form-label" asp-for="usermaster.ContactNumber"></label> <span class="text-danger"> *</span>
+                    <div class="form-icon">
+                        <input type="text" asp-for="usermaster.ContactNumber" class="form-control form-control-icon"
+                               id="iconInput" placeholder="3******" required>
+                        <i class="bx bx-phone"></i>
+                    </div>
+                </div>
+                <span class="text-danger" asp-validation-for="usermaster.ContactNumber"></span>
+            </div>
+        </div> *@
+       @*  <div class="row mt-2">
+
+            <div class="col-6">
+                <label class="form-label" asp-for="usermaster.RoleId"></label> <span class="text-danger"> *</span>
+                <select class="form-select req-border text-uppercase changeRole" asp-for="usermaster.RoleId" id="ddRole" asp-for="usermaster.RoleId" asp-items="Model.RoleList">
+                    <option value="">Select Role</option>
+                </select>
+            </div>
+            <div class="col-6">
+                <label class="form-label" asp-for="usermaster.IsActive"></label> <span class="text-danger"> *</span>
+                <select class="form-select req-border text-uppercase" asp-for="usermaster.IsActive" required>
+                    <option value="true">ACTIVE</option>
+                    <option value="false">IN-ACTIVE</option>
+                </select>
+                <span class="text-danger" asp-validation-for="usermaster.IsActive"></span>
+
+            </div>
+
+        </div> *@
+    @* 
+        <div class="row mt-2">
+            <div class="col-6">
+                <div class="form-group">
+                    <label class="form-label" asp-for="usermaster.DateOfBirth"></label> <span class="text-danger"> *</span>
+                    <input type="date" asp-for="usermaster.DateOfBirth" class="form-control form-control-icon" required>
+                    <span class="text-danger" asp-validation-for="usermaster.DateOfBirth"></span>
+                </div>
+            </div>
+            <div class="col-6">
+                <label class="form-label" asp-for="usermaster.Gender"></label> <span class="text-danger"> *</span>
+                <select asp-for="usermaster.Gender" class="form-control form-control-icon" required>
+                    <option value="">Select Gender</option>
+                    <option value="@((short)Enumeration.Gender.Male)">Male</option>
+                    <option value="@((short)Enumeration.Gender.Female)">Female</option>
+                </select> <span class="text-danger" asp-validation-for="usermaster.Gender"></span>
+            </div>
+        </div> *@
+     
+    </div>
+</form>
+
+<div class="modal-footer border-0 pt-6 px-0 pb-0">
+    <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancel</button>
+    <button type="button" class="btn btn-success" id="saveEmployeeButtonId" onclick="ams.user.Save()"><i class="fas fa-save"></i> Save</button>
+</div>

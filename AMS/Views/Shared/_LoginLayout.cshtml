@@ -1,0 +1,562 @@
+﻿
+<!doctype html>
+<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-bs-theme="dark" data-body-image="img-1" data-preloader="disable">
+<head>
+
+    @* <title id="titleId"> @AppCommon.Appname - @ViewData["Title"] </title> *@
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="AMS CRM" name="description" />
+    @* <meta content="snjglobalservices" name="author" /> *@
+    <!-- App favicon -->
+    @* <link rel="icon" type="image/png" sizes="16x16" href="~/logo-sm2.jpg">   *@
+    <script src="~/Lib/js/layout.js"></script>
+    <!-- Bootstrap Css -->
+    <link href="~/Lib/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="~/Lib/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="~/Lib/css/app.min.css" rel="stylesheet" type="text/css" />
+    <!-- custom Css-->
+    <link href="~/Lib/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Lib/css/style1.css rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+
+    <link href="~/Lib/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Lib/libs/sweetalert2/sweetalert2.min.js"></script>
+    <style>
+                .main-background {
+                    background-color: transparent !important;
+                }
+
+                * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                    font-family: "Poppins", sans-serif;
+                }
+
+                body {
+                    min-height: 100vh;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: #1F3A5F;
+                    padding: 30px;
+                }
+
+                .container {
+                    position: relative;
+                    max-width: 950px;
+                    background: #fff;
+                    padding: 0px 0px;
+                    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+                    perspective: 2700px;
+                    margin-top: -10px !important;
+                }
+
+                    .container .cover {
+                        position: absolute;
+                        top: 0;
+                        height: 100%;
+                        width: 50%;
+                        right: 50%;
+                        z-index: 98;
+                        transition: all 1s ease;
+                        transform-origin: left;
+                        transform-style: preserve-3d;
+                    }
+
+                    .container #flip:checked ~ .cover {
+                        transform: rotateY(-180deg);
+                    }
+
+                    .container .cover .front,
+                    .container .cover .back {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        height: 100%;
+                        width: 100%;
+                    }
+
+                .cover .back {
+                    transform: rotateY(180deg);
+                    backface-visibility: hidden;
+                }
+
+                .container .cover::before,
+                .container .cover::after {
+                    content: '';
+                    position: absolute;
+                    height: 100%;
+                    width: 100%;
+                    background: #1F3A5F;
+                    opacity: 0.5;
+                    z-index: 12;
+                }
+
+                .container .cover::after {
+                    opacity: 0.3;
+                    transform: rotateY(180deg);
+                    backface-visibility: hidden;
+                }
+
+                .container .cover img {
+                    position: absolute;
+                    height: 100%;
+                    width: 100%;
+                    object-fit: cover;
+                    z-index: 10;
+                }
+
+                .container .cover .text {
+                    position: absolute;
+                    z-index: 130;
+                    height: 100%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+
+                .cover .text .text-2 {
+                    font-size: 26px;
+                    font-weight: 600;
+                    color: #fff;
+                    text-align: center;
+                }
+
+                .cover .text .text-2 {
+                    font-size: 15px;
+                    font-weight: 500;
+                }
+
+                .container .forms {
+                    height: 100%;
+                    width: 950px;
+                    padding: 20px 20px;
+                    background: #fff;
+                }
+
+                .container .form-content {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+
+                .form-content .login-form,
+                .form-content .signup-form {
+                    width: 80% !important;
+                    padding: 30px 30px;
+                }
+
+                .forms .form-content .title {
+                    position: relative;
+                    font-size: 24px;
+                    font-weight: 500;
+                    color: #333;
+                }
+
+                    .forms .form-content .title:before {
+                        content: '';
+                        position: absolute;
+                        left: 0;
+                        bottom: 0;
+                        <!-- height: 3px;
+                        width: 25px;
+                        background: #7d2ae8; -->
+                    }
+
+                .para {
+                    color: #1F3A5F;
+                }
+
+                .forms .signup-form .title:before {
+                    width: 20px;
+                }
+
+                .forms .form-content .input-boxes {
+                    margin-top: 30px;
+                }
+
+                .forms .form-content .input-box {
+                    display: flex;
+                    align-items: center;
+                    height: 50px;
+                    width: 100%;
+                    margin: 15px 0;
+                    position: relative;
+                }
+
+                .form-content .input-box input {
+                    height: 100%;
+                    width: 100%;
+                    outline: none;
+                    border: none;
+                    padding: 0 30px;
+                    font-size: 16px;
+                    font-weight: 500;
+                    transition: all 0.3s ease;
+                    padding: 3px 35px;
+                    color: black;
+                    background: #EBECF0;
+                }
+
+                    .form-content .input-box input:focus,
+                    .form-content .input-box input:valid {
+                        border-color: #7d2ae8;
+                    }
+
+                .form-content .input-box i {
+                    position: absolute;
+                    color: #1F3A5F;
+                    font-size: 17px;
+                    padding: 0px 10px;
+                }
+
+                .forms .form-content .text {
+                    font-size: 14px;
+                    font-weight: 500;
+                    color: #333;
+                }
+
+                    .forms .form-content .text a {
+                        text-decoration: none;
+                    }
+
+                        .forms .form-content .text a:hover {
+                            text-decoration: underline;
+                        }
+
+                .forms .form-content .button {
+                    color: #fff;
+                    margin-top: 40px;
+                }
+
+                    .forms .form-content .button input {
+                        color: #fff;
+                        background: #1F3A5F;
+                        border-radius: 6px;
+                        padding: 0;
+                        cursor: pointer;
+                        transition: all 0.4s ease;
+                    }
+
+                        .forms .form-content .button input:hover {
+                            background: #8294ad;
+                        }
+
+                .text-muted {
+                    color: #1F3A5F !important;
+                }
+
+                .forms .form-content label {
+                    color: #5b13b9;
+                    cursor: pointer;
+                }
+
+                    .forms .form-content label:hover {
+                        text-decoration: underline;
+                    }
+
+                .forms .form-content .login-text,
+                .forms .form-content .sign-up-text {
+                    text-align: center;
+                    margin-top: 25px;
+                }
+
+                .container #flip {
+                    display: none;
+                }
+
+                /* Google Font Link */
+
+                /* Forget Password CSS */
+                .forgetP {
+                    color: #1F3A5F;
+                    font-weight: bold;
+                    font-size: 16px;
+                }
+
+                .for_paragraph {
+                    color: black;
+                    font-size: 13px;
+                }
+
+                .message_icon {
+                    color: #1F3A5F;
+                    margin-top: -25px;
+                }
+
+                .button_link {
+                    border-radius: 0px;
+                    background-color: #1F3A5F;
+                    color: white;
+                }
+
+                    .button_link:hover {
+                        background-color: #8294ad;
+                        transition: 0.5s;
+                    }
+
+                .label_color {
+                    color: #1F3A5F;
+                }
+
+                .input_fields {
+                    background: #EBECF0;
+                    border-radius: 0px;
+                    border: none;
+                }
+
+                    .input_fields:focus {
+                        border: 1px solid black;
+                        background: #EBECF0;
+                        color: black;
+                    }
+
+                .code_img {
+                    margin-left: 30px;
+                }
+
+                .icon_change_code {
+                    font-size: 17px;
+                }
+
+                .handCursor {
+                    background: #1F3A5F;
+                }
+
+                .click_here {
+                    color: #1F3A5F;
+                }
+
+                    .click_here:hover {
+                        color: #8294ad;
+                        transition: 0.5s;
+                    }
+
+        /* MULTI SPINNER */
+        .preloader {
+            position: absolute;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.2);
+            z-index:999 !important;
+            overflow:hidden;
+        }
+
+        .multi-spinner-container {
+            width: 150px;
+            height: 150px;
+            position: relative;
+            margin: 30px auto;
+            overflow: hidden;
+            z-index: 99999;
+        }
+
+        .multi-spinner {
+            position: absolute;
+            width: calc(100% - 9.9px);
+            height: calc(100% - 9.9px);
+            border: 5px solid transparent;
+            border-top-color: #02297D;
+            border-radius: 50%;
+            -webkit-animation: spin 5s cubic-bezier(0.17, 0.49, 0.96, 0.76) infinite;
+            animation: spin 3s cubic-bezier(0.17, 0.49, 0.96, 0.76) infinite;
+        }
+
+        /* @@-webkit-keyframes spin {
+            from {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            to {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @@keyframes spin {
+            from {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            to {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        } */
+
+    </style>
+</head>
+<body>
+    <!-- start Lodaer -->
+    @* <div class="preloader">
+        <div class="multi-spinner-container">
+            <div class="multi-spinner">
+                <div class="multi-spinner">
+                    <div class="multi-spinner">
+                        <div class="multi-spinner">
+                            <div class="multi-spinner">
+                                <div class="multi-spinner"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> *@
+    <!-- end Lodaer -->
+    @RenderBody()
+    <!-- JAVASCRIPT -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <script src="~/Lib/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Lib/libs/simplebar/simplebar.min.js"></script>
+    <script src="~/Lib/libs/node-waves/waves.min.js"></script>
+    <script src="~/Lib/libs/feather-icons/feather.min.js"></script>
+    <script src="~/Lib/js/pages/plugins/lord-icon-2.1.0.js"></script>
+    <script src="~/Lib/js/plugins.js"></script>
+
+    <script src="~/lib/libs/jquery/dist/aes.js"></script>
+    <script src="~/lib/libs/jquery/jquery.validate.min.js"></script>
+    <script src="~/lib/libs/jquery/jquery.validate.unobtrusive.js"></script>
+
+    <script src="~/lib/js/Custom/ams.js" asp-append-version="true"></script>
+    <script src="~/lib/js/Custom/ams.common.js" asp-append-version="true"></script>
+    <script src="~/lib/js/Custom/ams.auth.js" asp-append-version="true"></script>
+
+    <script>
+        function UrlContent(url) {
+            return "@Url.Content("~/")" + url
+        }
+
+        (function () {
+            'use strict';
+            const forms = document.querySelectorAll('.needs-validation');
+            forms.forEach(form => {
+                form.addEventListener(
+                    'submit',
+                    event => {
+                        if (!form.checkValidity()) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    },
+                    false
+                );
+            });
+        })();
+        function encryptPwdWithoutUsername() {
+            alert("string");
+            ShowLoader();
+            if (document.getElementById("passwordTextnew") != null) {
+                var txtPassword = document.getElementById("passwordTextnew").value.trim();
+                var txtPasswordConfirm = document.getElementById("passwordTextConfirm").value.trim();
+                var ResetPaswordCaptcha = document.getElementById("captcha").value.trim();
+
+                if (txtPassword == "" || ResetPaswordCaptcha == "") {
+                    HideLoader();
+                    return false;
+                }
+                else {
+                    var key = CryptoJS.enc.Utf8.parse('8080808080808080');
+                    var iv = CryptoJS.enc.Utf8.parse('8080808080808080');
+                    var encryptedpassword = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(txtPassword), key,
+                        {
+                            keySize: 128 / 8,
+                            iv: iv,
+                            mode: CryptoJS.mode.CBC,
+                            padding: CryptoJS.pad.Pkcs7
+                        });
+                    document.getElementById("passwordTextnew").value = encryptedpassword;
+                    let confPass = document.getElementById("passwordTextConfirm");
+                    if (confPass != null && typeof confPass != "undefined") {
+                        var encryptedConfpassword = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(confPass.value.trim()), key,
+                            {
+                                keySize: 128 / 8,
+                                iv: iv,
+                                mode: CryptoJS.mode.CBC,
+                                padding: CryptoJS.pad.Pkcs7
+                            });
+                        confPass.value = encryptedConfpassword;
+                    }
+                    HideLoader();
+                    return true;
+                }
+            }
+        }
+
+        function ResetBtnClick() {
+            ShowLoader();
+            $("#divMsg").removeClass("show").addClass("hide");
+            $.validator.unobtrusive.parse($("#forgotPasswordForm"));
+            if ($("#forgotPasswordForm").valid()) {
+                ShowLoader();
+                var formdata = $("#forgotPasswordForm").serialize();
+
+                $.ajax({
+                    url: '@Url.Action("ResetPass", "Account")',
+                    type: 'POST',
+                    data: formdata,
+                    success: function (data) {
+                        HideLoader();
+                        $("#forgotalert").show();
+                        $("#forgotalert").removeClass("alert-danger").removeClass("alert-success").addClass("alert-success");
+                        if (data.isSuccess) {
+                            $("#forgotalert").addClass("alert-success");
+                            $("#lblError").text(data.message);
+                            $("#divMsg").removeClass("alert-danger").addClass("alert-success");
+                            $("#divMsg i").removeClass("ri-error-warning-line").addClass("ri-check-double-line");
+                            $("#divMsg").removeClass("hide").addClass("show");
+                        }
+                        else {
+                            $("#lblError").text(data.message);
+                            $("#divMsg").removeClass("alert-success").addClass("alert-danger");
+                            $("#divMsg i").removeClass("ri-check-double-line").addClass("ri-error-warning-line");
+                            $("#divMsg").removeClass("hide").addClass("show");
+                            ams.common.RefreshCaptcha();
+                        }
+                        $("#txtCaptcha2").val('');
+                        ams.common.RefreshCaptcha();
+                    }
+                });
+
+            }
+            else {
+                $("#forgotPasswordForm").addClass("was-validated");
+                return false;
+            }
+
+        }
+
+        $('#forgotalert button').on("click", function () {
+            $("#forgotalert").Show();
+            return false;
+        });
+        $(window).on('load', function () {
+            $(".preloader").fadeOut(100);
+        });
+
+        function ShowLoader() {
+            $(".preloader").fadeIn();
+        }
+        function HideLoader() {
+            $(".preloader").fadeOut(305);
+        }
+    </script>
+    @RenderSection("Scripts", required: false)
+    </body>
+</html>
