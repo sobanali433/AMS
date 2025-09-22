@@ -1,6 +1,8 @@
-﻿using AMS.Models;
+﻿using AMS.Data;
+using AMS.Models;
 using AMS.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AMS.Controllers
 {
@@ -34,11 +36,40 @@ namespace AMS.Controllers
 
             return View();
         }
-
-        public IActionResult _Details(string id)
+        [HttpGet]
+        public IActionResult _Details(int? id)
         {
+            var roles = _userRepository.GetRoles()
+           .Select(r => new SelectListItem { Value = r.RoleId.ToString(), Text = r.RoleName }).ToList();
+            if (id == null)
+            {
+                var model = new UserViewModel
+                {
+                    RoleList = roles
+                };
+                return PartialView("_Details", model);
+            }
+            else {
+                var user = _userRepository.GetById(id.Value);
+                if (user == null) { 
+                return NotFound();  
+                }
+                var model = new UserViewModel
+                {
+                    UserMasterId = user.UserMasterId,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    ContactNumber = user.ContactNumber,
+                    RoleId = user.RoleId,
+                    RoleList = roles
+                
+                };
 
-            return View();
+                return PartialView("_Details", model);
+            }
+
+
+
         }
         public JsonResult GetList()
         {
@@ -46,7 +77,7 @@ namespace AMS.Controllers
             var result = new
             {
                 draw = Request.Form["draw"].FirstOrDefault(),
-                recordsTotal = data.Count,   
+                recordsTotal = data.Count,
                 recordsFiltered = data.Count,
                 data = data
             };

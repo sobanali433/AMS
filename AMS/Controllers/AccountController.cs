@@ -36,52 +36,53 @@ namespace AMS.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(UserMasterModel model)
         {
-            var user = await _accountRepository.GetByUsernameAndPasswordAsync(model.Username, model.Userpassword);
-
-            if (ModelState.IsValid) return View(model);
-
-            var user1 = _accountRepository.GetByUsernameAsync(model.Username, model.RoleName);
-            if (user == null || model.IsActive)
+            try
             {
-                ModelState.AddModelError("", "Invalid credentials or account inactive.");
-                return View(model);
-            }
-            var claims = new List<Claim>
-            {
+                var user = await _accountRepository.GetByUsernameAndPasswordAsync(model.Username, model.Userpassword);
+                var user1 = _accountRepository.GetByUsernameAsync(model.Username, model.RoleName);
+
+                if (user == null || !model.IsActive)
+                {
+                    ModelState.AddModelError("", "Invalid credentials or account inactive.");
+                    return View(model);
+                }
+
+                var claims = new List<Claim>
+        {
             new Claim(ClaimTypes.NameIdentifier, user.UserMasterId.ToString()),
             new Claim(ClaimTypes.Name, user.Username ?? ""),
-                //new Claim("FullName", user.FullName ?? ""),
-                new Claim("FirstName", user.FirstName),
+            new Claim("FirstName", user.FirstName ?? ""),
             new Claim("LastName", user.LastName ?? ""),
-                new Claim("RoleName", user?.Role?.RoleName ?? "User"),
-                new Claim(ClaimTypes.Role, user?.Role?.RoleName ?? "User") 
-                //new Claim(ClaimTypes.Role, user.RoleName),
+            new Claim("RoleName", user?.Role?.RoleName ?? "User"),
+            new Claim(ClaimTypes.Role, user?.Role?.RoleName ?? "User")
+        };
 
-            };
-            var claimsIdentity = new ClaimsIdentity(claims, "AMSCookies");
-            var authProperties = new AuthenticationProperties
-            {
-                //IsPersistent = model.RememberMe,
-                AllowRefresh = true,
-                ExpiresUtc = DateTimeOffset.UtcNow.AddHours(8) // set as you like
-            };
+                var claimsIdentity = new ClaimsIdentity(claims, "AMSCookies");
+                var authProperties = new AuthenticationProperties
+                {
+                    AllowRefresh = true,
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddHours(8)
+                };
 
-            HttpContext.SignInAsync(
-           scheme: "AMSCookies",
-           principal: new ClaimsPrincipal(claimsIdentity),
-           properties: authProperties);
+                await HttpContext.SignInAsync(
+                    scheme: "AMSCookies",
+                    principal: new ClaimsPrincipal(claimsIdentity),
+                    properties: authProperties);
 
-            int roleId = user.RoleId;
+                int roleId = user.RoleId;
 
-            if (roleId == 2)
-            {
-                return RedirectToAction("Index", "User");
+                if (roleId == 2)
+                    return RedirectToAction("Index", "User");
+                else
+                    return RedirectToAction("Index", "User");
             }
-            else
+            catch (Exception)
             {
-                return RedirectToAction("Index", "User");
+                ModelState.AddModelError("", "Please insert correct credentials.");
+                return View(model);
             }
         }
+
         [Authorize]
         public async Task<IActionResult> Logout()
         {

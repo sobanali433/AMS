@@ -87,11 +87,10 @@ ams.user = new function () {
             });
     }
     this.Add = function (id = '') {
-        alert("h");
         ams.common.HandleLoadingButton("#addNewEmployeeBtnId", function (revert) {
             $.ajax({
                 type: "GET",
-                url: "/User/_Details/" + id,  
+                url: "/User/_Details?id=" + id,  
                 success: function (data) {
                     $("#commonlargeModalContent").html(data);
                     ams.common.InitMask();

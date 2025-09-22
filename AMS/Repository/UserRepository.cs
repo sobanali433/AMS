@@ -16,6 +16,14 @@ namespace AMS.Repository
         {
             return _context.UserMasters.ToList();
         }
+        public UserMaster GetById(int id)
+        {
+            return _context.UserMasters.FirstOrDefault(u => u.UserMasterId == id);
+        }
+        public IEnumerable<Role> GetRoles()
+        {
+            return _context.Roles.ToList();
+        }
 
 
     }
