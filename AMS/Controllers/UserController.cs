@@ -49,10 +49,12 @@ namespace AMS.Controllers
                 };
                 return PartialView("_Details", model);
             }
-            else {
+            else
+            {
                 var user = _userRepository.GetById(id.Value);
-                if (user == null) { 
-                return NotFound();  
+                if (user == null)
+                {
+                    return NotFound();
                 }
                 var model = new UserViewModel
                 {
@@ -62,7 +64,7 @@ namespace AMS.Controllers
                     ContactNumber = user.ContactNumber,
                     RoleId = user.RoleId,
                     RoleList = roles
-                
+
                 };
 
                 return PartialView("_Details", model);
@@ -84,5 +86,45 @@ namespace AMS.Controllers
 
             return Json(result);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Save(UserMaster model)
+        {
+            //if (!ModelState.IsValid)
+            //{
+            //    return Json(new { isSuccess = false, message = "Invalid data" });
+            //}
+            try
+            {
+                if (model.UserMasterId == 0)
+                {
+                    var result = await _userRepository.AddUserAsync(model);
+                    return Json(new { isSuccess = result, message = result ? "User added successfully" : "Failed to add user" });
+                }
+                else 
+                {
+                    var existingUser = await _userRepository.GetByIdAsync(model.UserMasterId);
+                    if (existingUser == null)
+                        return Json(new { isSuccess = false, message = "User not found" });
+
+                    existingUser.Username = model.Username;
+                    existingUser.UserPassword = model.UserPassword;
+                    existingUser.FirstName = model.FirstName;
+                    existingUser.LastName = model.LastName;
+                    existingUser.ContactNumber = model.ContactNumber;
+                    existingUser.RoleId = model.RoleId;
+                    existingUser.UpdatedOn = DateTime.Now;
+
+                    var result = await _userRepository.UpdateUserAsync(existingUser);
+                    return Json(new { isSuccess = result, message = result ? "User updated successfully" : "Failed to update user" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { isSuccess = false, message = ex.Message });
+            }
+        }
+
     }
+
 }

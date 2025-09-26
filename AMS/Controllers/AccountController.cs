@@ -39,9 +39,9 @@ namespace AMS.Controllers
             try
             {
                 var user = await _accountRepository.GetByUsernameAndPasswordAsync(model.Username, model.Userpassword);
-                var user1 = _accountRepository.GetByUsernameAsync(model.Username, model.RoleName);
+                var userr = _accountRepository.GetByUsernameAsync(model.Username, model.RoleName);
 
-                if (user == null || !model.IsActive)
+                if (user == null)
                 {
                     ModelState.AddModelError("", "Invalid credentials or account inactive.");
                     return View(model);

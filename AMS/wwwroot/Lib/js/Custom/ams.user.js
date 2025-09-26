@@ -103,7 +103,31 @@ ams.user = new function () {
             });
         });
     };
-
+    this.Save = function () {
+        if ($("#AddUserform").valid()) {
+            //ShowLoader();
+            var formdata = $("#AddUserform").serialize();
+            ams.common.HandleLoadingButton("#saveEmployeeButtonId", function (revert) {
+                $.ajax({    
+                    type: "Post",
+                    url: "/User/Save/",
+                    data: formdata,
+                    success: function (result) {
+                        //HideLoader();
+                        if (result.isSuccess) {
+                            ams.user.Option.Table.ajax.reload();
+                            ams.common.ToastrSuccess(result.message, "right", "top");
+                            $("#commonlargeModal").modal('hide');
+                        } else {
+                            ams.common.ToastrError(result.message, "right", "top");
+                        }
+                    },
+                })
+                //Button Reverted From Loading
+                revert();
+            });
+        }
+    }
 
 
 }

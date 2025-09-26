@@ -11,6 +11,7 @@ namespace AMS.Models
         public string Username { get; set; }
         public bool IsActive { get; set; }
         public short? Gender { get; set; }
+        public string Ip { get; set; } = null!;
 
         public int RoleId { get; set; }
 

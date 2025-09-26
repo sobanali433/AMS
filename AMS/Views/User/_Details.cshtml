@@ -1,69 +1,31 @@
 ﻿@model AMS.Models.UserViewModel
 <style>
    
-    #commonlargeModal label,
-    #commonlargeModal .form-label,
-    #commonlargeModal .modal-title {
-        color: #fff !important;
-    }
-    #commonlargeModal .form-control,
-    #commonlargeModal .form-select {
-        background: rgba(255, 255, 255, 0.2);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        color: #fff;
-    }
-        #commonlargeModal .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
+    
+    /* Modal Content Glass Effect */
+    
 
-    /* Modal backdrop ko transparent + blur banaye */
-    .modal-backdrop.show {
-        background: rgba(0, 0, 0, 0.3); /* halka dark, transparent */
-        backdrop-filter: blur(5px); /* background blur */
+    div#commonlargeModal {
+        margin-top: -398px;
     }
 
-    /* Modal content ka professional glass effect */
-    #commonlargeModal .modal-content {
-        background: rgba(11, 37, 88, 0.7); /* blue + transparency */
-        backdrop-filter: blur(12px); /* blur inside modal */
-        border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.2); /* halka border for glass look */
-        color: #fff;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25); /* professional shadow */
+    #saveEmployeeButtonId{
+        background: #102557;
     }
 
-    /* Labels and headings ko white */
-    #commonlargeModal label,
-    #commonlargeModal .form-label,
-    #commonlargeModal .modal-title {
-        color: #fff !important;
+    #saveEmployeeButtonIdId {
+        background: #102557;
     }
-
-    /* Input fields ko bhi glassmorphism look */
-    #commonlargeModal .form-control,
-    #commonlargeModal .form-select {
-        background: rgba(255, 255, 255, 0.15);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        color: #fff;
-    }
-
-        #commonlargeModal .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-    #commonlargeModal .modal-dialog {
-        margin: -40px auto; /* yahan apke header ki height ke hisaab se adjust karein */
-        top: 0;
-        transform: none !important; /* default center positioning hatane ke liye */
-    }
-
 </style>
 
-<div class="modal-header bg-light p-3">
-    @* <h5 class="modal-title">@(Model.IsEdit ? "Edit" : "Add New") User</h5> *@
+<div class="modal-header p-3" style="background-color:#102557;">
+    <h5 class="modal-title text-white">
+        @* (Model.IsEdit ? "Edit" : "Add New") *@ Add User
+    </h5>
     <button type="button" class="btn-close" data-bs-dismiss="modal"
             aria-label="Close" id="close-modal"></button>
 </div>
+
 <form class="validation-wizard form-horizontal form-material needs-validation" id="AddUserform" autocomplete="off">
     <div class="modal-body">
         <div class="row">
@@ -75,22 +37,11 @@
             </div>
             <div class="col-6">
                 <label class="form-label" asp-for="LastName"></label> <span class="text-danger"> *</span>
-                <input asp-for="LastName" class="form-control" required>
+                <input asp-for="LastName" class="form-control" >
                 <span class="text-danger" asp-validation-for="LastName"></span>
             </div>
         </div>
         <div class="row mt-2">
-             <div class="col-6">
-                <div>
-                    <label for="iconInput" class="form-label" asp-for="RoleId"></label> <span class="text-danger"> *</span>
-                    <select class="form-select req-border text-uppercase" asp-for="RoleId" asp-items="Model.RoleList" required>
-                        <option value="">Select Role</option>
-                    </select>
-                </div>
-                <span class="text-danger" asp-validation-for="RoleId"></span>
-            </div> 
-        </div>
-         <div class="row mt-2">
             <div class="col-6">
                 <div>
                     <label for="iconInput" class="form-label" asp-for="Username"></label> <span class="text-danger"> *</span>
@@ -102,27 +53,28 @@
                 </div>
                 <span class="text-danger" asp-validation-for="Username"></span>
             </div>
-             <div class="col-6">
+            <div class="col-6">
                 <div>
                     <label for="iconInput" class="form-label" asp-for="ContactNumber"></label> <span class="text-danger"> *</span>
                     <div class="form-icon">
                         <input type="text" asp-for="ContactNumber" class="form-control form-control-icon"
-                               id="iconInput" placeholder="3******" required>
+                               id="iconInput" placeholder="3******" >
                         <i class="bx bx-phone"></i>
                     </div>
                 </div>
                 <span class="text-danger" asp-validation-for="ContactNumber"></span>
-            </div> 
-        </div> 
-         <div class="row mt-2">
-            @* <div class="col-6">
-                <label class="form-label" asp-for="Gender"></label> <span class="text-danger"> *</span>
-                <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Enumeration.Gender>()" class="form-control" required>
-                    <option value="">Select Gender</option>
-                </select>
-                <span class="text-danger" asp-validation-for="Gender"></span> 
-            </div>*@
-
+            </div>
+        </div>
+        <div class="row mt-2">
+             <div class="col-6">
+                <div>
+                    <label for="iconInput" class="form-label" asp-for="RoleId"></label> <span class="text-danger"> *</span>
+                    <select class="form-select req-border text-uppercase" asp-for="RoleId" asp-items="Model.RoleList" required>
+                        <option value="">Select Role</option>
+                    </select>
+                </div>
+                <span class="text-danger" asp-validation-for="RoleId"></span>
+            </div>
             <div class="col-6">
                 <label class="form-label" asp-for="IsActive"></label> <span class="text-danger"> *</span>
                 <select class="form-select req-border text-uppercase" asp-for="IsActive" required>
@@ -133,6 +85,17 @@
 
             </div>
 
+        </div>
+        
+         <div class="row mt-2">
+            @* <div class="col-6">
+                <label class="form-label" asp-for="Gender"></label> <span class="text-danger"> *</span>
+                <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Enumeration.Gender>()" class="form-control" required>
+                    <option value="">Select Gender</option>
+                </select>
+                <span class="text-danger" asp-validation-for="Gender"></span> 
+            </div>*@
+        
         </div> 
     @* 
         <div class="row mt-2">
@@ -156,7 +119,7 @@
     </div>
 </form>
 
-<div class="modal-footer border-0 pt-6 px-0 pb-0">
-    <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal"><i class="fas fa-ban"></i> Cancel</button>
+<div class="modal-footer border-0 pt-6 px-0 pb-0" > 
+    <button type="button" class="btn btn-secondary" id=" saveEmployeeButtonIdId" waves-effect" data-bs-dismiss="modal"><i class="fas fa-ban "></i> Cancel</button>
     <button type="button" class="btn btn-success" id="saveEmployeeButtonId" onclick="ams.user.Save()"><i class="fas fa-save"></i> Save</button>
 </div>

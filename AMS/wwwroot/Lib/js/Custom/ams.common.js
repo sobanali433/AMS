@@ -28,6 +28,38 @@ ams.common = new function () {
 
 
     }
+    this.ToastrSuccess = function (msg, position, gravity) {
+        Toastify({
+            newWindow: true,
+            text: msg,
+            gravity: gravity,
+            position: position,
+            className: "bg-success",
+            stopOnFocus: true,
+            offset: {
+                x: 50, 
+            },
+            duration: 3000,
+            close: true,
+            style: "style",
+        }).showToast();
+    }
 
+    this.ToastrError = function (msg, position, gravity) {
+        Toastify({
+            newWindow: true,
+            text: msg,
+            gravity: gravity,
+            position: position,
+            className: "bg-danger",
+            stopOnFocus: true,
+            offset: {
+                x: 50, 
+            },
+            duration: 3000,
+            close: true,
+            style: "style",
+        }).showToast();
+    }
 }
 

@@ -24,7 +24,21 @@ namespace AMS.Repository
         {
             return _context.Roles.ToList();
         }
+        public async Task<bool> AddUserAsync(UserMaster user)
+        {
+            await _context.UserMasters.AddAsync(user);
+            return await _context.SaveChangesAsync() > 0;
+        }
 
+        public async Task<bool> UpdateUserAsync(UserMaster user)
+        {
+            _context.UserMasters.Update(user);
+            return await _context.SaveChangesAsync() > 0;
+        }
+        public async Task<UserMaster?> GetByIdAsync(int id)
+        {
+            return await _context.UserMasters.FindAsync(id);
+        }
 
     }
 }
