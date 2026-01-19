@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AMS.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -14,7 +14,7 @@ namespace AMS.Controllers
         {
             _logger = logger;
         }
-        //[Authorize]
+        [Authorize]
         public IActionResult Index()
         {
             return View();

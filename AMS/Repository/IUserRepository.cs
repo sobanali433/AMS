@@ -4,6 +4,8 @@ namespace AMS.Repository
 {
     public interface IUserRepository
     {
+        //Task<List<UserMaster>> GetAllUsersWithoutSuperAdmin();
+
         List<UserMaster> GetList();
         UserMaster GetById(int id);
         IEnumerable<Role> GetRoles();

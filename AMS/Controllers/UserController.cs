@@ -1,11 +1,13 @@
 ﻿using AMS.Data;
 using AMS.Models;
 using AMS.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AMS.Controllers
 {
+    [Authorize (Roles = "SuperAdmin")]
     public class UserController : Controller
     {
         private readonly IUserRepository _userRepository;
@@ -17,8 +19,10 @@ namespace AMS.Controllers
             _userRepository = userRepository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            //var users = await _userRepository.GetAllUsersWithoutSuperAdmin();
+
             //var username = User.Identity?.Name;
             //var user = await _userRepository.HeaderlayoutAsync(username);
             //if (user == null)
@@ -98,6 +102,7 @@ namespace AMS.Controllers
             {
                 if (model.UserMasterId == 0)
                 {
+                    model.Ip = "1";
                     var result = await _userRepository.AddUserAsync(model);
                     return Json(new { isSuccess = result, message = result ? "User added successfully" : "Failed to add user" });
                 }
@@ -106,7 +111,7 @@ namespace AMS.Controllers
                     var existingUser = await _userRepository.GetByIdAsync(model.UserMasterId);
                     if (existingUser == null)
                         return Json(new { isSuccess = false, message = "User not found" });
-
+                    existingUser.Ip = "1";
                     existingUser.Username = model.Username;
                     existingUser.UserPassword = model.UserPassword;
                     existingUser.FirstName = model.FirstName;

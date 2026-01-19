@@ -12,6 +12,14 @@ namespace AMS.Repository
             _context = context;
         }
 
+        //public async Task<List<UserMaster>> GetAllUsersWithoutSuperAdmin()
+        //{
+        //    return await _context.UserMasters
+        //        .Include(u => u.Role)
+        //        .Where(u => u.Role != null && u.Role.RoleName != "SuperAdmin")
+        //        .ToListAsync();
+        //}
+
         public List<UserMaster> GetList()
         {
             return _context.UserMasters.ToList();
@@ -40,6 +48,12 @@ namespace AMS.Repository
             return await _context.UserMasters.FindAsync(id);
         }
 
+        public Task<UserMaster?> GetAllUsersWithoutSuperAdmin(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+       
     }
 }
 

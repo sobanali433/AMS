@@ -21,12 +21,14 @@ namespace AMS.Repository
         }
        
 
+       
         public async Task<UserMaster?> GetByUsernameAndPasswordAsync(string username, string password)
         {
             var user = await _context.UserMasters
                 .Include(u => u.Role)
-                .FirstOrDefaultAsync(u => u.Username == username
-                                       && u.UserPassword == password);
+                .FirstOrDefaultAsync(u =>
+                    u.Username == username &&
+                    u.UserPassword == password);
 
             if (user != null)
             {
@@ -40,6 +42,17 @@ namespace AMS.Repository
             return user;
         }
 
+        public async Task<UserMaster?> GetByUsernameAsync(string username)
+        {
+            var user = await _context.UserMasters
+          .Include(u => u.Role)
+          .FirstOrDefaultAsync(u => u.Username == username);
 
-    }
+            if (user == null || user.Role == null)
+                return null;
+
+            return user;
+
+        }
+        }
 }

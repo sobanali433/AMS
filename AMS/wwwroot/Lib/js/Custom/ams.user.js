@@ -42,11 +42,14 @@ ams.user = new function () {
                 },
                 "columns": [
                     {
-                        data: "username", name: "userName"
+                        data: null,
+                        render: function (data, type, row) {
+                            return `<button class="btn btn-sm btn-primary">Edit</button>`;
+                        }
                     },
-                    { data: "lastName", name: "LastName" },
                     { data: "firstName", name: "FirstName" },
-                    //{ data: "contactnumber", name: "ContactNumber" },
+                    { data: "lastName", name: "LastName" },
+                    {  data: "username", name: "userName"},
                     {
                         data: "roleName", name: "roleName", render: function (data, type, row) {
                             if (row.roleId == 1) {
@@ -67,12 +70,7 @@ ams.user = new function () {
                             return badge;
                         }
                     },
-                    {
-                        data: null,
-                        render: function (data, type, row) {
-                            return `<button class="btn btn-sm btn-primary">Edit</button>`;
-                        }
-                    }
+                
                     //{ data: "username", name: "Username", },
 
                     

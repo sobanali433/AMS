@@ -33,7 +33,7 @@ namespace AMS.Data
         public bool IsActive { get; set; }
 
 
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
         public short? Gender { get; set; }
 

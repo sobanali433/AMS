@@ -30,6 +30,7 @@ builder.Services.AddAuthentication("AMSCookies")
         x.Cookie.IsEssential = true;
         x.Cookie.SecurePolicy = CookieSecurePolicy.Always;
     });
+builder.Services.AddAuthorization();
 
 //builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 var app = builder.Build();
