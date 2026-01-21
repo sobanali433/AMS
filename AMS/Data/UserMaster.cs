@@ -46,7 +46,7 @@ namespace AMS.Data
         public int? UpdatedBy { get; set; }
         [Column(TypeName = "varchar(30)")]
 
-        public string Ip { get; set; } = null!;
+        public string? Ip { get; set; }
         public virtual Role Role { get; set; } = null!;
 
 

@@ -2,8 +2,11 @@
 using AMS.Models;
 using AMS.Repository;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace AMS.Controllers
 {
@@ -47,7 +50,7 @@ namespace AMS.Controllers
            .Select(r => new SelectListItem { Value = r.RoleId.ToString(), Text = r.RoleName }).ToList();
             if (id == null)
             {
-                var model = new UserViewModel
+                var model = new UserMasterModel
                 {
                     RoleList = roles
                 };
@@ -60,7 +63,7 @@ namespace AMS.Controllers
                 {
                     return NotFound();
                 }
-                var model = new UserViewModel
+                var model = new UserMasterModel
                 {
                     UserMasterId = user.UserMasterId,
                     FirstName = user.FirstName,
@@ -92,35 +95,77 @@ namespace AMS.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Save(UserMaster model)
+        public async Task<IActionResult> Save(UserMasterModel model)
         {
-            //if (!ModelState.IsValid)
+            Console.WriteLine(model.FirstName);
+            Console.WriteLine(model.LastName);
+            Console.WriteLine(model.Userpassword);
+            Console.WriteLine(model.UserMasterId);
+            Console.WriteLine(model.RoleId);
+            Console.WriteLine(model.Ip);
+            Console.WriteLine(model.DateOfBirth);
+            Console.WriteLine(model.Gender);
+            Console.WriteLine(model.RoleName);
+            Console.WriteLine(model.ContactNumber);
+            Console.WriteLine(model.IsActive);
+            Console.WriteLine(model.CreatedDate);
+            Console.WriteLine(model.IsFirstTimeLogin);
+            Console.WriteLine(model.Userpassword);
+
+            //if (!ModelState.IsValid) 
             //{
-            //    return Json(new { isSuccess = false, message = "Invalid data" });
+            //    return View(model);
             //}
             try
             {
-                if (model.UserMasterId == 0)
+                if (model.UserMasterId == 0 || model.UserMasterId == null)
                 {
-                    model.Ip = "1";
-                    var result = await _userRepository.AddUserAsync(model);
+                    if (string.IsNullOrWhiteSpace(model.Userpassword)) 
+                    {
+                        ModelState.AddModelError("", "Password required");
+                        return View(model);
+                    }
+                    var hasher = new PasswordHasher<UserMaster>();
+                    var user = new UserMaster
+                    {
+                        UserMasterId = model.UserMasterId,
+                        Username = model.Username,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        RoleId = model.RoleId,
+                        IsActive = model.IsActive
+
+                    };
+                    user.UserPassword = hasher.HashPassword(user, model.Userpassword);
+                    bool result =  Convert.ToBoolean(_userRepository.AddUserAsync(user));
+
                     return Json(new { isSuccess = result, message = result ? "User added successfully" : "Failed to add user" });
+
+                    //var result = await _userRepository.AddUserAsync(model);
                 }
                 else 
                 {
                     var existingUser = await _userRepository.GetByIdAsync(model.UserMasterId);
                     if (existingUser == null)
                         return Json(new { isSuccess = false, message = "User not found" });
-                    existingUser.Ip = "1";
+
+
                     existingUser.Username = model.Username;
-                    existingUser.UserPassword = model.UserPassword;
+                    existingUser.UserPassword = model.Userpassword;
                     existingUser.FirstName = model.FirstName;
                     existingUser.LastName = model.LastName;
                     existingUser.ContactNumber = model.ContactNumber;
                     existingUser.RoleId = model.RoleId;
                     existingUser.UpdatedOn = DateTime.Now;
 
+                    if (!string.IsNullOrWhiteSpace(model.Userpassword))
+                    {
+                        var hasher = new PasswordHasher<UserMaster>();
+                        model.Userpassword = hasher.HashPassword(existingUser,model.Userpassword);
+                    }
+
                     var result = await _userRepository.UpdateUserAsync(existingUser);
+
                     return Json(new { isSuccess = result, message = result ? "User updated successfully" : "Failed to update user" });
                 }
             }

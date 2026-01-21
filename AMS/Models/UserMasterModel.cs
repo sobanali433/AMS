@@ -19,10 +19,8 @@ namespace AMS.Models
         [StringLength(50)]
         [Required(ErrorMessage = "Please specify old password")]
         public string OldPassword { get; set; }
-        [DisplayName("Password")]
-        [StringLength(50)]
-        [Required(ErrorMessage = "Please specify password")]
-        [DataType(DataType.Password)]
+        [Required]
+        //[DataType(DataType.Password)]
         public string Userpassword { get; set; }
         [DisplayName("Confirm Password")]
         [StringLength(50)]
@@ -35,13 +33,13 @@ namespace AMS.Models
         public string EncryptUserRoleId { get; set; }
         [DisplayName("Role")]
         public string RoleName { get; set; }
-        [DisplayName("Last Name")]
-        [StringLength(100)]
-        [Required(ErrorMessage = "Please specify last name")]
+        //[DisplayName("Last Name")]
+        //[StringLength(100)]
+        //[Required(ErrorMessage = "Please specify last name")]
         public string LastName { get; set; }
         [DisplayName("First Name")]
         [StringLength(100)]
-        [Required(ErrorMessage = "Please specify last name")]
+        [Required(ErrorMessage = "Please specify fast name")]
         public string FirstName { get; set; }
         [DisplayName("Contact Number")]
         [StringLength(20)]
@@ -61,17 +59,19 @@ namespace AMS.Models
         [DisplayName("Date Added")]
         public DateTime CreatedDate { get; set; }
 
-        [DisplayName("Name")]
-        [Display(Name = "Date Of Birth")]
+        //[DisplayName("Name")]
+        //[Display(Name = "Date Of Birth")]
         public DateTime? DateOfBirth { get; set; }
         public short? Gender { get; set; }
 
         public string FullName { get; set; }
+        public bool IsFirstTimeLogin { get; set; }
 
         public List<SelectListItem> RoleList { get; set; }
 
         public string CaptchaCode { get; set; }
         public string CreatedOnString { get; set; }
+        public string? Ip { get; set; }
 
         public string CaptchaImage { get; set; }
 

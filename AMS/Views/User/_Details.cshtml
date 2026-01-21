@@ -1,10 +1,5 @@
-﻿@model AMS.Models.UserViewModel
+﻿@model AMS.Models.UserMasterModel
 <style>
-   
-    
-    /* Modal Content Glass Effect */
-    
-
     div#commonlargeModal {
         margin-top: -398px;
     }
@@ -36,9 +31,9 @@
                 <span class="text-danger" asp-validation-for="FirstName"></span>
             </div>
             <div class="col-6">
-                <label class="form-label" asp-for="LastName"></label> <span class="text-danger"> *</span>
+                <label class="form-label" asp-for="LastName"></label> </span>
                 <input asp-for="LastName" class="form-control" >
-                <span class="text-danger" asp-validation-for="LastName"></span>
+                 @* <span class="text-danger" asp-validation-for="LastName"></span>  *@
             </div>
         </div>
         <div class="row mt-2">
@@ -55,14 +50,14 @@
             </div>
             <div class="col-6">
                 <div>
-                    <label for="iconInput" class="form-label" asp-for="UserPassword"></label> <span class="text-danger"> *</span>
+                    <label for="iconInput" class="form-label" asp-for="Userpassword"></label> <span class="text-danger"> *</span>
                     <div class="form-icon">
-                        <input type="password" asp-for="UserPassword" class="form-control form-control-icon"
+                        <input type="password" asp-for="Userpassword" class="form-control form-control-icon"
                                id="iconInput" placeholder="3******" >
                         <i class="bx bx-phone"></i>
                     </div>
-                </div>
-                <span class="text-danger" asp-validation-for="UserPassword"></span>
+                </div>  
+                <span class="text-danger" asp-validation-for="Userpassword"></span>
             </div>
         </div>
 
@@ -78,18 +73,14 @@
                 </div>
                 <span class="text-danger" asp-validation-for="ContactNumber"></span>
             </div>
-        @*     <div class="col-6">
-                <div>
-                    <label for="iconInput" class="form-label" asp-for=""></label> <span class="text-danger"> *</span>
-                    <div class="form-icon">
-                        <input type="email" asp-for="Username" class="form-control form-control-icon email-inputmask"
-                               id="iconInput" placeholder="example@gmail.com" required>
-                        <i class="ri-mail-unread-line"></i>
-                    </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label class="form-label" asp-for="DateOfBirth"></label> <span class="text-danger"> *</span>
+                    <input type="date" asp-for="DateOfBirth" class="form-control form-control-icon" required>
+                    <span class="text-danger" asp-validation-for="DateOfBirth"></span>
                 </div>
-                <span class="text-danger" asp-validation-for="Username"></span>
             </div>
-         *@
+        
         </div>
 
 
@@ -106,44 +97,26 @@
             <div class="col-6">
                 <label class="form-label" asp-for="IsActive"></label> <span class="text-danger"> *</span>
                 <select class="form-select req-border text-uppercase" asp-for="IsActive" required>
-                    <option value="true">ACTIVE</option>
                     <option value="false">IN-ACTIVE</option>
+                    <option value="true">ACTIVE</option>
                 </select>
                 <span class="text-danger" asp-validation-for="IsActive"></span>
 
             </div>
 
         </div>
-        
-         <div class="row mt-2">
-            @* <div class="col-6">
-                <label class="form-label" asp-for="Gender"></label> <span class="text-danger"> *</span>
-                <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Enumeration.Gender>()" class="form-control" required>
-                    <option value="">Select Gender</option>
-                </select>
-                <span class="text-danger" asp-validation-for="Gender"></span> 
-            </div>*@
-        
-        </div> 
-    @* 
         <div class="row mt-2">
-            <div class="col-6">
-                <div class="form-group">
-                    <label class="form-label" asp-for="usermaster.DateOfBirth"></label> <span class="text-danger"> *</span>
-                    <input type="date" asp-for="usermaster.DateOfBirth" class="form-control form-control-icon" required>
-                    <span class="text-danger" asp-validation-for="usermaster.DateOfBirth"></span>
-                </div>
-            </div>
-            <div class="col-6">
-                <label class="form-label" asp-for="usermaster.Gender"></label> <span class="text-danger"> *</span>
-                <select asp-for="usermaster.Gender" class="form-control form-control-icon" required>
+            <div class="col-12">
+                <label class="form-label" asp-for="Gender"></label> <span class="text-danger"> *</span>
+                <select asp-for="Gender" class="form-control form-control-icon" >
                     <option value="">Select Gender</option>
-                    <option value="@((short)Enumeration.Gender.Male)">Male</option>
-                    <option value="@((short)Enumeration.Gender.Female)">Female</option>
-                </select> <span class="text-danger" asp-validation-for="usermaster.Gender"></span>
+                    <option value="Gender.Male)">Male</option>
+                    <option value="Gender.Female)">Female</option>
+                 </select> <span class="text-danger" asp-validation-for="Gender"></span> 
             </div>
-        </div> *@
-     
+        </div>
+       
+
     </div>
 </form>
 

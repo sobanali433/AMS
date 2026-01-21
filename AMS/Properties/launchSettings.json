@@ -18,6 +18,12 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
+    "Chrome-Profile": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+      "commandLineArgs": ".",
+      "workingDirectory": "."
+    },
     "https": {
       "commandName": "Project",
       "dotnetRunMessages": true,

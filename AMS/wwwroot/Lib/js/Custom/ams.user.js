@@ -9,8 +9,6 @@ ams.user = new function () {
         AttendanceTable: null,
     }
     this.Init = function (options) {
-        //this.Option = options;
-
         ams.user.Option = $.extend({}, ams.user.Option, options);
         ams.user.Option.Table = $("#userTableId").DataTable(
             {
@@ -94,9 +92,9 @@ ams.user = new function () {
                     ams.common.InitMask();
                     $.validator.unobtrusive.parse($("#AddUserform"));
                     $("#commonlargeModal").modal('show');
-                    //HideLoader();
+                    HideLoader();
                     //Button Reverted From Loading
-                    revert();
+                    revert();   
                 }
             });
         });

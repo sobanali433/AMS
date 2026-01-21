@@ -1,4 +1,4 @@
-﻿
+﻿@using AMS;
 <!doctype html>
 <html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-bs-theme="dark" data-body-image="img-1" data-preloader="disable">
 <head>
@@ -402,7 +402,7 @@
 </head>
 <body>
     <!-- start Lodaer -->
-    @* <div class="preloader">
+     <div class="preloader">
         <div class="multi-spinner-container">
             <div class="multi-spinner">
                 <div class="multi-spinner">
@@ -416,7 +416,7 @@
                 </div>
             </div>
         </div>
-    </div> *@
+    </div> 
     <!-- end Lodaer -->
     @RenderBody()
     <!-- JAVASCRIPT -->
@@ -433,9 +433,9 @@
     <script src="~/lib/libs/jquery/jquery.validate.min.js"></script>
     <script src="~/lib/libs/jquery/jquery.validate.unobtrusive.js"></script>
 
-    <script src="~/lib/js/Custom/ams.js" asp-append-version="true"></script>
-    <script src="~/lib/js/Custom/ams.common.js" asp-append-version="true"></script>
-    <script src="~/lib/js/Custom/ams.auth.js" asp-append-version="true"></script>
+    <script src="~/Lib/js/Custom/ams.js" asp-append-version="true"></script>
+    <script src="~/Lib/js/Custom/ams.common.js" asp-append-version="true"></script>
+    <script src="~/Lib/js/Custom/ams.auth.js" asp-append-version="true"></script>
 
     <script>
         function UrlContent(url) {
