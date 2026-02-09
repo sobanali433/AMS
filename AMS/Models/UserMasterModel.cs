@@ -63,6 +63,9 @@ namespace AMS.Models
         //[Display(Name = "Date Of Birth")]
         public DateTime? DateOfBirth { get; set; }
         public short? Gender { get; set; }
+        public int? CreatedBy { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public string UserMasterPassword { get; set; } = null!;
 
         public string FullName { get; set; }
         public bool IsFirstTimeLogin { get; set; }

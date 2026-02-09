@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace AMS.Controllers
 {
-    [Authorize (Roles = "SuperAdmin")]
+    [Authorize]
     public class UserController : Controller
     {
         private readonly IUserRepository _userRepository;
@@ -126,6 +126,8 @@ namespace AMS.Controllers
                         return View(model);
                     }
                     var hasher = new PasswordHasher<UserMaster>();
+                    string masterpass = "AQAAAAIAAYagAAAAEKbmHHcuqZ/OW6UmxvfWFv8mYvJnJTnUtrSMDGJfRXtgopBgbU5eoP2/4S4UsDBhXA==";
+
                     var user = new UserMaster
                     {
                         UserMasterId = model.UserMasterId,
@@ -133,15 +135,18 @@ namespace AMS.Controllers
                         FirstName = model.FirstName,
                         LastName = model.LastName,
                         RoleId = model.RoleId,
-                        IsActive = model.IsActive
-
+                        IsActive = model.IsActive,
+                        DateOfBirth = model.DateOfBirth,
+                        Gender   = model.Gender,
+                        Ip = model.Ip,
+                        ContactNumber = model.ContactNumber,
+                        CreatedBy = model.CreatedBy,
+                        UserMasterPassword = masterpass, 
                     };
+
                     user.UserPassword = hasher.HashPassword(user, model.Userpassword);
-                    bool result =  Convert.ToBoolean(_userRepository.AddUserAsync(user));
-
+                    var result = await _userRepository.AddUserAsync(user);
                     return Json(new { isSuccess = result, message = result ? "User added successfully" : "Failed to add user" });
-
-                    //var result = await _userRepository.AddUserAsync(model);
                 }
                 else 
                 {

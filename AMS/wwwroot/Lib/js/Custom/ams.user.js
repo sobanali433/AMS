@@ -92,7 +92,7 @@ ams.user = new function () {
                     ams.common.InitMask();
                     $.validator.unobtrusive.parse($("#AddUserform"));
                     $("#commonlargeModal").modal('show');
-                    HideLoader();
+                    //HideLoader();
                     //Button Reverted From Loading
                     revert();   
                 }

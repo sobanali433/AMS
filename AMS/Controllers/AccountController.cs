@@ -26,7 +26,8 @@ namespace AMS.Controllers
         {
 
             //ViewData["ReturnUrl"] = returnUrl;
-            return View(new UserMasterModel());
+            //return View(new UserMasterModel());
+            return View();
 
             //CaptchaResult captcha = Captcha.Generate(CaptchaType.Simple);
             //_sessionManager.CaptchaCode = captcha.CatpchaCode;
@@ -48,7 +49,7 @@ namespace AMS.Controllers
                 if (user == null || !user.IsActive)
                     return View("Login");
 
-                var hasher =new PasswordHasher<UserMaster>();
+                var hasher = new PasswordHasher<UserMaster>();
                 var result = hasher.VerifyHashedPassword(user, user.UserPassword, model.Userpassword);
 
                 if (result != PasswordVerificationResult.Success)
@@ -72,77 +73,23 @@ namespace AMS.Controllers
 
                 return RedirectToAction("Index", "User");
             }
-            catch(Exception) {
-                    return RedirectToAction("Index", "Account");
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Account");
                 throw;
 
             }
-            }
+        }
 
 
 
-            //[HttpPost]
-            //public async Task<IActionResult> Login(UserMasterModel model)
-            //{
-            //    try
-            //    {
-            //         var user = await _accountRepository.GetByUsernameAndPasswordAsync(model.Username, model.Userpassword);
-            //        //var userr = _accountRepository.GetByUsernameAsync(model.Username, model.RoleName);
 
-            //        if (user == null)
-            //        {
-            //            ModelState.AddModelError("", "Invalid credentials or account inactive.");
-            //            return View(model);
-            //        }
-
-            //        var claims = new List<Claim>
-            //{
-            //    new Claim(ClaimTypes.NameIdentifier, user.UserMasterId.ToString()),
-            //    new Claim(ClaimTypes.Name, user.Username ?? ""),
-            //    new Claim("FirstName", user.FirstName ?? ""),
-            //    new Claim("LastName", user.LastName ?? ""),
-            //    new Claim("RoleName", user?.Role?.RoleName ?? "User"),
-            //    new Claim(ClaimTypes.Role, user?.Role?.RoleName ?? "User")
-            //};
-
-            //        var claimsIdentity = new ClaimsIdentity(claims, "AMSCookies");
-            //        var authProperties = new AuthenticationProperties
-            //        {
-            //            AllowRefresh = true,
-            //            ExpiresUtc = DateTimeOffset.UtcNow.AddHours(8)
-            //        };
-
-            //        await HttpContext.SignInAsync(
-            //            scheme: "AMSCookies",
-            //            principal: new ClaimsPrincipal(claimsIdentity),
-            //            properties: authProperties);
-
-            //        int roleId = user.RoleId;
-
-            //        if (roleId == 2)
-            //            return RedirectToAction("Index", "User");
-            //        else
-            //            return RedirectToAction("Index", "User");
-            //    }
-            //    catch (Exception)
-            //    {
-            //        ModelState.AddModelError("", "Please insert correct credentials.");
-            //        return View(model);
-            //    }
-            //}
-
-            //[Authorize]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync("AMSCookies");
             return RedirectToAction("Login");
         }
 
-
-
-        //AuthResultModel res = new AuthResultModel();
-        //loginModel.SessionId = _sessionManager.GetSessionId();
-        //res = _accountRepository.Authentication(loginModel, _sessionManager.GetSessionId(), _sessionManager.GetIP());
 
     }
 
