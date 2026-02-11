@@ -1,0 +1,100 @@
+﻿﻿@using AMS.Enums
+@model AMS.Models.ProductModel
+
+<div class="modal-header p-3" style="background-color:#102557;">
+    <h5 class="modal-title text-white">
+        @* (Model.IsEdit ? "Edit" : "Add New") *@ Add User
+    </h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal"
+            aria-label="Close" id="close-modal"></button>
+</div>
+
+<form class="validation-wizard form-horizontal form-material needs-validation" id="AddProductform" autocomplete="off">
+    <div class="modal-body">
+        <div class="row">
+            <input asp-for="ProductId" type="hidden" />
+            <div class="col-6">
+                <label class="form-label" asp-for="ProductName"></label> <span class="text-danger"> *</span>
+                <input asp-for="ProductName" class="form-control" required>
+                <span class="text-danger" asp-validation-for="ProductName"></span>
+            </div>
+
+            <div class="col-6">
+                <label class="form-label" asp-for="ProductId"></label>
+                <select asp-for="ProductType"
+                        asp-items="Html.GetEnumSelectList<ProductType>()"
+                        class="form-control">
+                    <option value="">-- Select Product Type --</option>
+                </select>
+                <span class="text-danger" asp-validation-for="ProductType"></span>
+            </div>
+
+         @*    <div class="col-6">
+                <label class="form-label" asp-for="UserMasterModel.Gender"></label> <span class="text-danger"> *</span>
+                <select asp-for="UserMasterModel.Gender" class="form-control form-control-icon">
+                    <option value="">Select Gender</option>
+                    <option value="@((short)Enumeration.Gender.Male)">Male</option>
+                    <option value="@((short)Enumeration.Gender.Female)">Female</option>
+                </select>
+                <span class="text-danger" asp-validation-for="UserMasterModel.Gender"></span>
+            </div> *@
+
+        </div>
+        <div class="row mt-2">
+            <div class="col-6">
+                <div>
+                    <label for="iconInput" class="form-label" asp-for="SKU"></label> <span class="text-danger"> *</span>
+                    <div class="form-icon">
+                        <input type="text" asp-for="SKU" class="form-control form-control-icon"
+                               id="iconInput" placeholder="3******">
+                        <i class="bx bx-phone"></i>
+                    </div>
+                </div>
+                <span class="text-danger" asp-validation-for="SKU"></span>
+            </div>
+            
+            <div class="col-6">
+                <div>
+                    <label for="iconInput" class="form-label" asp-for="Price"></label> <span class="text-danger"> *</span>
+                    <div class="form-icon">
+                        <input type="number" asp-for="Price" class="form-control form-control-icon"
+                               id="iconInput" placeholder="******">
+                        <i class="bx bx-phone"></i>
+                    </div>
+                </div>
+                <span class="text-danger" asp-validation-for="Price"></span>
+            </div>
+        </div>
+
+
+
+        <div class="row mt-2">
+            @* <div class="col-6">
+                <label asp-for="CategoryId" class="form-label"></label>
+
+                <select asp-for="CategoryId"
+                        asp-items="Model.Categories"
+                        class="form-control">
+                    <option value="">-- Select Category --</option>
+                </select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div> *@
+
+            <div class="col-6">
+                <label class="form-label" asp-for="IsActive"></label> <span class="text-danger"> *</span>
+                <select class="form-select req-border text-uppercase" asp-for="IsActive" required>
+                    <option value="false">IN-ACTIVE</option>
+                    <option value="true">ACTIVE</option>
+                </select>
+                <span class="text-danger" asp-validation-for="IsActive"></span>
+
+            </div>
+
+        </div>
+    </div>
+</form>
+
+<div class="modal-footer border-0 pt-6 px-0 pb-0">
+    <button type="button" class="btn btn-secondary" id=" saveEmployeeButtonIdId" waves-effect" data-bs-dismiss="modal"><i class="fas fa-ban "></i> Cancel</button>
+    <button type="button" class="btn btn-success" id="saveproductButtonId" onclick="ams.product.Save()"><i class="fas fa-save"></i> Save</button>
+</div>

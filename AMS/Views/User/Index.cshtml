@@ -56,6 +56,7 @@
     </style>
 
 }
+
 <div class="row">
     <div class="col-xxl-2 col-xl-2 col-md-2">
         <!--Start offcanvas-->
@@ -173,6 +174,54 @@
             </div>
             <!--end offcanvas-footer-->
         </form>
+
+        <form class="d-flex flex-column justify-content-end ">
+            <div class="offcanvas-bodyy">
+                <div class="">
+                    <div class="w-100">
+
+                        <!--end offcanvas-body-->
+                        <div class="filter-btn">
+                            <a href="/Common/Table?table=User" class="btn"> Dashboard</a>
+                            <i class="fa-solid fa-filter"></i>
+                            @* <button type="submit" class="btn btn-primary w-100">Filters</button> *@
+                        </div>
+                    </div>
+                </div>
+                <!-- Accordions Bordered -->
+                <div class="accordion custom-accordionwithicon custom-accordion-border accordion-border-box accordion-secondary" id="accordionBordered">
+
+                    <div class="mb-2">
+                        <div class="accordion-item" id="BranchMasterbox">
+                            <h2 class="accordion-header text-dark">
+                                <button class="btn btn" type="submit">
+                                    Add Branches
+                                </button>
+                            </h2>
+
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <div class="accordion-item" id="d">
+                            <h2 class="accordion-header text-dark">
+                                <a class="btn btn" href="@Url.Action("_Details", "Product")">
+                                    Add Product
+                                </a>
+                            </h2>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end offcanvas-body-->
+            @* <div class="offcanvas-footer border-top p-3 text-center hstack gap-2">
+        <button class="btn btn-light w-100">Clear Filter</button>
+        <button type="submit" class="btn btn-primary w-100">Filters</button> 
+    </div> *@
+            <!--end offcanvas-footer-->
+        </form>
         <!--end offcanvas-->
     </div>
     <div class="col-xxl-10 col-xl-10 col-md-10 col-sm-12">
@@ -195,14 +244,12 @@
                             <thead class="fixedthead table-light">
                                 <tr>
                                     <th data-sort="action"><b>Action</b></th>
-
                                     <th class="sort"><b>First Name</b></th>
                                     <th class="sort"><b>Last Name</b></th>
                                     <th class="sort"><b>User Name</b></th>
                                     @* <th class="sort"><b>Contact Number</b></th> *@
-                                    <th class="sort"><b>RoleName</b></th>
-                                    <th class="sort"><b>Status</b></th>
-                                    @*   <th class="sort"><b>Contact Number</b></th>userTableId
+                                    @* <th class="sort"><b>RoleName</b></th> *@
+                                    @*   <th class="sort"><b>Contact Number</b></th>s
                                     <th class="sort"><b>Status</b></th>
                                     <th class="sort"><b>Role</b></th>
                                    *@ 

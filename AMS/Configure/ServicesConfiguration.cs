@@ -14,5 +14,12 @@ public static class ServicesConfiguration
         services.AddTransient<IDashboardRepository, DashboardRepository>();
         services.AddTransient<IAccountServices, AccountServices>();
         services.AddTransient<IUserRepository, UserRepository>();
+        //services.AddTransient<IProductRepository, ProductRepository>();
+        // If ProductRepository implements IProductRepository
+        services.AddScoped<IProductRepository, ProductRepository>();
+
+        // If no interface, direct registration
+
+
     }
 }

@@ -106,13 +106,20 @@
 
         </div>
         <div class="row mt-2">
-            <div class="col-12">
+            <div class="col-6">
                 <label class="form-label" asp-for="Gender"></label> <span class="text-danger"> *</span>
                 <select asp-for="Gender" class="form-control form-control-icon" >
                     <option value="">Select Gender</option>
                     <option value="Gender.Male)">Male</option>
                     <option value="Gender.Female)">Female</option>
                  </select> <span class="text-danger" asp-validation-for="Gender"></span> 
+            </div>
+
+            <div class="col-6">
+                <label class="form-label" asp-for="BranchId"></label> <span class="text-danger"> *</span>
+                <select asp-for="BranchId" class="form-control form-control-icon" asp-items="Model.BranchList">
+                    <option value="">Select Branch</option>
+                 </select> <span class="text-danger" asp-validation-for="BranchId"></span> 
             </div>
         </div>
        

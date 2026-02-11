@@ -40,7 +40,7 @@ namespace AMS.Controllers
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                RoleName = user.Role.RoleName
+                RoleName = user.Roles.RoleName
             };
 
             return View(model);
@@ -51,7 +51,6 @@ namespace AMS.Controllers
         {
             var username = User.Identity?.Name;
 
-            // await the task to get the actual user object
             var user = await _dashboardRepository.HeaderlayoutAsync(username);
 
             if (user == null)
@@ -63,9 +62,8 @@ namespace AMS.Controllers
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                RoleName = user.Role.RoleName,
+                RoleName = user.Roles.RoleName,
             };
-
             return View(model);
 
 

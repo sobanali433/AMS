@@ -20,17 +20,18 @@ namespace AMS.Repository
         //        .ToListAsync();
         //}
 
-        public List<UserMaster> GetList()
-        {
-            return _context.UserMasters.ToList();
-        }
+      
         public UserMaster GetById(int id)
         {
             return _context.UserMasters.FirstOrDefault(u => u.UserMasterId == id);
         }
         public IEnumerable<Role> GetRoles()
         {
-            return _context.Roles.ToList();
+            return _context.Roles.AsNoTracking().Where(u => u.RoleName != "SuperAdmin").ToList();
+        }
+        public IEnumerable<BranchMaster> GetBranches()
+        {
+            return _context.BranchMasters.ToList();
         }
         public async Task<bool> AddUserAsync(UserMaster user)
         {
@@ -48,12 +49,17 @@ namespace AMS.Repository
             return await _context.UserMasters.FindAsync(id);
         }
 
-        public Task<UserMaster?> GetAllUsersWithoutSuperAdmin(int id)
+        public List<UserMaster> GetList()
         {
-            throw new NotImplementedException();
+            return _context.UserMasters.AsNoTracking().Where(u => u.Roles.RoleName != "SuperAdmin").ToList();
         }
 
-       
+        //public List<UserMaster> GetAllUsersWithoutSuperAdmin()
+        //{
+        //    return _context.UserMasters.Include(u => u.Roles.RoleId ==1).Where(u => u.Roles.RoleName != "SuperAdmin" ).ToList();
+        //}
+
+
     }
 }
 

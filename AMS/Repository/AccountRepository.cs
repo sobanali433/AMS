@@ -16,8 +16,8 @@ namespace AMS.Repository
         public async Task<UserMaster?> GetByUsernameAsync(string username, string rolename)
         {
             return await _context.UserMasters
-                .Include(u => u.Role)
-                .FirstOrDefaultAsync(u => u.Username == username || u.Role.RoleName == rolename);
+                .Include(u => u.Roles)
+                .FirstOrDefaultAsync(u => u.Username == username || u.Roles.RoleName == rolename);
         }
        
 
@@ -25,18 +25,18 @@ namespace AMS.Repository
         public async Task<UserMaster?> GetByUsernameAndPasswordAsync(string username, string password)
         {
             var user = await _context.UserMasters
-                .Include(u => u.Role)
+                .Include(u => u.Roles)
                 .FirstOrDefaultAsync(u =>
                     u.Username == username &&
                     u.UserPassword == password);
 
             if (user != null)
             {
-                Console.WriteLine($"✅ User Found: {user.Username}, Role: {user.Role.RoleName}");
+                Console.WriteLine($"User Found: {user.Username}, Role: {user.Roles.RoleName}");
             }
             else
             {
-                Console.WriteLine("❌ No user found with given credentials!");
+                Console.WriteLine("No user found with given credentials!");
             }
 
             return user;
@@ -45,10 +45,10 @@ namespace AMS.Repository
         public async Task<UserMaster?> GetByUsernameAsync(string username)
         {
             var user = await _context.UserMasters
-          .Include(u => u.Role)
+          .Include(u => u.Roles)
           .FirstOrDefaultAsync(u => u.Username == username);
 
-            if (user == null || user.Role == null)
+            if (user == null || user.Roles == null)
                 return null;
 
             return user;

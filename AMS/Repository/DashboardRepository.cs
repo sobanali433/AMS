@@ -14,7 +14,7 @@ namespace AMS.Repository
         public  Task<UserMaster?> HeaderlayoutAsync(string username)
         {
             return  _context.UserMasters
-                .Include(u => u.Role) 
+                .Include(u => u.Roles) 
                 .FirstOrDefaultAsync(u => u.Username == username);
         }
     }

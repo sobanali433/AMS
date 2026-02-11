@@ -19,17 +19,7 @@ namespace AMS.Controllers
         {
             return View();
         }
-        [HttpPost]
-
-        public IActionResult Index(int first, int second)
-        {
-            if (ModelState.IsValid !=true)
-            {
-                int result = first + second;
-                return View(result);
-            }
-            return View(null);
-        }
+      
         [Authorize]
 
         public IActionResult Privacy()

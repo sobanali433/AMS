@@ -5,14 +5,16 @@ namespace AMS.Repository
 {
     public interface IUserRepository
     {
-        //Task<List<UserMaster>> GetAllUsersWithoutSuperAdmin();
+        //List<UserMaster> GetAllUsersWithoutSuperAdmin();
 
         List<UserMaster> GetList();
         UserMaster GetById(int id);
         IEnumerable<Role> GetRoles();
-        //Task<bool> AddUserAsync(UserMaster user);
+        IEnumerable<BranchMaster> GetBranches();
         Task<bool> UpdateUserAsync(UserMaster user);
         Task<UserMaster?> GetByIdAsync(int id);
         Task<bool> AddUserAsync(UserMaster model);
+
+
     }
 }

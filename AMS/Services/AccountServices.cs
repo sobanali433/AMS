@@ -21,7 +21,6 @@ namespace AMS.Services
 
             if (userEntity == null) return null;
 
-            // ✅ Mapping Entity → Model
             var model = new UserMasterModel
             {
                 UserMasterId = userEntity.UserMasterId,
@@ -29,10 +28,9 @@ namespace AMS.Services
                 Userpassword = userEntity.UserPassword,
                 FirstName = userEntity.FirstName,
                 LastName = userEntity.LastName,
-                RoleName = userEntity.Role?.RoleName,
+                RoleName = userEntity.Roles?.RoleName,
                 IsActive = userEntity.IsActive
             };
-
             return model;
         }
 

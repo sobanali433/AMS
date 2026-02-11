@@ -27,6 +27,12 @@ namespace AMS.Models
         [Required(ErrorMessage = "Please specify confirm password")]
         [Compare("Password", ErrorMessage = "Password and Confirmation Password must match.")]
         public string ConfirmPassword { get; set; }
+        [Required]
+        public int BranchId { get; set; }
+
+        [DisplayName("branchname")]
+        [Required(ErrorMessage = "Please select branch")]
+        public string BranchName { get; set; }
         [DisplayName("Role")]
         [Required(ErrorMessage = "Please select role")]
         public short RoleId { get; set; }
@@ -71,6 +77,7 @@ namespace AMS.Models
         public bool IsFirstTimeLogin { get; set; }
 
         public List<SelectListItem> RoleList { get; set; }
+        public List<SelectListItem> BranchList { get; set; }
 
         public string CaptchaCode { get; set; }
         public string CreatedOnString { get; set; }

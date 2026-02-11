@@ -13,6 +13,9 @@ namespace AMS.Mapper
             CreateMap<UserMasterModel, UserMaster>();
             CreateMap<UserMaster, UserMasterModel>();
 
+            CreateMap<ProductModel, Product>();
+            CreateMap<Product, ProductModel>();
+
 
         }
      

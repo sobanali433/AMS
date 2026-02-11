@@ -24,6 +24,8 @@ namespace AMS.Controllers
 
         public async Task<IActionResult> Index()
         {
+            
+
             //var users = await _userRepository.GetAllUsersWithoutSuperAdmin();
 
             //var username = User.Identity?.Name;
@@ -46,13 +48,14 @@ namespace AMS.Controllers
         [HttpGet]
         public IActionResult _Details(int? id)
         {
-            var roles = _userRepository.GetRoles()
-           .Select(r => new SelectListItem { Value = r.RoleId.ToString(), Text = r.RoleName }).ToList();
+            var roles = _userRepository.GetRoles().Select(r => new SelectListItem{Value = r.RoleId.ToString(),Text = r.RoleName}  ).ToList();
+            var branches = _userRepository.GetBranches().Select(b => new SelectListItem{Value = b.BranchId.ToString(),Text = b.BranchName}).ToList();
             if (id == null)
             {
                 var model = new UserMasterModel
                 {
-                    RoleList = roles
+                    RoleList = roles,
+                    BranchList = branches,
                 };
                 return PartialView("_Details", model);
             }
@@ -70,52 +73,33 @@ namespace AMS.Controllers
                     LastName = user.LastName,
                     ContactNumber = user.ContactNumber,
                     RoleId = user.RoleId,
-                    RoleList = roles
-
+                    BranchId = user.BranchId,
+                    IsActive = user.IsActive
                 };
 
                 return PartialView("_Details", model);
             }
-
-
-
         }
+        [HttpPost]
         public JsonResult GetList()
         {
-            var data = _userRepository.GetList();
+            //var data = _userRepository.GetAllUsersWithoutSuperAdmin();
+
+            var user = _userRepository.GetList();
+
             var result = new
             {
                 draw = Request.Form["draw"].FirstOrDefault(),
-                recordsTotal = data.Count,
-                recordsFiltered = data.Count,
-                data = data
+                recordsTotal = user.Count,
+                recordsFiltered = user.Count,
+                data = user
             };
-
             return Json(result);
         }
 
         [HttpPost]
         public async Task<IActionResult> Save(UserMasterModel model)
         {
-            Console.WriteLine(model.FirstName);
-            Console.WriteLine(model.LastName);
-            Console.WriteLine(model.Userpassword);
-            Console.WriteLine(model.UserMasterId);
-            Console.WriteLine(model.RoleId);
-            Console.WriteLine(model.Ip);
-            Console.WriteLine(model.DateOfBirth);
-            Console.WriteLine(model.Gender);
-            Console.WriteLine(model.RoleName);
-            Console.WriteLine(model.ContactNumber);
-            Console.WriteLine(model.IsActive);
-            Console.WriteLine(model.CreatedDate);
-            Console.WriteLine(model.IsFirstTimeLogin);
-            Console.WriteLine(model.Userpassword);
-
-            //if (!ModelState.IsValid) 
-            //{
-            //    return View(model);
-            //}
             try
             {
                 if (model.UserMasterId == 0 || model.UserMasterId == null)
@@ -124,6 +108,11 @@ namespace AMS.Controllers
                     {
                         ModelState.AddModelError("", "Password required");
                         return View(model);
+                    }
+                    if (model.IsActive == false) 
+                    {
+                        return Json(new { isSuccess = false, message = "User is inActive" });
+
                     }
                     var hasher = new PasswordHasher<UserMaster>();
                     string masterpass = "AQAAAAIAAYagAAAAEKbmHHcuqZ/OW6UmxvfWFv8mYvJnJTnUtrSMDGJfRXtgopBgbU5eoP2/4S4UsDBhXA==";
@@ -142,6 +131,7 @@ namespace AMS.Controllers
                         ContactNumber = model.ContactNumber,
                         CreatedBy = model.CreatedBy,
                         UserMasterPassword = masterpass, 
+                        BranchId = model.BranchId,
                     };
 
                     user.UserPassword = hasher.HashPassword(user, model.Userpassword);

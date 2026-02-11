@@ -1,10 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 
 namespace AMS.Data
 {
     public class UserMaster
     {
+        [Key]
+
         public int UserMasterId { get; set; }
         [Column(TypeName = "varchar(20)")]
 
@@ -47,7 +50,10 @@ namespace AMS.Data
         [Column(TypeName = "varchar(30)")]
 
         public string? Ip { get; set; }
-        public virtual Role Role { get; set; } = null!;
+        public virtual Role Roles { get; set; } = null!;
+
+        public int BranchId { get; set; }
+        public BranchMaster BranchMasters { get; set; }
 
 
 

@@ -1,6 +1,6 @@
 ﻿var ams = ams || {};
 
-ams.user = new function () {
+ams.product = new function () {
     this.Option = {
         Table: null,
         TableId: "",
@@ -8,9 +8,10 @@ ams.user = new function () {
         RoleId: 0,
         AttendanceTable: null,
     }
+
     this.Init = function (options) {
-        ams.user.Option = $.extend({}, ams.user.Option, options);
-        ams.user.Option.Table = $("#userTableId").DataTable(
+        ams.product.Option = $.extend({}, ams.user.Option, options);
+        ams.product.Option.Table = $("#productTableId").DataTable(
             {
                 paging: true,
                 serverSide: true,
@@ -22,7 +23,7 @@ ams.user = new function () {
                 pageLength: 20,
                 dom: '<"top-toolbar"<"toolbar-top"if<"entries-info">><"export-btn-container"><"entries-dropdown"><"search-bar-container">>rt<"bottom-toolbar"<"toolbar-bottom"p>>',
                 language: {
-                    search: '<i class="ri-search-line" onclick="SnjCrm.Lead.Search()"></i>', 
+                    search: '<i class="ri-search-line" onclick="SnjCrm.Lead.Search()"></i>',
                     searchPlaceholder: "Search...",
                     paginate: {
                         next: '<i class="ri-arrow-right-s-line"></i>',
@@ -31,7 +32,7 @@ ams.user = new function () {
                 },
                 ajax: {
                     type: "Post",
-                    url: '/User/GetList',
+                    url: '/Product/GetList',
                     data: function (dtParms) {
                         dtParms.search.value = $("#txtSearch").val();
                         return dtParms;
@@ -45,55 +46,58 @@ ams.user = new function () {
                             return `<button class="btn btn-sm btn-primary">Edit</button>`;
                         }
                     },
-                    { data: "firstName", name: "FirstName" },
-                    { data: "lastName", name: "LastName" },
-                    {  data: "username", name: "userName"},
-                          
-                 
-                
-                    //{ data: "username", name: "Username", },
-
-                    
-
+                    { data: "productName", name: "ProductName" },
+                    { data: "productType", name: "ProductType" },
+                    { data: "sku", name: "SKU" },
+                    { data: "category", name: "Category" },
+                    { data: "price", name: "Price" },
                     //{ data: "firstName", name: "FirstName", },
                     //{ data: "lastName", name: "LastName" },
 
                     //{ data: "contactNumber", name: "ContactNumber" },
-                  
+
                 ],
                 order: [[0, "ASC"]],
             });
     }
+
+
+
+
+
     this.Add = function (id = '') {
         ams.common.HandleLoadingButton("#addNewEmployeeBtnId", function (revert) {
             $.ajax({
                 type: "GET",
-                url: "/User/_Details?id=" + id,  
+                url: "/Product/_Details?id=" + id,
                 success: function (data) {
                     $("#commonlargeModalContent").html(data);
                     ams.common.InitMask();
-                    $.validator.unobtrusive.parse($("#AddUserform"));
+                    $.validator.unobtrusive.parse($("#AddProductform"));
                     $("#commonlargeModal").modal('show');
                     //HideLoader();
                     //Button Reverted From Loading
-                    revert();   
+                    revert();
                 }
             });
         });
     };
+
+
     this.Save = function () {
-        if ($("#AddUserform").valid()) {
+        alert();
+        if ($("#AddProductform").valid()) {
             //ShowLoader();
-            var formdata = $("#AddUserform").serialize();
-            ams.common.HandleLoadingButton("#saveEmployeeButtonId", function (revert) {
-                $.ajax({    
+            var formdata = $("#AddProductform").serialize();
+            ams.common.HandleLoadingButton("#saveproductButtonId", function (revert) {
+                $.ajax({
                     type: "Post",
                     url: "/User/Save/",
                     data: formdata,
                     success: function (result) {
                         //HideLoader();
                         if (result.isSuccess) {
-                            ams.user.Option.Table.ajax.reload();
+                            ams.product.Option.Table.ajax.reload();
                             ams.common.ToastrSuccess(result.message, "right", "top");
                             $("#commonlargeModal").modal('hide');
                         } else {
@@ -106,7 +110,4 @@ ams.user = new function () {
             });
         }
     }
-
-
 }
-    
