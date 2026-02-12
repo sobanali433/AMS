@@ -1,9 +1,25 @@
 ﻿﻿@using AMS.Enums
 @model AMS.Models.ProductModel
+@* @{
+    Layout = null;
+} *@
+<style>
+    div#commonlargeModal {
+        margin-top: -398px;
+    }
+
+    #saveEmployeeButtonId {
+        background: #102557;
+    }
+
+    #saveEmployeeButtonIdId {
+        background: #102557;
+    }
+</style>
 
 <div class="modal-header p-3" style="background-color:#102557;">
     <h5 class="modal-title text-white">
-        @* (Model.IsEdit ? "Edit" : "Add New") *@ Add User
+        (Model.IsEdit ? "Edit" : "Add New")  Add Product
     </h5>
     <button type="button" class="btn-close" data-bs-dismiss="modal"
             aria-label="Close" id="close-modal"></button>
@@ -15,12 +31,12 @@
             <input asp-for="ProductId" type="hidden" />
             <div class="col-6">
                 <label class="form-label" asp-for="ProductName"></label> <span class="text-danger"> *</span>
-                <input asp-for="ProductName" class="form-control" required>
+               <input asp-for="ProductName" class="form-control" required>
                 <span class="text-danger" asp-validation-for="ProductName"></span>
             </div>
 
             <div class="col-6">
-                <label class="form-label" asp-for="ProductId"></label>
+                <label class="form-label" asp-for="ProductType"></label><span class="text-danger"> *</span>
                 <select asp-for="ProductType"
                         asp-items="Html.GetEnumSelectList<ProductType>()"
                         class="form-control">
@@ -46,8 +62,8 @@
                     <label for="iconInput" class="form-label" asp-for="SKU"></label> <span class="text-danger"> *</span>
                     <div class="form-icon">
                         <input type="text" asp-for="SKU" class="form-control form-control-icon"
-                               id="iconInput" placeholder="3******">
-                        <i class="bx bx-phone"></i>
+                               id="iconInput" placeholder="******">
+                        @* <i class="bx bx-name"></i> *@
                     </div>
                 </div>
                 <span class="text-danger" asp-validation-for="SKU"></span>
@@ -57,9 +73,8 @@
                 <div>
                     <label for="iconInput" class="form-label" asp-for="Price"></label> <span class="text-danger"> *</span>
                     <div class="form-icon">
-                        <input type="number" asp-for="Price" class="form-control form-control-icon"
-                               id="iconInput" placeholder="******">
-                        <i class="bx bx-phone"></i>
+                        <input type="number" asp-for="Price" class="form-control form-control-icon" required
+                               id="iconInput" placeholder="******">                        @* <i class="bx bx-phone"></i> *@
                     </div>
                 </div>
                 <span class="text-danger" asp-validation-for="Price"></span>
@@ -69,16 +84,16 @@
 
 
         <div class="row mt-2">
-            @* <div class="col-6">
+            <div class="col-6">
                 <label asp-for="CategoryId" class="form-label"></label>
 
                 <select asp-for="CategoryId"
-                        asp-items="Model.Categories"
+                        asp-items="Model.CategoriesList"
                         class="form-control">
                     <option value="">-- Select Category --</option>
                 </select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
-            </div> *@
+            </div>
 
             <div class="col-6">
                 <label class="form-label" asp-for="IsActive"></label> <span class="text-danger"> *</span>
@@ -96,5 +111,5 @@
 
 <div class="modal-footer border-0 pt-6 px-0 pb-0">
     <button type="button" class="btn btn-secondary" id=" saveEmployeeButtonIdId" waves-effect" data-bs-dismiss="modal"><i class="fas fa-ban "></i> Cancel</button>
-    <button type="button" class="btn btn-success" id="saveproductButtonId" onclick="ams.product.Save()"><i class="fas fa-save"></i> Save</button>
+    <button type="button" class="btn btn-primary" id="saveproductButtonId" onclick="ams.product.Save()"><i class="fas fa-save"></i> Save</button>
 </div>

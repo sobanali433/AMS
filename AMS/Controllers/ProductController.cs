@@ -1,7 +1,9 @@
 ﻿using AMS.Data;
 using AMS.Models;
 using AMS.Repository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data;
 
 namespace AMS.Controllers
@@ -24,14 +26,50 @@ namespace AMS.Controllers
         }
 
 
+
         [HttpGet]
-        public async Task<IActionResult> _Details(int? id)
+        public IActionResult _Details(int? id)
         {
+            var categories = _productRepository.GetCategories()
+                .Select(c => new SelectListItem
+                {
+                    Value = c.CategoryId.ToString(),
+                    Text = c.CategoryName
+                }).ToList();
 
+            if (id == null)
+            {
+                var model = new ProductModel
+                {
+                    CategoriesList = categories
+                };
 
-            return View();
+                return PartialView("_Details", model);
+            }
+            else
+            {
+                var product = _productRepository.GetByIdAsync(id.Value);
 
+                if (product == null)
+                {
+                    return NotFound();
+                }
+
+                var model = new ProductModel
+                {
+                    //ProductId = product.ProductId,
+                    //ProductName = product.ProductName,
+                    //Price = product.Price,
+                    //CategoryId = product.CategoryId,
+                    //IsActive = product.IsActive,
+                    //CategoryList = categories
+                };
+
+                return PartialView("_Details", model);
+            }
         }
+
+
 
         [HttpPost]
         public JsonResult GetList()
@@ -48,6 +86,75 @@ namespace AMS.Controllers
             };
             return Json(result);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Save(ProductModel model)
+        {
+            try
+            {
+                if (model == null)
+                    return Json(new { isSuccess = false, message = "Invalid data" });
+
+                if (model.ProductId == null || model.ProductId == 0)
+                {
+                    if (model.IsActive == false)
+                    {
+                        return Json(new { isSuccess = false, message = "Product is InActive" });
+                    }
+
+                    var product = new Product
+                    {
+                        ProductName = model.ProductName,
+                        ProductType = model.ProductType,
+                        Price = model.Price,
+                        SKU = model.SKU,
+                        IsActive = model.IsActive,
+                        Categories = model.Categories,
+                        CategoryId = model.CategoryId,
+                        CreatedAt = DateTime.Now
+
+                    };
+
+                    var result = await _productRepository.AddproductAsync(product);
+
+                    return Json(new
+                    {
+                        isSuccess = result,
+                        message = result ? "Product added successfully" : "Failed to add product"
+                    });
+                }
+                else
+                {
+                    var existingProduct = await _productRepository.GetByIdAsync(model.ProductId);
+
+                    if (existingProduct == null)
+                        return Json(new { isSuccess = false, message = "Product not found" });
+
+                    existingProduct.ProductName = model.ProductName;
+                    existingProduct.ProductType = model.ProductType;
+                    existingProduct.Price = model.Price;
+                    existingProduct.SKU = model.SKU;
+                    existingProduct.IsActive = model.IsActive;
+                    existingProduct.Categories = model.Categories;
+                    existingProduct.CreatedAt = DateTime.Now;
+
+                    var result = await _productRepository.UpdateAsync(existingProduct);
+
+                    return Json(new
+                    {
+                        isSuccess = result,
+                        message = result ? "Product updated successfully" : "Failed to update product"
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { isSuccess = false, message = ex.Message });
+            }
+        }
+
+
+
 
     }
 }

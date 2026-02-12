@@ -44,6 +44,8 @@ namespace AMS.Repository
             _context.UserMasters.Update(user);
             return await _context.SaveChangesAsync() > 0;
         }
+        
+
         public async Task<UserMaster?> GetByIdAsync(int id)
         {
             return await _context.UserMasters.FindAsync(id);

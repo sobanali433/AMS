@@ -1,5 +1,6 @@
 ﻿using AMS.Data;
 using AMS.Enums;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -18,13 +19,15 @@ namespace AMS.Models
 
         [Required(ErrorMessage = "Please specify sku")]
         public string SKU { get; set; }
-        [DisplayName("product price")]
+
+        [DisplayName("price")]
         [Required(ErrorMessage = "Please specify price")]
 
         public decimal Price { get; set; }
 
         public int CategoryId { get; set; }
         public Category Categories { get; set; }
+        public List<SelectListItem> CategoriesList { get; set; }
 
         public DateTime CreatedAt { get; set; }
         [Required]

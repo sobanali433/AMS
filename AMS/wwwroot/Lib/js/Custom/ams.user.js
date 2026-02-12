@@ -48,7 +48,17 @@ ams.user = new function () {
                     { data: "firstName", name: "FirstName" },
                     { data: "lastName", name: "LastName" },
                     {  data: "username", name: "userName"},
-                          
+                    {
+                        data: "isActive", name: "isActive", className: "text-center col-1",
+                        render: function (data, type, row) {
+                            var badge = ''
+                            if (row.isActive)
+                                badge += '<span class="badge bg-success-subtle text-success">Active</span>'
+                            else
+                                badge += '<span class="badge bg-danger-subtle text-danger">In-Active</span>'
+                            return badge;
+                        }
+                    },
                  
                 
                     //{ data: "username", name: "Username", },

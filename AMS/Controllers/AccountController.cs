@@ -71,7 +71,15 @@ namespace AMS.Controllers
 
                 await HttpContext.SignInAsync("AMSCookies", principal);
 
-                return RedirectToAction("Index", "User");
+
+                if (user.Roles?.RoleName == "SuperAdmin")
+                {
+                    return RedirectToAction("AdminDashboard", "Dashboard");
+
+                }
+                return RedirectToAction("UserDashboard", "Dashboard");
+                //return RedirectToAction("Index", "User");
+
             }
             catch (Exception)
             {

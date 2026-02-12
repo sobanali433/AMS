@@ -1,6 +1,7 @@
 ﻿@model AMS.Models.ProductModel
 @{
     ViewData["Title"] = "Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section styles {
     <!--datatable css-->
@@ -21,7 +22,7 @@
                         <option value="1">Active</option>
                         <option value="2">In-Active</option>
                     </select> *@
-                <button type="button" class="btn btn-primary btn-sm add-btn w-100" id="addNewEmployeeBtnId" onclick="ams.product.Add()"><i class="ri-add-line align-bottom me-1"></i> Add User</button>
+                <button type="button" class="btn btn-primary btn-sm add-btn w-100" id="addNewproductBtnId" onclick="ams.product.Add()"><i class="ri-add-line align-bottom me-1"></i> Add Prodcut</button>
             </div>
         </div>
         <div class="card-body">
@@ -32,11 +33,10 @@
                             <tr>
                                 <th data-sort="action"><b>Action</b></th>
                                 <th class="sort"><b>Product Name</b></th>
-                                <th class="sort"><b>ProductType Name</b></th>
+                                @* <th class="sort"><b>ProductType </b></th> *@
                                 <th class="sort"><b>SKU</b></th>
-                                <th class="sort"><b>Category</b></th>
                                 <th class="sort"><b>Price</b></th>
-                                @* <th class="sort"><b>IsActive</b></th> *@
+                                <th class="sort"><b>Status</b></th>
                                 </tr>
                         </thead>
                         <tbody></tbody>
@@ -69,7 +69,7 @@
     <script src="~/Lib/js/Custom/ams.product.js"></script>
     <script>
         $(document).ready(function () {
-            ams.productTableId.Init({
+            ams.product.Init({
                 TableId: "productTableId",
                 SearchId: "txtSearch",
             });

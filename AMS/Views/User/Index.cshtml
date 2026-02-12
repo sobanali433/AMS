@@ -1,7 +1,10 @@
 ﻿@model AMS.Models.UserMasterModel
 @{
     ViewData["Title"] = "User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
+
 @section styles {
     <!--datatable css-->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" />
@@ -9,221 +12,12 @@
     <!--datatable responsive css-->
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
-    <style>
-        .pointermouse {
-            cursor: pointer;
-        }
 
-        #addNewEmployeeBtnId{
-        background: #102557;
-        }
-        .filter {
-            background-color: rgba(2, 184, 243, .08);
-        }
-
-        .filterheight {
-            max-height: 140px;
-            overflow: auto;
-            margin-bottom: 10px !important;
-        }
-
-        .fixedthead {
-            position: sticky !important;
-            top: 0px;
-            z-index: 2;
-            background-color: white
-        }
-            
-        .hide {
-            display: none
-        }
-
-        tr {
-            width: 100% !important;
-        }
-
-        .dataTables_length label {
-            margin-top: 0.25rem !important;
-            margin-bottom: 0rem !important;
-        }
-
-        .dataTables_info {
-            padding-top: 0.6rem !important
-        }
-
-        .filterDatePicker {
-        }
-    </style>
 
 }
 
-<div class="row">
-    <div class="col-xxl-2 col-xl-2 col-md-2">
-        <!--Start offcanvas-->
-        <!--end offcanvas-header-->
-        <form class="d-flex flex-column justify-content-end h-100">
-            <div class="offcanvas-body">
-                <div class="">
-                    <div class="w-100">
-                        <!--end offcanvas-body-->
-                        <div class="filter-btn">
-                            <a href="/Common/Table?table=User" class="btn">Clear Filter</a>
-                            <i class="fa-solid fa-filter"></i>
-                            @* <button type="submit" class="btn btn-primary w-100">Filters</button> *@
-                        </div>
-                    </div>
-                </div>
-                <!-- Accordions Bordered -->
-                <div class="accordion custom-accordionwithicon custom-accordion-border accordion-border-box accordion-secondary" id="accordionBordered">
-                   
-                        <div class="mb-2">
-                            <div class="accordion-item" id="BranchMasterbox">
-                                <h2 class="accordion-header text-dark">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#accor_BranchMasterbox" aria-expanded="true" aria-controls="accor_BranchMasterboxx">
-                                        Branch
-                                    </button>
-                                </h2>
-                                <div id="accor_BranchMasterbox" class="accordion-collapse collapse filterheight" aria-labelledby="BranchMasterbox" data-bs-parent="#accordionBordered">
-                                    <div class="accordion-body">
-                                          
-
-
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    
-                    <div class="mb-2">
-                        <div class="accordion-item" id="RoleMasterbox">
-                            <h2 class="accordion-header text-dark">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#accor_RoleMasterbox" aria-expanded="true" aria-controls="accor_RoleMasterboxx">
-                                    Role
-                                </button>
-                            </h2>
-                            <div id="accor_RoleMasterbox" class="accordion-collapse collapse filterheight" aria-labelledby="RoleMasterbox" data-bs-parent="#accordionBordered">
-                                <div class="accordion-body">
-                                   
-
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mb-2">
-                        <div class="accordion-item" id="SessionCompletedbox">
-                            <h2 class="accordion-header text-dark">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#accor_SessionCompletedbox" aria-expanded="true" aria-controls="accor_SessionCompletedboxx">
-                                    Active
-                                </button>
-                            </h2>
-                            <div id="accor_SessionCompletedbox" class="accordion-collapse collapse filterheight" aria-labelledby="SessionCompletedbox" data-bs-parent="#accordionBordered">
-                                <div class="accordion-body">
-                                 
-
-
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-2">
-                        <div class="accordion-item" id="Departmentbox">
-                            <h2 class="accordion-header text-dark">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#accor_Departmentbox" aria-expanded="true" aria-controls="accor_Departmentboxx">
-                                    Department
-                                </button>
-                            </h2>
-                            <div id="accor_Departmentbox" class="accordion-collapse collapse filterheight" aria-labelledby="Departmentbox" data-bs-parent="#accordionBordered">
-                                <div class="accordion-body">
-                                 
-
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="mb-2">
-                        <div class="accordion-item" id="Gendertbox">
-                            <h2 class="accordion-header text-dark">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#accor_Gendertbox" aria-expanded="true" aria-controls="accor_Gendertboxx">
-                                    Gender
-                                </button>
-                            </h2>
-                            <div id="accor_Gendertbox" class="accordion-collapse collapse filterheight" aria-labelledby="Gendertbox" data-bs-parent="#accordionBordered">
-                                <div class="accordion-body">
-
-                                  
-
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-            <!--end offcanvas-body-->
-            <div class="offcanvas-footer border-top p-3 text-center hstack gap-2">
-                <button class="btn btn-light w-100">Clear Filter</button>
-                @* <button type="submit" class="btn btn-primary w-100">Filters</button> *@
-            </div>
-            <!--end offcanvas-footer-->
-        </form>
-
-        <form class="d-flex flex-column justify-content-end ">
-            <div class="offcanvas-bodyy">
-                <div class="">
-                    <div class="w-100">
-
-                        <!--end offcanvas-body-->
-                        <div class="filter-btn">
-                            <a href="/Common/Table?table=User" class="btn"> Dashboard</a>
-                            <i class="fa-solid fa-filter"></i>
-                            @* <button type="submit" class="btn btn-primary w-100">Filters</button> *@
-                        </div>
-                    </div>
-                </div>
-                <!-- Accordions Bordered -->
-                <div class="accordion custom-accordionwithicon custom-accordion-border accordion-border-box accordion-secondary" id="accordionBordered">
-
-                    <div class="mb-2">
-                        <div class="accordion-item" id="BranchMasterbox">
-                            <h2 class="accordion-header text-dark">
-                                <button class="btn btn" type="submit">
-                                    Add Branches
-                                </button>
-                            </h2>
-
-                        </div>
-                    </div>
-
-                    <div class="mb-2">
-                        <div class="accordion-item" id="d">
-                            <h2 class="accordion-header text-dark">
-                                <a class="btn btn" href="@Url.Action("_Details", "Product")">
-                                    Add Product
-                                </a>
-                            </h2>
-
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--end offcanvas-body-->
-            @* <div class="offcanvas-footer border-top p-3 text-center hstack gap-2">
-        <button class="btn btn-light w-100">Clear Filter</button>
-        <button type="submit" class="btn btn-primary w-100">Filters</button> 
-    </div> *@
-            <!--end offcanvas-footer-->
-        </form>
-        <!--end offcanvas-->
-    </div>
+@* <div class="row">
+   *@
     <div class="col-xxl-10 col-xl-10 col-md-10 col-sm-12">
         <div class="card" id="leadsList">
             <div class="card-header d-flex align-items-center">
@@ -247,11 +41,11 @@
                                     <th class="sort"><b>First Name</b></th>
                                     <th class="sort"><b>Last Name</b></th>
                                     <th class="sort"><b>User Name</b></th>
+                                    <th class="sort"><b>Status</b></th>
                                     @* <th class="sort"><b>Contact Number</b></th> *@
                                     @* <th class="sort"><b>RoleName</b></th> *@
-                                    @*   <th class="sort"><b>Contact Number</b></th>s
-                                    <th class="sort"><b>Status</b></th>
-                                    <th class="sort"><b>Role</b></th>
+                                  
+                                @*    <th class="sort"><b>Role</b></th>
                                    *@ 
                                 </tr>
                             </thead>
@@ -266,7 +60,7 @@
         </div>
     </div>
     <!--end col-->
-</div>
+@* </div> *@
 
 @section scripts {
     <!--datatable js-->

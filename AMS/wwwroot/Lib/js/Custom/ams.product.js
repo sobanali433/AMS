@@ -10,7 +10,7 @@ ams.product = new function () {
     }
 
     this.Init = function (options) {
-        ams.product.Option = $.extend({}, ams.user.Option, options);
+        ams.product.Option = $.extend({}, ams.product.Option, options);
         ams.product.Option.Table = $("#productTableId").DataTable(
             {
                 paging: true,
@@ -35,38 +35,42 @@ ams.product = new function () {
                     url: '/Product/GetList',
                     data: function (dtParms) {
                         dtParms.search.value = $("#txtSearch").val();
+
                         return dtParms;
                     },
                     complete: function (response, result) { }
+
                 },
                 "columns": [
                     {
                         data: null,
                         render: function (data, type, row) {
-                            return `<button class="btn btn-sm btn-primary">Edit</button>`;
+
+                            return `<button class="btn btn-sm btn">  <i class="ri-delete-bin-fill align-bottom text-muted"></i></button>`;
                         }
                     },
                     { data: "productName", name: "ProductName" },
-                    { data: "productType", name: "ProductType" },
+                    //{ data: "productType", name: "ProductType" },
                     { data: "sku", name: "SKU" },
-                    { data: "category", name: "Category" },
                     { data: "price", name: "Price" },
-                    //{ data: "firstName", name: "FirstName", },
-                    //{ data: "lastName", name: "LastName" },
-
-                    //{ data: "contactNumber", name: "ContactNumber" },
-
+                    {
+                        data: "isActive", name: "isActive", className: "text-center col-1",
+                        render: function (data, type, row) {
+                            var badge = ''
+                            if (row.isActive)
+                                badge += '<span class="badge bg-success-subtle text-success">Active</span>'
+                            else
+                                badge += '<span class="badge bg-danger-subtle text-danger">In-Active</span>'
+                            return badge;
+                        }
+                    },
                 ],
                 order: [[0, "ASC"]],
             });
     }
 
-
-
-
-
     this.Add = function (id = '') {
-        ams.common.HandleLoadingButton("#addNewEmployeeBtnId", function (revert) {
+        ams.common.HandleLoadingButton("#addNewproductBtnId", function (revert) {
             $.ajax({
                 type: "GET",
                 url: "/Product/_Details?id=" + id,
@@ -83,16 +87,14 @@ ams.product = new function () {
         });
     };
 
-
     this.Save = function () {
-        alert();
         if ($("#AddProductform").valid()) {
             //ShowLoader();
             var formdata = $("#AddProductform").serialize();
             ams.common.HandleLoadingButton("#saveproductButtonId", function (revert) {
                 $.ajax({
                     type: "Post",
-                    url: "/User/Save/",
+                    url: "/Product/Save/",
                     data: formdata,
                     success: function (result) {
                         //HideLoader();
@@ -105,7 +107,6 @@ ams.product = new function () {
                         }
                     },
                 })
-                //Button Reverted From Loading
                 revert();
             });
         }

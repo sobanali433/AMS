@@ -8,7 +8,8 @@
 
 <body>
     <div id="layout-wrapper">
-         <partial name="_HeaderLayout" />  
+         <partial name="_HeaderLayout" />
+
         <div class="page-content">
             <div class="container-fluid">
                 <!-- start page title -->
@@ -26,7 +27,7 @@
                                                         <h4 class="fs-16 mb-1">Good Morning !</h4>
                                                         <p class="text-muted mb-0">Here's what's happening In AMS Community.</p>
                                                     </div>
-                                                    
+
 
                                                 </div><!-- end card header -->
                                             </div>
@@ -38,10 +39,10 @@
                                     <!--end col-->
                                 </div>
                                 <!--end row-->
-                               
 
 
-                            @* <h4 class="mb-sm-0">@ViewBag.ptitle</h4> *@
+
+                                @* <h4 class="mb-sm-0">@ViewBag.ptitle</h4> *@
                             <div class="page-title-right">
                                 <ol class="breadcrumb m-0">
                                     @* <li class="breadcrumb-item"><a href="javascript: void(0);">@ViewBag.pagetitle</a></li> *@
@@ -70,15 +71,19 @@
                     </div>
                 </div> *@
                 <!-- end Lodaer -->
+                    <partial name="_Sidebar" />
+
                 @RenderBody()
                 <!-- Modal Code Start-->
             @await Html.PartialAsync("_ModalPopupPartial") 
                 <!-- Modal Code End-->
             </div>
+
         </div>
         @await Html.PartialAsync("_FooterPartial")
     </div>
-    <!-- END layout --> 
+
+        <!-- END layout --> 
     @await Html.PartialAsync("_ScriptPartial")
     @{
         await (Html.RenderPartialAsync("_ValidationScriptsPartial"));
