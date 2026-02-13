@@ -19,7 +19,7 @@
 
 <div class="modal-header p-3" style="background-color:#102557;">
     <h5 class="modal-title text-white">
-        @* (Model.IsEdit ? "Edit" : "Add New") *@ Add User
+        @(Model.IsEdit ? "Edit User" : "Add User")
     </h5>
     <button type="button" class="btn-close" data-bs-dismiss="modal"
             aria-label="Close" id="close-modal"></button>
@@ -110,14 +110,26 @@
 
         </div>
         <div class="row mt-2">
+            @{
+                var genders = new List<SelectListItem>
+                        {
+                        new SelectListItem { Value = "1", Text = "Male" },
+                        new SelectListItem { Value = "0", Text = "Female" }
+                        };
+            }
+
             <div class="col-6">
-                <label class="form-label" asp-for="Gender"></label> <span class="text-danger"> *</span>
-                <select asp-for="Gender" class="form-control form-control-icon" >
+                <label class="form-label" asp-for="Gender"></label>
+                <span class="text-danger">*</span>
+
+                <select asp-for="Gender" asp-items="genders" class="form-control form-control-icon">
                     <option value="">Select Gender</option>
-                    <option value="Gender.Male)">Male</option>
-                    <option value="Gender.Female)">Female</option>
-                 </select> <span class="text-danger" asp-validation-for="Gender"></span> 
+                </select>
+
+                <span class="text-danger" asp-validation-for="Gender"></span>
             </div>
+
+
 
             <div class="col-6">
                 <label class="form-label" asp-for="BranchId"></label> <span class="text-danger"> *</span>

@@ -15,6 +15,7 @@ namespace AMS.Controllers
     {
         private readonly IUserRepository _userRepository;
         private readonly IAccountRepository _accountRepository;
+        public static string AppDateTimeFormat = "MM/dd/yyyy hh:mm tt";
 
         public UserController(IUserRepository userRepository, IAccountRepository accountRepository)
         {
@@ -24,39 +25,25 @@ namespace AMS.Controllers
 
         public async Task<IActionResult> Index()
         {
-            
-
-            //var users = await _userRepository.GetAllUsersWithoutSuperAdmin();
-
-            //var username = User.Identity?.Name;
-            //var user = await _userRepository.HeaderlayoutAsync(username);
-            //if (user == null)
-            //{
-            //    return RedirectToAction("Logout", "Account");
-            //}
-
-            //var model = new UserMasterModel
-            //{
-            //    FirstName = user.FirstName,
-            //    LastName = user.LastName,
-            //    RoleName = user.Role.RoleName
-            //};
-
 
             return View();
         }
         [HttpGet]
         public IActionResult _Details(int? id)
         {
-            var roles = _userRepository.GetRoles().Select(r => new SelectListItem{Value = r.RoleId.ToString(),Text = r.RoleName}  ).ToList();
-            var branches = _userRepository.GetBranches().Select(b => new SelectListItem{Value = b.BranchId.ToString(),Text = b.BranchName}).ToList();
+            var roles = _userRepository.GetRoles().Select(r => new SelectListItem { Value = r.RoleId.ToString(), Text = r.RoleName }).ToList();
+            var branches = _userRepository.GetBranches().Select(b => new SelectListItem { Value = b.BranchId.ToString(), Text = b.BranchName }).ToList();
+            var genders = new List<SelectListItem>{new SelectListItem { Value = "1", Text = "Male" },new SelectListItem { Value = "0", Text = "Female" }};
+
             if (id == null)
             {
                 var model = new UserMasterModel
                 {
                     RoleList = roles,
                     BranchList = branches,
+                    GenderList = genders
                 };
+                model.IsEdit = false; 
                 return PartialView("_Details", model);
             }
             else
@@ -69,14 +56,23 @@ namespace AMS.Controllers
                 var model = new UserMasterModel
                 {
                     UserMasterId = user.UserMasterId,
+                    Username = user.Username,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     ContactNumber = user.ContactNumber,
                     RoleId = user.RoleId,
+                    RoleName = user.Roles.RoleName,
                     BranchId = user.BranchId,
-                    IsActive = user.IsActive
+                    IsActive = user.IsActive,
+                    CreatedOn = user.CreatedOn,
+                    BranchName = user.BranchMasters.BranchName,
+                    Gender = user.Gender,
+                    DateOfBirth = user.DateOfBirth,
+                    RoleList = roles,
+                    BranchList = branches,
+                    GenderList = genders,
+                    IsEdit = true
                 };
-
                 return PartialView("_Details", model);
             }
         }
@@ -104,12 +100,12 @@ namespace AMS.Controllers
             {
                 if (model.UserMasterId == 0 || model.UserMasterId == null)
                 {
-                    if (string.IsNullOrWhiteSpace(model.Userpassword)) 
+                    if (string.IsNullOrWhiteSpace(model.Userpassword))
                     {
                         ModelState.AddModelError("", "Password required");
                         return View(model);
                     }
-                    if (model.IsActive == false) 
+                    if (model.IsActive == false)
                     {
                         return Json(new { isSuccess = false, message = "User is inActive" });
 
@@ -126,19 +122,20 @@ namespace AMS.Controllers
                         RoleId = model.RoleId,
                         IsActive = model.IsActive,
                         DateOfBirth = model.DateOfBirth,
-                        Gender   = model.Gender,
+                        Gender = model.Gender,
                         Ip = model.Ip,
                         ContactNumber = model.ContactNumber,
                         CreatedBy = model.CreatedBy,
-                        UserMasterPassword = masterpass, 
+                        UserMasterPassword = masterpass,
                         BranchId = model.BranchId,
+                        //CreatedOn = DateTime.UtcNow,
                     };
 
                     user.UserPassword = hasher.HashPassword(user, model.Userpassword);
                     var result = await _userRepository.AddUserAsync(user);
                     return Json(new { isSuccess = result, message = result ? "User added successfully" : "Failed to add user" });
                 }
-                else 
+                else
                 {
                     var existingUser = await _userRepository.GetByIdAsync(model.UserMasterId);
                     if (existingUser == null)
@@ -156,7 +153,7 @@ namespace AMS.Controllers
                     if (!string.IsNullOrWhiteSpace(model.Userpassword))
                     {
                         var hasher = new PasswordHasher<UserMaster>();
-                        model.Userpassword = hasher.HashPassword(existingUser,model.Userpassword);
+                        model.Userpassword = hasher.HashPassword(existingUser, model.Userpassword);
                     }
 
                     var result = await _userRepository.UpdateUserAsync(existingUser);
@@ -169,6 +166,21 @@ namespace AMS.Controllers
                 return Json(new { isSuccess = false, message = ex.Message });
             }
         }
+
+        [HttpPost]
+        
+        public IActionResult Delete(int id)
+        {
+            if (id == null)
+                return Json(new { success = false, message = "Invalid ID" });
+
+            var result = _userRepository.Delete(id);
+
+            return Json(new { isSuccess = result.isSuccess, message = result.message });
+
+        }
+
+
 
     }
 

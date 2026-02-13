@@ -5,31 +5,31 @@ ams.common = new function () {
         window.history.back()
     }
 
-    this.AjaxRequest = function (methodType,  reqData) {
+    this.AjaxRequest = function (methodType, apiName, reqData) {
         return new Promise((resolve, reject) => {
-            //ShowLoader(); // Start the loader
             $.ajax({
                 type: methodType,
-                //url: UrlContent(),
+                url: (apiName),
                 data: reqData,
                 success: function (response) {
-                    //HideLoader(); // Hide the loader
+                    HideLoader(); // Hide the loader
                     resolve(response);
                 },
                 error: function (xhr, status, error) {
-                    //HideLoader(); // Hide the loader
                     reject({ xhr, status, error });
                 }
             });
         });
     };
 
+
+
     this.AjaxRequestViaForm = function (methodType,  reqData) {
         return new Promise((resolve, reject) => {
             //ShowLoader(); // Start the loader
             $.ajax({
                 type: methodType,
-                //url: UrlContent(),
+                //url: url,
                 data: reqData,
                 dataType: 'json',
                 contentType: false,

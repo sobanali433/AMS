@@ -28,7 +28,7 @@ namespace AMS.Controllers
 
 
         [HttpGet]
-        public IActionResult _Details(int? id)
+        public async Task<IActionResult>  _Details(int? id)
         {
             var categories = _productRepository.GetCategories()
                 .Select(c => new SelectListItem
@@ -39,30 +39,34 @@ namespace AMS.Controllers
 
             if (id == null)
             {
+
                 var model = new ProductModel
                 {
                     CategoriesList = categories
                 };
 
+                model.IsEdit = false;
                 return PartialView("_Details", model);
             }
             else
             {
-                var product = _productRepository.GetByIdAsync(id.Value);
+                var product = await _productRepository.GetByIdAsync(id.Value);
 
                 if (product == null)
                 {
                     return NotFound();
                 }
-
                 var model = new ProductModel
                 {
-                    //ProductId = product.ProductId,
-                    //ProductName = product.ProductName,
-                    //Price = product.Price,
-                    //CategoryId = product.CategoryId,
-                    //IsActive = product.IsActive,
-                    //CategoryList = categories
+                    ProductId = product.ProductId,
+                    ProductName = product.ProductName,
+                    Price = product.Price,
+                    CategoryId = product.CategoryId,
+                    IsActive = product.IsActive,
+                    CategoriesList = categories,
+                    ProductType = product.ProductType,
+                    SKU = product.SKU,
+                    IsEdit = true
                 };
 
                 return PartialView("_Details", model);
@@ -75,8 +79,8 @@ namespace AMS.Controllers
         public JsonResult GetList()
         {
             //var data = _userRepository.GetAllUsersWithoutSuperAdmin();
-            var user = _productRepository.GetList();
-
+            var user = _productRepository.GetProductList();
+            
             var result = new
             {
                 draw = Request.Form["draw"].FirstOrDefault(),
@@ -84,6 +88,7 @@ namespace AMS.Controllers
                 recordsFiltered = user.Count,
                 data = user
             };
+
             return Json(result);
         }
 
@@ -153,6 +158,17 @@ namespace AMS.Controllers
             }
         }
 
+        [HttpPost]
+
+        public IActionResult Delete(int id)
+        {
+            if (id == null)
+                return Json(new { success = false, message = "Invalid ID" });
+
+            var result = _productRepository.ProductDelete(id);
+
+            return Json(new { isSuccess = result.isSuccess, message = result.message });
+        }
 
 
 

@@ -6,8 +6,9 @@ namespace AMS.Repository
     public interface IUserRepository
     {
         //List<UserMaster> GetAllUsersWithoutSuperAdmin();
+        (bool isSuccess, string message) Delete(int id);
 
-        List<UserMaster> GetList();
+        List<object> GetList();
         UserMaster GetById(int id);
         IEnumerable<Role> GetRoles();
         IEnumerable<BranchMaster> GetBranches();

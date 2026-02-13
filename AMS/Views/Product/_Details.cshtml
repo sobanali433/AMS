@@ -19,7 +19,7 @@
 
 <div class="modal-header p-3" style="background-color:#102557;">
     <h5 class="modal-title text-white">
-        (Model.IsEdit ? "Edit" : "Add New")  Add Product
+        @(Model.IsEdit ? "Edit Product" : "Add Product")
     </h5>
     <button type="button" class="btn-close" data-bs-dismiss="modal"
             aria-label="Close" id="close-modal"></button>
@@ -45,16 +45,7 @@
                 <span class="text-danger" asp-validation-for="ProductType"></span>
             </div>
 
-         @*    <div class="col-6">
-                <label class="form-label" asp-for="UserMasterModel.Gender"></label> <span class="text-danger"> *</span>
-                <select asp-for="UserMasterModel.Gender" class="form-control form-control-icon">
-                    <option value="">Select Gender</option>
-                    <option value="@((short)Enumeration.Gender.Male)">Male</option>
-                    <option value="@((short)Enumeration.Gender.Female)">Female</option>
-                </select>
-                <span class="text-danger" asp-validation-for="UserMasterModel.Gender"></span>
-            </div> *@
-
+        
         </div>
         <div class="row mt-2">
             <div class="col-6">

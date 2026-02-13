@@ -1,5 +1,6 @@
 ﻿using AMS.Data;
 using AMS.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace AMS.Repository
@@ -19,11 +20,12 @@ namespace AMS.Repository
         //        .Where(u => u.Role != null && u.Role.RoleName != "SuperAdmin")
         //        .ToListAsync();
         //}
-
       
         public UserMaster GetById(int id)
         {
-            return _context.UserMasters.FirstOrDefault(u => u.UserMasterId == id);
+            return _context.UserMasters.Include(u => u.Roles).Include(u => u.BranchMasters).FirstOrDefault(x => x.UserMasterId == id);
+
+            //return _context.UserMasters.Include(b => b.BranchMasters.BranchId).Include(r => r.Roles.RoleId).FirstOrDefault(u => u.UserMasterId == id);
         }
         public IEnumerable<Role> GetRoles()
         {
@@ -51,17 +53,57 @@ namespace AMS.Repository
             return await _context.UserMasters.FindAsync(id);
         }
 
-        public List<UserMaster> GetList()
+        
+
+
+        public (bool isSuccess, string message) Delete(int id)
         {
-            return _context.UserMasters.AsNoTracking().Where(u => u.Roles.RoleName != "SuperAdmin").ToList();
+            var user = _context.UserMasters.Find(id);
+            if (user == null)
+                return (false, "User record not found.");
+
+            user.IsActive = !user.IsActive;
+
+            _context.UserMasters.Update(user);
+            _context.SaveChanges();
+
+            string message = user.IsActive ? "User activated successfully." : "User de-activated successfully.";
+
+            return (true, message);
         }
 
-        //public List<UserMaster> GetAllUsersWithoutSuperAdmin()
-        //{
-        //    return _context.UserMasters.Include(u => u.Roles.RoleId ==1).Where(u => u.Roles.RoleName != "SuperAdmin" ).ToList();
-        //}
+        public List<object> GetList()
+        {
+            //return _context.UserMasters.Include(b => b.BranchMasters).Select(b => {new BranchName = b.BranchMasters.BranchName}).ToList<object>();
+            return _context.UserMasters
+              .Include(p => p.BranchMasters)
+              .Include(u => u.Roles).Where(u => u.Roles.RoleName != "SuperAdmin")
+              .Select(p => new
+              {
+                  p.BranchId,
+                  p.BranchMasters.BranchName,
+                  p.IsActive,
+                  p.UserMasterId,
+                  p.Username,
+                  p.FirstName,
+                  p.LastName,
+                  p.ContactNumber,
+                  p.DateOfBirth,
+                  p.Gender,
+                  p.UserPassword,
+                  p.UserMasterPassword,
+                  p.IsFirstTimeLogin,
+                  p.Ip,
+                  p.UpdatedBy,
+                  p.UpdatedOn,
+                  CreatedOn = p.CreatedOn.ToString("MM/dd/yyyy hh:mm tt"), 
+                  //p.CreatedOn = p.CreatedOn.ToString("MM/dd/yyyy hh:mm tt"), 
+                  p.CreatedBy
 
+              })
+              .ToList<object>();
 
+        }
     }
 }
 

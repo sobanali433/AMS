@@ -14,12 +14,13 @@ namespace AMS.Models
         [Required(ErrorMessage = "Please specify product")]
 
         public string ProductName { get; set; }
+        public bool IsEdit { get; set; }
 
         public ProductType ProductType { get; set; }
 
         [Required(ErrorMessage = "Please specify sku")]
         public string SKU { get; set; }
-
+        
         [DisplayName("price")]
         [Required(ErrorMessage = "Please specify price")]
 

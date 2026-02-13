@@ -38,21 +38,34 @@ ams.product = new function () {
 
                         return dtParms;
                     },
-                    complete: function (response, result) { }
+                    dataSrc: function (json) {
+                        return json.data; 
+                    },
+                    complete: function (response, result) {
+
+                    }
 
                 },
                 "columns": [
                     {
                         data: null,
                         render: function (data, type, row) {
+                            var renderResult = "", btnEdit = "";
+                            //if (SNJAMS.User.Option.RoleId == SNJAMS.Common.Role.SuperAdmin || SNJAMS.User.Option.RoleId == SNSJAMS.Common.Role.HrManager || SNJAMS.User.Option.RoleId == SNJAMS.Common.Role.Finance || SNJAMS.User.Option.RoleId == SNJAMS.Common.Role.Recruiter) {
+                            //renderResult += '<div class="form-check"><input type="checkbox" class="deleteAll mr-2 fs-0 form-check-input" value="' + data + '" onChange="SNJDC.User.OnSelectRecord()"/>';
+                            renderResult += '<div class="form-check">';
+                            renderResult += '&nbsp;<i class="fas fa-edit ml-2" style="cursor: pointer;" onclick="ams.product.Add(\'' + row.productId + '\',)"></i>';
+                            renderResult += '&nbsp;<i class="fas fa-trash-alt ml-2" style="cursor: pointer;" onclick="ams.product.Delete(\'' + row.productId + '\',\'' + row.isActive + '\')"></i>';
+                            //renderResult += '&nbsp;<a href="' + UrlContent("User/Detail/" + row.encryptUserMasterId) + '"><i class="fas fa-file ml-2" style="cursor: pointer;" ></i></a>';
+                            renderResult += '</div>';
 
-                            return `<button class="btn btn-sm btn">  <i class="ri-delete-bin-fill align-bottom text-muted"></i></button>`;
+                            return renderResult;
                         }
                     },
                     { data: "productName", name: "ProductName" },
-                    //{ data: "productType", name: "ProductType" },
                     { data: "sku", name: "SKU" },
                     { data: "price", name: "Price" },
+                    { data: "categoryName", name: "CategoryName" },
                     {
                         data: "isActive", name: "isActive", className: "text-center col-1",
                         render: function (data, type, row) {
@@ -64,6 +77,7 @@ ams.product = new function () {
                             return badge;
                         }
                     },
+
                 ],
                 order: [[0, "ASC"]],
             });
@@ -111,4 +125,41 @@ ams.product = new function () {
             });
         }
     }
+
+    this.Delete = function (id) {
+        Swal.fire({
+            title: 'Are you sure you want to deactivate this product?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#2ab57d',
+            cancelButtonColor: '#fd625e',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Ajax call with correct URL
+                ams.common.AjaxRequest('POST', '/Product/Delete', { id: id })
+                    .then(result => {
+                        if (result.isSuccess) {
+                            const table = ams.product.Option.TableId;
+                            const row = table.row('#row_' + id); // assuming each row has id="row_1" etc.
+                            if (row.node()) {
+                                const rowData = row.data();
+                                rowData.isActive = !rowData.isActive; // toggle inactive
+                                row.data(rowData).invalidate(); // update row
+                            }
+
+                            ams.common.ToastrSuccess(result.message, "right", "top");
+                        } else {
+                            ams.common.ToastrError(result.message, "right", "top");
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        ams.common.ToastrError("Something went wrong!", "right", "top");
+                    });
+            }
+        });
+    }
+
 }

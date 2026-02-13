@@ -1,4 +1,6 @@
 ﻿using AMS.Data;
+using AMS.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace AMS.Repository
 {
@@ -14,10 +16,40 @@ namespace AMS.Repository
         //{
         //    return _context.Products.ToList();
         //}
-        public List<Product> GetList()
+        //public List<Product> ()
+        //{
+        //    return _context.Products
+        //  .Include(p => p.Categories) // Load related Category
+        //  .Select(p => new
+        //  {
+        //      p.ProductId,
+        //      p.ProductName,
+        //      p.SKU,
+        //      p.Price,
+        //        p.Categories.CategoryName, // 👈 yahan ID nahi, name chahiye
+        //      p.IsActive
+        //  })
+        //  .ToList<object>();
+        //    //return _context.Products.Include(p => p).ToList();
+        //    //return _context.Products.ToList();
+        //}
+        public List<object> GetProductList()
         {
-            return _context.Products.ToList();
+            return _context.Products
+                .Include(p => p.Categories).AsEnumerable()  
+                .Select(p => new
+                {
+                    p.ProductId,
+                    p.ProductName,
+                    p.SKU,
+                    p.Price,
+                    CategoryName = p.Categories.CategoryName, 
+                    //ProductType = p.ProductType.ToString(),    
+                    p.IsActive
+                })
+                .ToList<object>();
         }
+
 
         public async Task<bool> AddUserAsync(UserMaster user)
         {
@@ -44,6 +76,23 @@ namespace AMS.Repository
         {
             _context.Products.Update(product);
             return await _context.SaveChangesAsync() > 0;
+            
+
+        }
+        public (bool isSuccess, string message) ProductDelete(int id)
+        {
+            var product = _context.Products.Find(id);
+            if (product == null)
+                return (false, "product not found.");
+
+            product.IsActive = !product.IsActive;
+
+            _context.Products.Update(product);
+            _context.SaveChanges();
+
+            string message = product.IsActive ? "Product activated successfully." : "Product  de-activated successfully.";
+
+            return (true, message);
         }
 
 

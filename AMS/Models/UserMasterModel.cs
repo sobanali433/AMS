@@ -19,6 +19,7 @@ namespace AMS.Models
         [StringLength(50)]
         [Required(ErrorMessage = "Please specify old password")]
         public string OldPassword { get; set; }
+        public bool  IsEdit { get; set; }
         [Required]
         //[DataType(DataType.Password)]
         public string Userpassword { get; set; }
@@ -30,7 +31,7 @@ namespace AMS.Models
         [Required]
         public int BranchId { get; set; }
 
-        [DisplayName("branchname")]
+        [DisplayName("BranchName")]
         [Required(ErrorMessage = "Please select branch")]
         public string BranchName { get; set; }
         [DisplayName("Role")]
@@ -71,6 +72,8 @@ namespace AMS.Models
         public short? Gender { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
+        public string CreatedOnString { get; set; }
+
         public string UserMasterPassword { get; set; } = null!;
 
         public string FullName { get; set; }
@@ -78,9 +81,9 @@ namespace AMS.Models
 
         public List<SelectListItem> RoleList { get; set; }
         public List<SelectListItem> BranchList { get; set; }
+        public List<SelectListItem> GenderList { get; set; }
 
         public string CaptchaCode { get; set; }
-        public string CreatedOnString { get; set; }
         public string? Ip { get; set; }
 
         public string CaptchaImage { get; set; }

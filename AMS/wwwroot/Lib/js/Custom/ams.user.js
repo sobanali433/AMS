@@ -40,14 +40,25 @@ ams.user = new function () {
                 },
                 "columns": [
                     {
-                        data: null,
-                        render: function (data, type, row) {
-                            return `<button class="btn btn-sm btn-primary">Edit</button>`;
+                        data: "userMasterId", name: "userMasterId", orderable: false, render: function (data, type, row) {
+
+                            var renderResult = "", btnEdit = "";
+                            //if (SNJAMS.User.Option.RoleId == SNJAMS.Common.Role.SuperAdmin || SNJAMS.User.Option.RoleId == SNSJAMS.Common.Role.HrManager || SNJAMS.User.Option.RoleId == SNJAMS.Common.Role.Finance || SNJAMS.User.Option.RoleId == SNJAMS.Common.Role.Recruiter) {
+                            //renderResult += '<div class="form-check"><input type="checkbox" class="deleteAll mr-2 fs-0 form-check-input" value="' + data + '" onChange="SNJDC.User.OnSelectRecord()"/>';
+                            renderResult += '<div class="form-check">';
+                            renderResult += '&nbsp;<i class="fas fa-edit ml-2" style="cursor: pointer;" onclick="ams.user.Add(\'' + row.userMasterId + '\',)"></i>';
+                            renderResult += '&nbsp;<i class="fas fa-trash-alt ml-2" style="cursor: pointer;" onclick="ams.user.Delete(\'' + row.userMasterId + '\',\'' + row.isActive + '\')"></i>';
+                            //renderResult += '&nbsp;<a href="' + UrlContent("User/Detail/" + row.encryptUserMasterId) + '"><i class="fas fa-file ml-2" style="cursor: pointer;" ></i></a>';
+                            renderResult += '</div>';
+
+                            return renderResult;
                         }
                     },
                     { data: "firstName", name: "FirstName" },
                     { data: "lastName", name: "LastName" },
                     {  data: "username", name: "userName"},
+                    { data: "branchName", name: "branchName"},
+                    { data: "createdOn", name: "createdOn"},
                     {
                         data: "isActive", name: "isActive", className: "text-center col-1",
                         render: function (data, type, row) {
@@ -116,6 +127,35 @@ ams.user = new function () {
             });
         }
     }
+    this.Delete = function (id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: "/User/Delete/",
+                    data: { id: id },
+                    success: function (result) {
+                        if (result.isSuccess) {
+                            ams.user.TableId.ajax.reload(null, false); 
+                            ams.common.ToastrSuccess(result.message, "right", "top");
+                        } else {
+                            ams.common.ToastrError(result.message, "right", "top");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        ams.common.ToastrError("Something went wrong!", "right", "top");
+                    }
+                });
+            }
+        });
+    }
+
 
 
 }
