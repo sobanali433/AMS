@@ -3,6 +3,7 @@ using AMS.Models;
 using AMS.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Operations;
+using System.Threading.Tasks;
 
 namespace AMS.Controllers
 {
@@ -11,37 +12,106 @@ namespace AMS.Controllers
         private readonly IStockRepository _stockRepository;
         private readonly IProductRepository _productRepository;
         private readonly IUserRepository _userRepository;
-        public StockController(IStockRepository stockRepository, IProductRepository productRepository, IUserRepository userRepository)
+        private readonly IOrderRepository _orderRepository;
+        private readonly IBranchRepository _branchRepository;
+        public StockController(IStockRepository stockRepository, IProductRepository productRepository, IUserRepository userRepository, IOrderRepository orderRepository, IBranchRepository branchRepository)
         {
             _stockRepository = stockRepository;
             _productRepository = productRepository;
             _userRepository = userRepository;
+            _orderRepository = orderRepository;
+            _branchRepository = branchRepository;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
+            ViewBag.Branches = _branchRepository.GetAllAsync();
 
             return View();
         }
 
         [HttpPost]
-        public JsonResult GetList(int branchID)
+        public async Task<JsonResult> GetList(int branchID)
         {
             //var data = _userRepository.GetAllUsersWithoutSuperAdmin();
-            var user = _stockRepository.GetStockList(branchID);
+            var user =await _stockRepository.GetStockListAsync(branchID);
 
-            var result = new
+            var data = user.Select(s => new
             {
-                draw = Request.Form["draw"].FirstOrDefault(),
-                recordsTotal = user.Count,
-                recordsFiltered = user.Count,
-                data = user
-            };
+                s.StockId,
+                BranchName = s.BranchMasters.BranchName,
+                ProductName = s.Products.ProductName,
+                s.Quantity,
+                LastUpdated = s.LastUpdated.ToString("MM/dd/yyyy hh:mm tt")
+            }).ToList();
 
-            return Json(result);
+            return Json(new
+            {
+                data = data
+            });
+        }
+        public async Task<IActionResult> ManageStock()
+        {
+        //    ViewBag.Products = await _stockRepository.GetAllAsync();
+        //    ViewBag.Branches = await _stockRepository.GetAllAsync();
+            return View();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ManageStock(int productId, int branchId, int quantity, string orderType)
+        {
+            if (quantity <= 0)
+                return BadRequest("Quantity must be greater than zero");
 
+            var stock = await _stockRepository.GetByProductAndBranchAsync(productId, branchId);
+
+            if (stock == null)
+            {
+                stock = new Stock
+                {
+                    ProductId = productId,
+                    BranchId = branchId,
+                    Quantity = 0,
+                    LastUpdated = DateTime.Now
+                };
+
+                await _stockRepository.AddAsync(stock);
+            }
+
+            if (orderType == "IN")
+            {
+                stock.Quantity += quantity;
+            }
+            else if (orderType == "OUT")
+            {
+                if (stock.Quantity < quantity)
+                    return BadRequest("Insufficient stock");
+
+                stock.Quantity -= quantity;
+            }
+            else
+            {
+                return BadRequest("Invalid order type");
+            }
+
+            stock.LastUpdated = DateTime.Now;
+            await _stockRepository.UpdateAsync(stock);
+
+            // Save order history
+            var order = new Order
+            {
+                ProductId = productId,
+                BranchId = branchId,
+                Quantity = quantity,
+                OrderType = orderType,
+                CreatedAt = DateTime.Now
+            };
+
+            //await _orderRepository.AddAsync(order);
+
+            return Ok();
+
+        }
 
     }
 }

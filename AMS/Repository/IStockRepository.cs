@@ -5,8 +5,12 @@ namespace AMS.Repository
 {
     public interface IStockRepository
     {
-        //Task<List<Stock>> GetStocksByBranchAsync(int branchId);
-        List<StockModel> GetStockList(int? branchId);
+        Task<Stock> GetByProductAndBranchAsync(int productId, int branchId);
+        Task<List<Stock>> GetStockListAsync(int branchId);
+
+        Task AddAsync(Stock stock);
+        //Task AddAsync(Order order);
+        Task UpdateAsync(Stock stock);
 
     }
 }

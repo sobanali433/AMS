@@ -16,6 +16,8 @@ public static class ServicesConfiguration
         services.AddTransient<IUserRepository, UserRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IStockRepository, StockRepository>();
+        services.AddScoped<IOrderRepository, OrderRepository>();
+        services.AddScoped<IBranchRepository, BranchRepository>();
 
         // If no interface, direct registration
 

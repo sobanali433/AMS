@@ -19,6 +19,9 @@ namespace AMS.Mapper
             CreateMap<StockModel, Stock>();
             CreateMap<Stock, StockModel>();
 
+            CreateMap<OrderModel, Order>();
+            CreateMap<Order, OrderModel>();
+
 
         }
      

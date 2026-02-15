@@ -34,7 +34,7 @@ ams.stock = new function () {
                     type: "Post",
                     url: '/Stock/GetList',
                     data: function (d) {
-                        d.branchID = 1;
+                        d.branchId = $('#branchSelect').val();
                     },
                     complete: function (response, result) { }
                 },
@@ -61,7 +61,7 @@ ams.stock = new function () {
                 order: [[0, "ASC"]],
             });
         $('#branchSelect').on('change', function () {
-            table.ajax.reload();
+            ams.stock.Option.Table.ajax.reload();
         });
     }
 

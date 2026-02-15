@@ -26,12 +26,24 @@
         <div class="card-header d-flex align-items-center">
             <h5 class="card-title mb-0 flex-grow-1"></i>Users</h5>
             <div class="d-flex me-4 gap-4">
-                @*  <select id="ddStatus" class="form-control" onchange="SnjCrm.User.Search()">
-                        <option value="">Select Status</option>
-                        <option value="1">Active</option>
-                        <option value="2">In-Active</option>
-                    </select> *@
-                <button type="button" style="background-color: #102557 !important; color:white;" class="btn btn btn-sm add-btn w-100 " id="addNewStockBtnId" onclick="ams.stock.Add()"><i class="ri-add-line align-bottom me-1"></i> Add Stock</button>
+
+                <select id="branchSelect" class="form-select">
+                    <option value="0">All Branches</option>
+                    @foreach (var branch in ViewBag.Branches)
+                    {
+                        <option value="@branch.BranchId">@branch.BranchName</option>
+                    }
+                </select>
+
+                <button type="button"
+                        style="background-color: #102557 !important; color:white;"
+                        class="btn btn-sm add-btn w-100"
+                        id="addNewStockBtnId"
+                        onclick="ams.stock.Add()">
+                    <i class="ri-add-line align-bottom me-1"></i> Add Stock
+                </button>
+
+                @* <button type="button" style="background-color: #102557 !important; color:white;" class="btn btn btn-sm add-btn w-100 " id="addNewStockBtnId" onclick="ams.stock.Add()"><i class="ri-add-line align-bottom me-1"></i> Add Stock</button> *@
             </div>
         </div>
         <div class="card-body">
@@ -47,7 +59,10 @@
                                 <th class="sort"><b>Update time</b></th>
                                 </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody>
+                           
+
+                        </tbody>
                         <tfoot id="tablefoxot" class="highlight" style="background-color:darkgray;overflow-y:scroll">
                         </tfoot>
                     </table>
