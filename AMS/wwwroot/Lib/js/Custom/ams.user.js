@@ -8,6 +8,7 @@ ams.user = new function () {
         RoleId: 0,
         AttendanceTable: null,
     }
+
     this.Init = function (options) {
         ams.user.Option = $.extend({}, ams.user.Option, options);
         ams.user.Option.Table = $("#userTableId").DataTable(

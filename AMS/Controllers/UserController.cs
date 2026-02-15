@@ -79,8 +79,6 @@ namespace AMS.Controllers
         [HttpPost]
         public JsonResult GetList()
         {
-            //var data = _userRepository.GetAllUsersWithoutSuperAdmin();
-
             var user = _userRepository.GetList();
 
             var result = new
@@ -128,7 +126,7 @@ namespace AMS.Controllers
                         CreatedBy = model.CreatedBy,
                         UserMasterPassword = masterpass,
                         BranchId = model.BranchId,
-                        //CreatedOn = DateTime.UtcNow,
+                        CreatedOn = DateTime.UtcNow
                     };
 
                     user.UserPassword = hasher.HashPassword(user, model.Userpassword);

@@ -73,38 +73,53 @@
 
 
         <!-- ================= DASHBOARD SECTION ================= -->
-        <div class="mt-4">
+        @if (User.IsInRole("SuperAdmin"))
+        {
+            <div class="mt-4">
 
-            <div class="filter-btn mb-3">
-                <a href="#" class="btn btn w-100">
-                    Dashboard
-                </a>
-            </div>
+                <div class="filter-btn mb-3">
+                    <a href="#" class="btn btn w-100">
+                        Dashboard
+                    </a>
+                </div>
 
-            <div class="accordion custom-accordionwithicon custom-accordion-border accordion-border-box accordion-secondary" id="accordionBordered">
+                <div class="accordion custom-accordionwithicon custom-accordion-border accordion-border-box accordion-secondary" id="accordionBordered">
 
-                <div class="accordion-item mb-2">
-                    <h2 class="accordion-header">
-                        <a class="accordion-button collapsed text-decoration-none"
-                           href="@Url.Action("Index", "User")">
-                            Add Users
-                        </a>
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header">
+                            <a class="accordion-button collapsed text-decoration-none"
+                               href="@Url.Action("Index", "User")">
+                                Add Users
+                            </a>
 
-                    </h2>
+                        </h2>
+
+                    </div>
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header">
+                            <a class="accordion-button collapsed text-decoration-none"
+                               href="@Url.Action("Index", "Product")">
+                                Add Product
+                            </a>
+
+                        </h2>
+                    </div>
+
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header">
+                            <a class="accordion-button collapsed text-decoration-none"
+                               href="@Url.Action("Index", "Stock")">
+                                Add Stock
+                            </a>
+
+                        </h2>
+                    </div>
 
                 </div>
-                <div class="accordion-item mb-2">
-                    <h2 class="accordion-header">
-                        <a class="accordion-button collapsed text-decoration-none"
-                           href="@Url.Action("Index", "Product")">
-                            Add Product
-                        </a>
-
-                    </h2>
-
-                </div>
             </div>
-        </div>
+        
+        }
+      
     </div>
 </div>
 

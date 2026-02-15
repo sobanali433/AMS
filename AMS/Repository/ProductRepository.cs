@@ -48,6 +48,7 @@ namespace AMS.Repository
                     p.IsActive
                 })
                 .ToList<object>();
+
         }
 
 
@@ -69,8 +70,29 @@ namespace AMS.Repository
 
         public async Task<bool> AddproductAsync(Product product)
         {
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
             await _context.Products.AddAsync(product);
-            return await _context.SaveChangesAsync() > 0;
+             await _context.SaveChangesAsync();
+
+            var branches = await _context.BranchMasters.ToListAsync();
+            foreach (var branchData in branches) 
+            {
+                _context.Stocks.Add(new Stock
+                {
+                    ProductId = product.ProductId,
+                    BranchId = branchData.BranchId,
+                    Quantity = 0,
+                    LastUpdated = DateTime.UtcNow
+                });
+
+            }
+            await _context.SaveChangesAsync();
+
+            await transaction.CommitAsync();
+            return true;
+
+
         }
         public async Task<bool> UpdateAsync(Product product)
         {
