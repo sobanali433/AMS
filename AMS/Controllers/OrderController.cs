@@ -14,11 +14,24 @@ namespace AMS.Controllers
 
             public IActionResult Index()
             {
-                var orders =  _orderRepository.GetAllWithDetailsAsync();
-                return View(orders);
+                return View();
             }
 
+        [HttpPost]
+        public async Task<JsonResult> GetList()
+        {
+            var user = _orderRepository.GetAllWithDetailsAsync();
 
+            var result = new
+            {
+                draw = Request.Form["draw"].FirstOrDefault(),
+                recordsTotal = user.Count,
+                recordsFiltered = user.Count,
+                data = user
+            };
+
+            return Json(result);
+        }
 
 
     }

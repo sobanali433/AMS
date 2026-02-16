@@ -9,12 +9,13 @@ namespace AMS.Repository
         Task<List<Stock>> GetStockListAsync(int branchId);
         Task<List<Product>> GetProductAsync();
         IEnumerable<BranchMaster> GetBranches();
+        IEnumerable<Product> GetProducts();
 
         Task AddAsync(Stock stock);
-        //Task AddAsync(Order order);
         Task UpdateAsync(Stock stock);
+        //Task GetById(UserMaster user);
 
-
+        
 
     }
 }

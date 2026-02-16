@@ -69,14 +69,14 @@ ams.stock = new function () {
 
 
     this.Add = function (id = '') {
-        ams.common.HandleLoadingButton("#addNewOrderBtnId", function (revert) {
+        ams.common.HandleLoadingButton("#addNewStockBtnId", function (revert) {
             $.ajax({
                 type: "GET",
                 url: "/Stock/ManageStock?id=" + id,
                 success: function (data) {
                     $("#commonlargeModalContent").html(data);
                     ams.common.InitMask();
-                    $.validator.unobtrusive.parse($("#AddOrderform"));
+                    $.validator.unobtrusive.parse($("#AddStockform"));
                     $("#commonlargeModal").modal('show');
                     //HideLoader();
                     //Button Reverted From Loading
@@ -87,18 +87,18 @@ ams.stock = new function () {
     };
 
     this.Save = function () {
-        if ($("#AddOrderform").valid()) {
+        if ($("#AddStockform").valid()) {
             //ShowLoader();
-            var formdata = $("#AddOrderform").serialize();
-            ams.common.HandleLoadingButton("#saveOrderButtonId", function (revert) {
+            var formdata = $("#AddStockform").serialize();
+            ams.common.HandleLoadingButton("#saveStockformButtonId", function (revert) {
                 $.ajax({
                     type: "Post",
-                    url: "/Order/Save/",
+                    url: "/Stock/ManageStock/",
                     data: formdata,
                     success: function (result) {
                         //HideLoader();
                         if (result.isSuccess) {
-                            ams.product.Option.Table.ajax.reload();
+                            ams.stock.Option.Table.ajax.reload();
                             ams.common.ToastrSuccess(result.message, "right", "top");
                             $("#commonlargeModal").modal('hide');
                         } else {

@@ -26,6 +26,13 @@ namespace AMS.Repository
             return _context.UserMasters.Include(u => u.Roles).Include(u => u.BranchMasters).FirstOrDefault(x => x.UserMasterId == id);
 
         }
+      
+        //public UserMaster GetByUserId(int id)
+        //{
+        //    return _context.UserMasters.FirstOrDefault(x => x.UserMasterId == id);
+
+        //}
+        
         public IEnumerable<Role> GetRoles()
         {
             return _context.Roles.AsNoTracking().Where(u => u.RoleName != "SuperAdmin").ToList();
@@ -76,7 +83,7 @@ namespace AMS.Repository
             //return _context.UserMasters.Include(b => b.BranchMasters).Select(b => {new BranchName = b.BranchMasters.BranchName}).ToList<object>();
             return _context.UserMasters
               .Include(p => p.BranchMasters)
-              .Include(u => u.Roles).Where(u => u.Roles.RoleName != "SuperAdmin")
+              .Include(u => u.Roles).Where(u => u.Roles.RoleName != "SuperAddmin")
               .Select(p => new
               {
                   p.BranchId,

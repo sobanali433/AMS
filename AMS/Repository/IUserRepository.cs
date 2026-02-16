@@ -10,6 +10,7 @@ namespace AMS.Repository
 
         List<object> GetList();
         UserMaster GetById(int id);
+        //UserMaster GetByUserId(int id);
         IEnumerable<Role> GetRoles();
         IEnumerable<BranchMaster> GetBranches();
         Task<bool> UpdateUserAsync(UserMaster user);

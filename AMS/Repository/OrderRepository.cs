@@ -1,4 +1,5 @@
 ﻿using AMS.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace AMS.Repository
 {
@@ -11,10 +12,19 @@ namespace AMS.Repository
         }
         public List<Order> GetAllWithDetailsAsync()
         {
-            return _context.Orders
-                //.Include(o => o.Products)
-                //.Include(o => o.BranchMasters)
+            return _context.Orders.Include(o => o.Products)
+                .Include(o => o.BranchMasters)
                 .ToList();
         }
+
+        public async Task<Order> AddOrderAsync(Order order)
+        {
+            await _context.Orders.AddAsync(order);
+            await _context.SaveChangesAsync();
+            return order;
+        }
+
+
+
     }
 }

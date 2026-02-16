@@ -36,7 +36,7 @@ namespace AMS.Controllers
         public async Task<JsonResult> GetList(int branchID)
         {
             //var data = _userRepository.GetAllUsersWithoutSuperAdmin();
-            var user =await _stockRepository.GetStockListAsync(branchID);
+            var user = await _stockRepository.GetStockListAsync(branchID);
 
             var data = user.Select(s => new
             {
@@ -55,19 +55,20 @@ namespace AMS.Controllers
         public IActionResult ManageStock()
         {
 
-            //var bracnhes = _stockRepository.GetBranchesAsync();
             var branches = _stockRepository.GetBranches().Select(b => new SelectListItem { Value = b.BranchId.ToString(), Text = b.BranchName }).ToList();
+            var products = _stockRepository.GetProducts().Select(b => new SelectListItem { Value = b.ProductId.ToString(), Text = b.ProductName }).ToList();
 
             var model = new OrderModel
-                {
-                    BranchList = branches,
-                };
-                model.IsEdit = false;
-                return PartialView("ManageStock", model);
-            }
+            {
+                BranchList = branches,
+                ProductList = products,
+            };
+            model.IsEdit = false;
+            return PartialView("ManageStock", model);
+        }
 
         [HttpPost]
-        public async Task<IActionResult> ManageStock(int productId, int branchId, int quantity, string orderType)
+        public async Task<IActionResult> ManageStock(int productId, int branchId, int quantity, string orderType, int userId)
         {
             if (quantity <= 0)
                 return BadRequest("Quantity must be greater than zero");
@@ -105,6 +106,7 @@ namespace AMS.Controllers
 
             stock.LastUpdated = DateTime.Now;
             await _stockRepository.UpdateAsync(stock);
+            var cr = _userRepository.GetById(userId);
 
             // Save order history
             var order = new Order
@@ -113,14 +115,28 @@ namespace AMS.Controllers
                 BranchId = branchId,
                 Quantity = quantity,
                 OrderType = orderType,
-                CreatedAt = DateTime.Now
+                CreatedById = cr.UserMasterId,
+                CreatedBy = cr.Username,
+                CreatedAt = DateTime.UtcNow,
+                CreatedByUser = cr,
             };
 
-            //await _orderRepository.AddAsync(order);
+            try 
+            {
+                 await _orderRepository.AddOrderAsync(order);
+            
+            }
+            catch {
+                Exception exception;
+            }
 
-            return Ok();
 
-        }
+        //return Json(new { success = true, message = "Order stock in successfully" ,});
+
+        return Json(new { success = true, message = "Order saved successfully", orderId = order.OrderId });
+
 
     }
+
+}
 }

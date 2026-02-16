@@ -36,11 +36,11 @@ namespace AMS.Repository
             await _context.Stocks.AddAsync(stock);
             await _context.SaveChangesAsync();
         }
-        //public async Task AddAsync(Order order)
-        //{
-        //    await _context.Orders.AddAsync(order);
-        //    await _context.SaveChangesAsync();
-        //}
+        public async Task AddAsync(Order order)
+        {
+            await _context.Orders.AddAsync(order);
+            await _context.SaveChangesAsync();
+        }
 
         public async Task UpdateAsync(Stock stock)
         {
@@ -55,6 +55,10 @@ namespace AMS.Repository
         public IEnumerable<BranchMaster> GetBranches()
         {
             return _context.BranchMasters.ToList();
+        }
+        public IEnumerable<Product> GetProducts()
+        {
+            return _context.Products.ToList();
         }
     }
 
