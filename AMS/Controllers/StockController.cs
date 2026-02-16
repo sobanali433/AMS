@@ -2,7 +2,9 @@
 using AMS.Models;
 using AMS.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.Operations;
+using System.Data;
 using System.Threading.Tasks;
 
 namespace AMS.Controllers
@@ -50,12 +52,19 @@ namespace AMS.Controllers
                 data = data
             });
         }
-        public async Task<IActionResult> ManageStock()
+        public IActionResult ManageStock()
         {
-        //    ViewBag.Products = await _stockRepository.GetAllAsync();
-        //    ViewBag.Branches = await _stockRepository.GetAllAsync();
-            return View();
-        }
+
+            //var bracnhes = _stockRepository.GetBranchesAsync();
+            var branches = _stockRepository.GetBranches().Select(b => new SelectListItem { Value = b.BranchId.ToString(), Text = b.BranchName }).ToList();
+
+            var model = new OrderModel
+                {
+                    BranchList = branches,
+                };
+                model.IsEdit = false;
+                return PartialView("ManageStock", model);
+            }
 
         [HttpPost]
         public async Task<IActionResult> ManageStock(int productId, int branchId, int quantity, string orderType)

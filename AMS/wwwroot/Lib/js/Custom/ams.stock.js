@@ -36,6 +36,8 @@ ams.stock = new function () {
                     data: function (d) {
                         d.branchId = $('#branchSelect').val();
                     },
+                    
+                
                     complete: function (response, result) { }
                 },
                 "columns": [
@@ -65,4 +67,83 @@ ams.stock = new function () {
         });
     }
 
+
+    this.Add = function (id = '') {
+        ams.common.HandleLoadingButton("#addNewOrderBtnId", function (revert) {
+            $.ajax({
+                type: "GET",
+                url: "/Stock/ManageStock?id=" + id,
+                success: function (data) {
+                    $("#commonlargeModalContent").html(data);
+                    ams.common.InitMask();
+                    $.validator.unobtrusive.parse($("#AddOrderform"));
+                    $("#commonlargeModal").modal('show');
+                    //HideLoader();
+                    //Button Reverted From Loading
+                    revert();
+                }
+            });
+        });
+    };
+
+    this.Save = function () {
+        if ($("#AddOrderform").valid()) {
+            //ShowLoader();
+            var formdata = $("#AddOrderform").serialize();
+            ams.common.HandleLoadingButton("#saveOrderButtonId", function (revert) {
+                $.ajax({
+                    type: "Post",
+                    url: "/Order/Save/",
+                    data: formdata,
+                    success: function (result) {
+                        //HideLoader();
+                        if (result.isSuccess) {
+                            ams.product.Option.Table.ajax.reload();
+                            ams.common.ToastrSuccess(result.message, "right", "top");
+                            $("#commonlargeModal").modal('hide');
+                        } else {
+                            ams.common.ToastrError(result.message, "right", "top");
+                        }
+                    },
+                })
+                revert();
+            });
+        }
+    }
+
+    this.Delete = function (id) {
+        Swal.fire({
+            title: 'Are you sure you want to deactivate this product?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#2ab57d',
+            cancelButtonColor: '#fd625e',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Ajax call with correct URL
+                ams.common.AjaxRequest('POST', '/Product/Delete', { id: id })
+                    .then(result => {
+                        if (result.isSuccess) {
+                            const table = ams.product.Option.TableId;
+                            const row = table.row('#row_' + id); // assuming each row has id="row_1" etc.
+                            if (row.node()) {
+                                const rowData = row.data();
+                                rowData.isActive = !rowData.isActive; // toggle inactive
+                                row.data(rowData).invalidate(); // update row
+                            }
+
+                            ams.common.ToastrSuccess(result.message, "right", "top");
+                        } else {
+                            ams.common.ToastrError(result.message, "right", "top");
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        ams.common.ToastrError("Something went wrong!", "right", "top");
+                    });
+            }
+        });
+    }
 }

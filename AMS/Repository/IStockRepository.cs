@@ -7,10 +7,14 @@ namespace AMS.Repository
     {
         Task<Stock> GetByProductAndBranchAsync(int productId, int branchId);
         Task<List<Stock>> GetStockListAsync(int branchId);
+        Task<List<Product>> GetProductAsync();
+        IEnumerable<BranchMaster> GetBranches();
 
         Task AddAsync(Stock stock);
         //Task AddAsync(Order order);
         Task UpdateAsync(Stock stock);
+
+
 
     }
 }

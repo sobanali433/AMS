@@ -1,0 +1,75 @@
+﻿﻿@using AMS.Enums
+@model AMS.Models.OrderModel
+@* @{
+    Layout = null;
+} *@
+<style>
+    div#commonlargeModal {
+        margin-top: -398px;
+    }
+
+    #saveOrderButtonId {
+        background: #102557;
+    }
+
+    #saveOrderButtonIdId {
+        background: #102557;
+    }
+</style>
+
+<div class="modal-header p-3" style="background-color:#102557;">
+    <h5 class="modal-title text-white">
+        @* @(Model.IsEdit ? "Edit Order" : "Add Order") *@
+    </h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal"
+            aria-label="Close" id="close-modal"></button>
+</div>
+
+<form class="validation-wizard form-horizontal form-material needs-validation" id="AddOrderform" autocomplete="off">
+    <div class="modal-body">
+        <div class="row">
+            <input asp-for="OrderId " type="hidden" />
+            <div class="col-6">
+
+                <label class="form-label" asp-for="Products.ProductName"></label> <span class="text-danger"> *</span>
+                <input asp-for="Products.ProductName" class="form-control" required>
+                <span class="text-danger" asp-validation-for="Products.ProductName"></span>
+            </div>
+
+            <div class="col-6">
+                <label class="form-label" asp-for="BranchId"></label> <span class="text-danger"> *</span>
+                <select asp-for="BranchId" class="form-control form-control-icon" asp-items="Model.BranchList">
+                    <option value="">Select Branch</option>
+                </select> <span class="text-danger" asp-validation-for="BranchId"></span>
+            </div>
+        </div>
+        <div class="row mt-2">
+        
+
+            <div class="col-6">
+                <div>
+                    <label for="iconInput" class="form-label" asp-for="Quantity"></label> <span class="text-danger"> *</span>
+                    <div class="form-icon">
+                        <input type="number" asp-for="Quantity" class="form-control form-control-icon" required
+                               id="iconInput" placeholder="******">                       
+                    </div>
+                </div>
+                <span class="text-danger" asp-validation-for="Quantity"></span>
+            </div>
+
+            <div class="col-6">
+                <label class="form-label" asp-for="OrderType"></label> <span class="text-danger"> *</span>
+                <select class="form-select req-border text-uppercase" asp-for="OrderType" required>
+                    <option value="IN">Stock IN</option>
+                    <option value="OUT">Stock Out</option>
+                </select>
+                <span class="text-danger" asp-validation-for="OrderType"></span>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="modal-footer border-0 pt-6 px-0 pb-0">
+    <button type="button" class="btn btn-secondary" id=" saveOrderButtonIdId" waves-effect" data-bs-dismiss="modal"><i class="fas fa-ban "></i> Cancel</button>
+    <button type="button" class="btn btn-primary" id="saveOrderButtonId" onclick="ams.order.Save()"><i class="fas fa-save"></i> Save</button>
+</div>

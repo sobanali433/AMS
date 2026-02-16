@@ -47,6 +47,15 @@ namespace AMS.Repository
             _context.Stocks.Update(stock);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<List<Product>> GetProductAsync()
+        {
+            return await _context.Products.ToListAsync();
+        }
+        public IEnumerable<BranchMaster> GetBranches()
+        {
+            return _context.BranchMasters.ToList();
+        }
     }
 
 

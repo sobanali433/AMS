@@ -1,4 +1,5 @@
 ﻿using AMS.Data;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AMS.Models
 {
@@ -11,6 +12,7 @@ namespace AMS.Models
 
         public int BranchId { get; set; }
         public BranchMaster BranchMasters { get; set; }
+        public List<SelectListItem> BranchList { get; set; }
 
         public int Quantity { get; set; }
 
@@ -19,6 +21,7 @@ namespace AMS.Models
         public int CreatedById { get; set; }
         public UserMaster CreatedByUser { get; set; }
         public string CreatedBy { get; set; }
+        public bool IsEdit { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }
 }

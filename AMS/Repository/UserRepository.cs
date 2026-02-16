@@ -25,7 +25,6 @@ namespace AMS.Repository
         {
             return _context.UserMasters.Include(u => u.Roles).Include(u => u.BranchMasters).FirstOrDefault(x => x.UserMasterId == id);
 
-            //return _context.UserMasters.Include(b => b.BranchMasters.BranchId).Include(r => r.Roles.RoleId).FirstOrDefault(u => u.UserMasterId == id);
         }
         public IEnumerable<Role> GetRoles()
         {

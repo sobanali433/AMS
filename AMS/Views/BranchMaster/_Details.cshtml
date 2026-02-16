@@ -1,0 +1,73 @@
+﻿@model AMS.Models.BranchModel
+
+@* @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+} *@
+<style>
+    div#commonlargeModal {
+        margin-top: -400px !important;
+    }
+
+    #saveBranchButtonId {
+        background: #102557;
+    }
+
+    #saveBranchButtonId {
+        background: #102557;
+    }
+</style>
+<div class="modal-header p-3" style="background-color:#102557;">
+    <h5 class="modal-title text-white">
+        @(Model.IsEdit ? "Edit Branch" : "Add Branch")
+    </h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal"
+            aria-label="Close" id="close-modal"></button>
+</div>
+
+<form class="validation-wizard form-horizontal form-material needs-validation" id="Addbranchform" autocomplete="off">
+    <div class="modal-body">
+        <div class="row">
+            <input asp-for="BranchId" type="hidden" />
+            <div class="col-6">
+                <label class="form-label" asp-for="BranchName"></label> <span class="text-danger"> *</span>
+                <input asp-for="BranchName" class="form-control" required>
+                <span class="text-danger" asp-validation-for="BranchName"></span>
+            </div>
+
+            <div class="col-6">
+                <label class="form-label" asp-for="Location"></label> <span class="text-danger"> </span>
+                <input asp-for="Location" class="form-control" required>
+                @* <span class="text-danger" asp-validation-for="Location"></span> *@
+            </div>
+        
+        </div>
+      
+        <div class="row mt-2">
+            <div class="col-6">
+                <label class="form-label" asp-for="CreatedAt" hidden></label> 
+                <input type="datetime-local" asp-for="CreatedAt" class="form-control" hidden>
+                @* <span class="text-danger" asp-validation-for="Location"></span> *@
+            </div>
+
+
+            <div class="col-6">
+                <label class="form-label" asp-for="IsActive"></label> <span class="text-danger"> *</span>
+                <select class="form-select req-border text-uppercase" asp-for="IsActive" required>
+                    <option value="false">IN-ACTIVE</option>
+                    <option value="true">ACTIVE</option>
+                </select>
+                <span class="text-danger" asp-validation-for="IsActive"></span>
+
+            </div>
+
+        </div>
+      
+
+
+    </div>
+</form>
+
+<div class="modal-footer border-0 pt-6 px-0 pb-0">
+    <button type="button" class="btn btn-secondary" id="saveBranchButtonId" waves-effect" data-bs-dismiss="modal"><i class="fas fa-ban "></i> Cancel</button>
+    <button type="button" class="btn btn-success" id="saveBranchButtonId" onclick="ams.branch.Save()"><i class="fas fa-save"></i> Save</button>
+</div>
