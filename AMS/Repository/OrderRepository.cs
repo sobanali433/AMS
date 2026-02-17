@@ -12,8 +12,9 @@ namespace AMS.Repository
         }
         public List<Order> GetAllWithDetailsAsync()
         {
-            return _context.Orders.Include(o => o.Products)
+            return _context.Orders
                 .Include(o => o.BranchMasters)
+                .Include(o => o.Products)
                 .ToList();
         }
 

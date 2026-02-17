@@ -54,12 +54,13 @@ namespace AMS.Repository
         }
         
 
-        public async Task<UserMaster?> GetByIdAsync(int id)
+        public async Task<UserMaster?> GetByIdAsync(int UserId)
         {
-            return await _context.UserMasters.FindAsync(id);
+            //return await _context.UserMasters.FindAsync(id);
+            return await _context.UserMasters.FirstOrDefaultAsync(u => u.UserMasterId == UserId);
         }
 
-        
+
 
 
         public (bool isSuccess, string message) Delete(int id)
@@ -83,7 +84,7 @@ namespace AMS.Repository
             //return _context.UserMasters.Include(b => b.BranchMasters).Select(b => {new BranchName = b.BranchMasters.BranchName}).ToList<object>();
             return _context.UserMasters
               .Include(p => p.BranchMasters)
-              .Include(u => u.Roles).Where(u => u.Roles.RoleName != "SuperAddmin")
+              .Include(u => u.Roles).Where(u => u.Roles.RoleName != "SuperAdmin")
               .Select(p => new
               {
                   p.BranchId,

@@ -22,15 +22,17 @@ namespace AMS.Controllers
         {
             var user = _orderRepository.GetAllWithDetailsAsync();
 
-            var result = new
+            var data = user.Select(s => new
             {
-                draw = Request.Form["draw"].FirstOrDefault(),
-                recordsTotal = user.Count,
-                recordsFiltered = user.Count,
-                data = user
-            };
+                BranchName = s.BranchMasters.BranchName,
+                ProductName = s.Products.ProductName,
+                s.Quantity,
+            }).ToList();
 
-            return Json(result);
+            return Json(new
+            {
+                data = data
+            });
         }
 
 

@@ -14,7 +14,7 @@ namespace AMS.Repository
         IEnumerable<Role> GetRoles();
         IEnumerable<BranchMaster> GetBranches();
         Task<bool> UpdateUserAsync(UserMaster user);
-        Task<UserMaster?> GetByIdAsync(int id);
+        Task<UserMaster?> GetByIdAsync(int UserId);
         Task<bool> AddUserAsync(UserMaster model);
 
 

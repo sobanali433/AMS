@@ -18,8 +18,7 @@ namespace AMS.Data
         public string OrderType { get; set; } 
 
         public int CreatedById { get; set; }
-        public UserMaster CreatedByUser { get; set; }
-        public string CreatedBy { get; set; }
+        public UserMaster CreatedBy { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }

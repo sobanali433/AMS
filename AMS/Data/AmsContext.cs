@@ -18,7 +18,14 @@ namespace AMS.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Order>()
+    .HasOne(o => o.CreatedBy)
+    .WithMany()
+    .HasForeignKey(o => o.CreatedById)
+    .OnDelete(DeleteBehavior.Restrict);
 
             // UserMaster → Branch
             modelBuilder.Entity<UserMaster>()

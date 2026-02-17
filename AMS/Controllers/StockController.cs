@@ -4,7 +4,9 @@ using AMS.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.Operations;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace AMS.Controllers
@@ -68,7 +70,7 @@ namespace AMS.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ManageStock(int productId, int branchId, int quantity, string orderType, int userId)
+        public async Task<IActionResult> ManageStock(int productId, int branchId, int quantity, string orderType)
         {
             if (quantity <= 0)
                 return BadRequest("Quantity must be greater than zero");
@@ -106,7 +108,14 @@ namespace AMS.Controllers
 
             stock.LastUpdated = DateTime.Now;
             await _stockRepository.UpdateAsync(stock);
-            var cr = _userRepository.GetById(userId);
+            //var cr = _userRepository.GetByIdAsync(UserId);
+
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null)
+            {
+                return Unauthorized();
+            }
+            int currentUserId = int.Parse(userIdClaim.Value);
 
             // Save order history
             var order = new Order
@@ -115,25 +124,23 @@ namespace AMS.Controllers
                 BranchId = branchId,
                 Quantity = quantity,
                 OrderType = orderType,
-                CreatedById = cr.UserMasterId,
-                CreatedBy = cr.Username,
+                CreatedById = currentUserId,
                 CreatedAt = DateTime.UtcNow,
-                CreatedByUser = cr,
             };
 
-            try 
+            try
             {
-                 await _orderRepository.AddOrderAsync(order);
-            
+                await _orderRepository.AddOrderAsync(order);
+
             }
-            catch {
+            catch
+            {
                 Exception exception;
             }
 
 
-        //return Json(new { success = true, message = "Order stock in successfully" ,});
+            return Json(new { success = true, message = "Order stock in successfully", });
 
-        return Json(new { success = true, message = "Order saved successfully", orderId = order.OrderId });
 
 
     }

@@ -47,7 +47,7 @@ ams.order = new function () {
                             //if (SNJAMS.User.Option.RoleId == SNJAMS.Common.Role.SuperAdmin || SNJAMS.User.Option.RoleId == SNSJAMS.Common.Role.HrManager || SNJAMS.User.Option.RoleId == SNJAMS.Common.Role.Finance || SNJAMS.User.Option.RoleId == SNJAMS.Common.Role.Recruiter) {
                             //renderResult += '<div class="form-check"><input type="checkbox" class="deleteAll mr-2 fs-0 form-check-input" value="' + data + '" onChange="SNJDC.User.OnSelectRecord()"/>';
                             renderResult += '<div class="form-check">';
-                            renderResult += '&nbsp;<i class="fas fa-edit ml-2" style="cursor: pointer;" onclick="ams.user.Add(\'' + row.userMasterId + '\',)"></i>';
+                            //renderResult += '&nbsp;<i class="fas fa-edit ml-2" style="cursor: pointer;" onclick="ams.user.Add(\'' + row.userMasterId + '\',)"></i>';
                             //renderResult += '&nbsp;<i class="fas fa-trash-alt ml-2" style="cursor: pointer;" onclick="ams.user.Delete(\'' + row.userMasterId + '\',\'' + row.isActive + '\')"></i>';
                             //renderResult += '&nbsp;<a href="' + UrlContent("User/Detail/" + row.encryptUserMasterId) + '"><i class="fas fa-file ml-2" style="cursor: pointer;" ></i></a>';
                             renderResult += '</div>';
@@ -56,7 +56,7 @@ ams.order = new function () {
                         }
                     },
                     { data: "productName", name: "ProductName" },
-                    { data: "branchName", name: "branchName" },
+                    { data: "branchName", name: "BranchName" },
                     { data: "quantity", name: "Quantity" },
                 ],
                 order: [[0, "ASC"]],
