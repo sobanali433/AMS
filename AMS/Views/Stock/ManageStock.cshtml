@@ -19,7 +19,8 @@
 
 <div class="modal-header p-3" style="background-color:#102557;">
     <h5 class="modal-title text-white">
-        @* @(Model.IsEdit ? "Edit Order" : "Add Order") *@
+         @* @(Model.IsEdit ? "Edit Stock" : "Add Stock")  *@
+         Add Stock
     </h5>
     <button type="button" class="btn-close" data-bs-dismiss="modal"
             aria-label="Close" id="close-modal"></button>
@@ -29,9 +30,9 @@
     <div class="modal-body">
         <div class="row">
             <div class="col-6">
-                <label class="form-label" asp-for="BranchId"></label> <span class="text-danger"> *</span>
-                <select asp-for="BranchId" class="form-control form-control-icon" asp-items="Model.BranchList">
-                    <option value="">Select Branch</option>
+                <label class="form-label" asp-for="BranchId"></label> <span class="text-danger" > *</span>
+                <select asp-for="BranchId" class="form-control form-control-icon" asp-items="Model.BranchList"  >
+                    <option value="">Branch</option>
                 </select> <span class="text-danger" asp-validation-for="BranchId"></span>
             </div>
 

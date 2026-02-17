@@ -73,8 +73,7 @@
 
 
         <!-- ================= DASHBOARD SECTION ================= -->
-        @if (User.IsInRole("SuperAdmin"))
-        {
+        
             <div class="mt-4">
 
                 <div class="filter-btn mb-3">
@@ -83,22 +82,32 @@
                     </a>
                 </div>
 
+            @if (User.IsInRole("SuperAdmin"))
+            {
                 <div class="accordion custom-accordionwithicon custom-accordion-border accordion-border-box accordion-secondary" id="accordionBordered">
 
                     <div class="accordion-item mb-2">
                         <h2 class="accordion-header">
                             <a class="accordion-button collapsed text-decoration-none"
-                               href="@Url.Action("Index", "User")">
+                            href="@Url.Action("Index", "User")">
                                 Add Users
                             </a>
-
                         </h2>
 
                     </div>
                     <div class="accordion-item mb-2">
                         <h2 class="accordion-header">
                             <a class="accordion-button collapsed text-decoration-none"
-                               href="@Url.Action("Index", "Product")">
+                            href="@Url.Action("Index", "BranchMaster")">
+                                Add Branch
+                            </a>
+
+                        </h2>
+                    </div>
+                    <div class="accordion-item mb-2">
+                        <h2 class="accordion-header">
+                            <a class="accordion-button collapsed text-decoration-none"
+                            href="@Url.Action("Index", "Product")">
                                 Add Product
                             </a>
 
@@ -108,36 +117,29 @@
                     <div class="accordion-item mb-2">
                         <h2 class="accordion-header">
                             <a class="accordion-button collapsed text-decoration-none"
-                               href="@Url.Action("Index", "Stock")">
+                            href="@Url.Action("Index", "Stock")">
                                 Add Stock
                             </a>
 
                         </h2>
                     </div>
+                    </div>
+                    }
+                    <div class="accordion custom-accordionwithicon custom-accordion-border accordion-border-box accordion-secondary" id="accordionBordered">
+
                     <div class="accordion-item mb-2">
                         <h2 class="accordion-header">
                             <a class="accordion-button collapsed text-decoration-none"
-                               href="@Url.Action("Index", "BranchMaster")">
-                                Add Branch
+                            href="@Url.Action("Index", "Order")">
+                                Order List
                             </a>
 
                         </h2>
                     </div>
-                    <div class="accordion-item mb-2">
-                        <h2 class="accordion-header">
-                            <a class="accordion-button collapsed text-decoration-none"
-                               href="@Url.Action("Index", "Order")">
-                                Add Orders
-                            </a>
-
-                        </h2>
-                    </div>
-
                 </div>
-            </div>
-        
-        }
-      
+                </div>
+
+
     </div>
 </div>
 

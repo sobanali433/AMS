@@ -60,26 +60,16 @@ namespace AMS.Controllers
                 {
                     return NotFound();
                 }
-                var model = new UserMasterModel
+                var model = new BranchModel
                 {
-                    //UserMasterId = user.UserMasterId,
-                    //Username = user.Username,
-                    //FirstName = user.FirstName,
-                    //LastName = user.LastName,
-                    //ContactNumber = user.ContactNumber,
-                    //RoleId = user.RoleId,
-                    //RoleName = user.Roles.RoleName,
-                    //BranchId = user.BranchId,
-                    //IsActive = user.IsActive,
-                    //CreatedOn = user.CreatedOn,
-                    //BranchName = user.BranchMasters.BranchName,
-                    //Gender = user.Gender,
-                    //DateOfBirth = user.DateOfBirth,
-                    //RoleList = roles,
-                    //BranchList = branches,
-                    //GenderList = genders,
-                    //IsEdit = true
+                    BranchId = user.BranchId,
+                    BranchName = user.BranchName,
+                    Location = user.Location,
+                    CreatedAt = user.CreatedAt,
+                    IsActive = user.IsActive,
+
                 };
+                model.IsEdit = true;
                 return PartialView("_Details", model);
             }
         }

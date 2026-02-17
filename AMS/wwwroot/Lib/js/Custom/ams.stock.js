@@ -49,7 +49,7 @@ ams.stock = new function () {
                             //renderResult += '<div class="form-check"><input type="checkbox" class="deleteAll mr-2 fs-0 form-check-input" value="' + data + '" onChange="SNJDC.User.OnSelectRecord()"/>';
                             renderResult += '<div class="form-check">';
                             renderResult += '&nbsp;<i class="fas fa-edit ml-2" style="cursor: pointer;" onclick="ams.stock.Add(\'' + row.stockId + '\',)"></i>';
-                            renderResult += '&nbsp;<i class="fas fa-trash-alt ml-2" style="cursor: pointer;" onclick="ams.stock.Delete(\'' + row.stockId + '\',\'' + row.isActive + '\')"></i>';
+                            //renderResult += '&nbsp;<i class="fas fa-trash-alt ml-2" style="cursor: pointer;" onclick="ams.stock.Delete(\'' + row.stockId + '\',\'' + row.isActive + '\')"></i>';
                             renderResult += '</div>';
 
                             return renderResult;

@@ -837,7 +837,7 @@ i.bx.bx-poll.text-success {
 
 .toolbar-top .dataTables_filter i {
     position: relative;
-    left: 205px;
+    /*left: 205px;*/
     background-color: rgb(11, 37, 88);
     color: white;
     padding: 14px 13px;

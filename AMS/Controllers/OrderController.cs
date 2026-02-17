@@ -27,6 +27,9 @@ namespace AMS.Controllers
                 BranchName = s.BranchMasters.BranchName,
                 ProductName = s.Products.ProductName,
                 s.Quantity,
+                s.OrderType,
+                CreatedAt = s.CreatedAt.ToString("MM/dd/yyyy hh:mm tt")
+                
             }).ToList();
 
             return Json(new

@@ -6,6 +6,7 @@
         Laptop = 2,
         Keyboard = 3,
         Mouse = 4,
-        Monitor = 5
+        Monitor = 5,
+        Other =6
     }
 }

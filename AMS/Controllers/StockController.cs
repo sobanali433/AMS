@@ -1,6 +1,7 @@
 ﻿using AMS.Data;
 using AMS.Models;
 using AMS.Repository;
+using AspNetCoreGeneratedDocument;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.Operations;
@@ -70,10 +71,15 @@ namespace AMS.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ManageStock(int productId, int branchId, int quantity, string orderType)
+        public async Task<IActionResult> ManageStock(int productId, int branchId, int quantity, string orderType, StockModel model)
         {
+
             if (quantity <= 0)
-                return BadRequest("Quantity must be greater than zero");
+                return Json(new { result = true, message = "please  insert quantity", });
+
+            if (quantity == 0 && quantity != null)
+                return Json(new { result = true, message = "quantity is empty", });
+
 
             var stock = await _stockRepository.GetByProductAndBranchAsync(productId, branchId);
 
@@ -86,9 +92,12 @@ namespace AMS.Controllers
                     Quantity = 0,
                     LastUpdated = DateTime.Now
                 };
-
+                
                 await _stockRepository.AddAsync(stock);
+                
             }
+
+           
 
             if (orderType == "IN")
             {
@@ -97,13 +106,15 @@ namespace AMS.Controllers
             else if (orderType == "OUT")
             {
                 if (stock.Quantity < quantity)
-                    return BadRequest("Insufficient stock");
+                return Json(new { result = true, message = "Insufficient stock", });
+
 
                 stock.Quantity -= quantity;
             }
             else
             {
-                return BadRequest("Invalid order type");
+                return Json(new { result = true, message = "Invalid order type"});
+
             }
 
             stock.LastUpdated = DateTime.Now;
@@ -126,6 +137,7 @@ namespace AMS.Controllers
                 OrderType = orderType,
                 CreatedById = currentUserId,
                 CreatedAt = DateTime.UtcNow,
+
             };
 
             try
@@ -139,11 +151,8 @@ namespace AMS.Controllers
             }
 
 
-            return Json(new { success = true, message = "Order stock in successfully", });
-
-
+            return Json(new { isSuccess = true, message = "Order stock in successfully" });
+        }
 
     }
-
-}
 }

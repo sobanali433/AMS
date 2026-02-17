@@ -71,7 +71,6 @@ namespace AMS.Repository
         public async Task<bool> AddproductAsync(Product product)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
-
             await _context.Products.AddAsync(product);
              await _context.SaveChangesAsync();
 

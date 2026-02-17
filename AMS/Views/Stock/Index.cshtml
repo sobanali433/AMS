@@ -24,11 +24,11 @@
 <div class="col-xxl-10 col-xl-10 col-md-10 col-sm-12">
     <div class="card" id="leadsList">
         <div class="card-header d-flex align-items-center">
-            <h5 class="card-title mb-0 flex-grow-1"></i>Users</h5>
+            <h5 class="card-title mb-0 flex-grow-1"></i>Stock</h5>
             <div class="d-flex me-4 gap-4">
 
-                <select id="branchSelect" class="form-select">
-                    <option value="0">All Branches</option>
+                <select id="branchSelect" class="form-select" >
+                    <option value="0">Select Branch</option>
                     @foreach (var branch in ViewBag.Branches)
                     {
                         <option value="@branch.BranchId">@branch.BranchName</option>
