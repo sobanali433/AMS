@@ -44,10 +44,11 @@ ams.order = new function () {
                         data: "OrderId", name: "OrderId", orderable: false, render: function (data, type, row) {
 
                             var renderResult = "", btnEdit = "";
-                            //if (SNJAMS.User.Option.RoleId == SNJAMS.Common.Role.SuperAdmin || SNJAMS.User.Option.RoleId == SNSJAMS.Common.Role.HrManager || SNJAMS.User.Option.RoleId == SNJAMS.Common.Role.Finance || SNJAMS.User.Option.RoleId == SNJAMS.Common.Role.Recruiter) {
-                            //renderResult += '<div class="form-check"><input type="checkbox" class="deleteAll mr-2 fs-0 form-check-input" value="' + data + '" onChange="SNJDC.User.OnSelectRecord()"/>';
+                            //if (ams.order.Option.RoleName == "SuperAdmin") {
+                            renderResult += '<div class="form-check">';
+                            renderResult += '<div class="form-check"><input type="checkbox" class="deleteAll mr-2 fs-0 form-check-input" value="' + data + '" onChange="ams.order.OnSelectRecord()"/>';
                             //renderResult += '<div class="form-check">';
-                            renderResult += '&nbsp;<i class="fas fa-eye ml-2"  style="cursor: pointer;" onclick="ams.user.Add(\'' + row.userMasterId + '\',)"></i>';
+                            renderResult += '&nbsp;<i class="fas fa-eye ml-2"  style="cursor: pointer;" onclick="ams.order.Add(\'' + row.user + '\',)"></i>';
                             //renderResult += '&nbsp;<i class="fas fa-trash-alt ml-2" style="cursor: pointer;" onclick="ams.user.Delete(\'' + row.userMasterId + '\',\'' + row.isActive + '\')"></i>';
                             //renderResult += '&nbsp;<a href="' + UrlContent("User/Detail/" + row.encryptUserMasterId) + '"><i class="fas fa-file ml-2" style="cursor: pointer;" ></i></a>';
                             //renderResult += '</div>';
@@ -56,7 +57,20 @@ ams.order = new function () {
                         }
                     },
                     { data: "productName", name: "ProductName" },
-                    { data: "branchName", name: "BranchName" },
+
+                    {
+                        data: "branchName",
+                        name: "branchName",
+                        className: "text-center col-2",
+                        render: function (data, type, row) {
+                            return '<span style="Color:#102557; padding:4px 8px; border-radius:4px; display:inline-block;">'
+                                + data +
+                                '</span>';
+                        }
+                    },
+
+
+                    //{ data: "branchName", name: "BranchName" },
                     { data: "quantity", name: "Quantity" },
                     //{ data: "orderType", name: "OrderType" },
                     {
@@ -76,4 +90,39 @@ ams.order = new function () {
             });
     }
 
+    this.OnSelectRecord = function () {
+        //checked unchecked header checkbox
+        var totalRowLength = $(".deleteAll").length;
+        var totalSelectedRowLength = $(".deleteAll:checked").length;
+
+        if (parseInt(totalRowLength) == parseInt(totalSelectedRowLength)) {
+            $(".selectAll").prop("checked", true);
+        }
+        else {
+            $(".selectAll").prop("checked", false);
+        }
+        if (totalSelectedRowLength > 0) {
+            //$("#btnAssignToAgent").removeClass("hide")
+        }
+        else {
+            //$("#btnAssignToAgent").addClass("hide")
+        }
+    }
+
+    $('.selectAll').change(function () {
+        var ischecked = $('.selectAll').is(':checked');
+        if (ischecked) {
+            $('.deleteAll').prop('checked', true);
+        }
+        if (!ischecked) {
+            $('.deleteAll').prop('checked', false);
+        }
+        var totalSelectedRowLength = $(".deleteAll:checked").length;
+        if (totalSelectedRowLength > 0) {
+            //$("#btnAssignToAgent").removeClass("hide")
+        }
+        else {
+            //$("#btnAssignToAgent").addClass("hide")
+        }
+    });
 }

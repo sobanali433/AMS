@@ -2,6 +2,7 @@
 using AMS.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace AMS.Repository
 {
@@ -81,6 +82,7 @@ namespace AMS.Repository
 
         public List<object> GetList()
         {
+           
             //return _context.UserMasters.Include(b => b.BranchMasters).Select(b => {new BranchName = b.BranchMasters.BranchName}).ToList<object>();
             return _context.UserMasters
               .Include(p => p.BranchMasters)

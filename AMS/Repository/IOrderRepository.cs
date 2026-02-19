@@ -5,6 +5,8 @@ namespace AMS.Repository
     public interface IOrderRepository
     {
         Task<Order> AddOrderAsync(Order order);
-        List<Order> GetAllWithDetailsAsync();
+        //List<Order> GetAllWithDetailsAsync();
+        Task<List<Order>> GetOrdersByRoleAsync(string role, int branchId);
+
     }
 }

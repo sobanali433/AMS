@@ -6,7 +6,7 @@ namespace AMS.Controllers
         public class OrderController : Controller
         {
             private readonly IOrderRepository _orderRepository;
-
+            private int branchId = 0;
             public OrderController(IOrderRepository orderRepository)
             {
                 _orderRepository = orderRepository;
@@ -20,9 +20,17 @@ namespace AMS.Controllers
         [HttpPost]
         public async Task<JsonResult> GetList()
         {
-            var user = _orderRepository.GetAllWithDetailsAsync();
+            var role = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
+            var branchIdClaim = User.FindFirst("BranchId")?.Value;
+            //var user = _orderRepository.GetAllWithDetailsAsync();
 
-            var data = user.Select(s => new
+
+
+            if (!string.IsNullOrEmpty(branchIdClaim))
+                branchId = int.Parse(branchIdClaim);
+            var orders = await _orderRepository.GetOrdersByRoleAsync(role, branchId);
+
+            var data = orders.Select(s => new
             {
                 BranchName = s.BranchMasters.BranchName,
                 ProductName = s.Products.ProductName,

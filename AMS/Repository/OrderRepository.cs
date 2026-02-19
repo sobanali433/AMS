@@ -10,12 +10,26 @@ namespace AMS.Repository
         {
             _context = context;
         }
-        public List<Order> GetAllWithDetailsAsync()
+        //public List<Order> GetAllWithDetailsAsync()
+        //{
+        //    return _context.Orders
+        //        .Include(o => o.BranchMasters)
+        //        .Include(o => o.Products)
+        //        .ToList();
+        //}
+        public async Task<List<Order>> GetOrdersByRoleAsync(string role, int branchId)
         {
-            return _context.Orders
+            var query = _context.Orders
                 .Include(o => o.BranchMasters)
                 .Include(o => o.Products)
-                .ToList();
+                .AsQueryable();
+
+            if (role == "User")
+            {
+                query = query.Where(o => o.BranchId == branchId);
+            }
+
+            return await query.ToListAsync();
         }
 
         public async Task<Order> AddOrderAsync(Order order)

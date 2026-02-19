@@ -62,7 +62,9 @@ namespace AMS.Controllers
              new Claim("LastName", user.LastName ?? "Guest"),
              new Claim("RoleName", user.Roles?.RoleName ?? "Guest"),
              new Claim(ClaimTypes.NameIdentifier, user.UserMasterId.ToString()),
-             new Claim(ClaimTypes.Role, user.Roles?.RoleName ?? "Guest")
+             new Claim(ClaimTypes.Role, user.Roles?.RoleName ?? "Guest"),
+             new Claim("BranchId", user.BranchId.ToString())
+
                 };
 
 

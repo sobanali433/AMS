@@ -37,7 +37,15 @@
                     <table id="orderTableId" class="table table-bordered nowrap table-striped align-middle snj-table" style="width:100%">
                         <thead class="fixedthead table-light">
                             <tr>
-                                <th data-sort="action"><b>Action</b></th>
+                                @* @if(User.IsInRole("SuperAdmin")){ *@
+                                    <th>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="selectAll form-check-input" value="1" />
+                                        </div>
+                                    </th>
+                                    @* } *@
+                                  
+                                @* <th data-sort="action"><b>Action</b></th> *@
                                 <th class="sort"><b>Product Name</b></th>
                                 <th class="sort"><b>Branch Name</b></th>
                                 <th class="sort"><b>Quantity</b></th>
