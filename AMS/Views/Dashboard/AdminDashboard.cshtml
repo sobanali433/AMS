@@ -4,4 +4,178 @@
     ViewData["Title"] = "Login";
     // Layout = "_HeaderLayout";
 }
+@section styles {
+    <!--datatable css-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" />
+    <link href="https://cdn.datatables.net/fixedcolumns/4.2.1/css/fixedColumns.dataTables.min.css" rel="stylesheet" />
+    <!--datatable responsive css-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+}
+
+
+<div class="row">
+    <div class="col-xxl-3 col-lg-3 col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="float-end">
+                    <a class="dropdown-item" title="Details" href="#" onclick="SnjCrm.ProductionDashboard.OnClickStatusDetail('1','','','')"><i class="ri-information-line information-card"></i></a>
+                </div>
+                <div class="d-flex align-items-center">
+                    <i class="bx bx-poll text-success"></i>
+                    <h6 class="ms-2 mb-0 fs-14">New Lead</h6>
+                </div>
+                <div class="row align-items-end g-0">
+                    <div class="col-6">
+                        <h5 class="mb-1 mt-4" id="newLeadTotal">0</h5>
+                        <p class="text-success fs-13 fw-medium mb-0" id="newLeadRatio">
+                            0.00%<span class="text-muted ms-2 fs-10 text-uppercase">(Ratio)</span>
+                        </p>
+                    </div><!-- end col -->
+                    <div class="col-6">
+                        <div class="apex-charts crypto-widget"
+                             dir="ltr" id="newLead_sparkline_charts"></div>
+                    </div><!-- end col -->
+                </div><!-- end row -->
+            </div><!-- end card body -->
+        </div>
+    </div>
+    <div class="col-xxl-3 col-lg-3 col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="float-end">
+                    <a class="dropdown-item" title="Details" href="#" onclick="SnjCrm.ProductionDashboard.OnClickStatusDetail('9','','','')"><i class="ri-information-line information-card"></i></a>
+                </div>
+                <div class="d-flex align-items-center">
+                    <i class="bx bx-poll text-success"></i>
+                    <h6 class="ms-2 mb-0 fs-14">SNS Pending</h6>
+                </div>
+                <div class="row align-items-end g-0">
+                    <div class="col-6">
+                        <h5 class="mb-1 mt-4" id="snsPendingTotal">0</h5>
+                        <p class="text-danger fs-13 fw-medium mb-0" id="snsPendingRatio">
+                            0.00%<span class="text-muted ms-2 fs-10 text-uppercase">(Ratio)</span>
+                        </p>
+                    </div><!-- end col -->
+                    <div class="col-6">
+                        <div class="apex-charts crypto-widget"
+                             data-colors='["--vz-danger", "--vz-transparent"]' dir="ltr"
+                             id="snsPending_sparkline_charts"></div>
+                    </div><!-- end col -->
+                </div><!-- end row -->
+            </div><!-- end card body -->
+        </div>
+    </div>
+    <div class="col-xxl-3 col-lg-3 col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="float-end">
+                    <a class="dropdown-item" title="Details" href="#" onclick="SnjCrm.ProductionDashboard.OnClickStatusDetail('12','','','0','')"><i class="ri-information-line information-card"></i></a>
+                </div>
+
+                <div class="d-flex align-items-center">
+                    <i class="bx bx-poll text-success"></i>
+                    <h6 class="ms-2 mb-0 fs-14">QA Pending</h6>
+                </div>
+                <div class="row align-items-end g-0">
+                    <div class="col-6">
+                        <h5 class="mb-1 mt-4" id="qaPendingTotal">0</h5>
+                        <p class="text-success fs-13 fw-medium mb-0" id="qaPendingRatio">
+                            0.00%<span class="text-muted ms-2 fs-10 text-uppercase">(Ratio)</span>
+                        </p>
+                    </div><!-- end col -->
+                    <div class="col-6">
+                        <div class="apex-charts crypto-widget"
+                             data-colors='["--vz-success", "--vz-transparent"]' dir="ltr"
+                             id="qaPending_sparkline_charts"></div>r
+                    </div><!-- end col -->
+                </div><!-- end row -->
+            </div><!-- end card body -->
+        </div>
+    </div>
+
+    <div class="col-xxl-3 col-lg-3 col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="float-end">
+                    <a class="dropdown-item" title="Details" href="#" onclick="SnjCrm.ProductionDashboard.OnClickStatusDetail('','','','13')"><i class="ri-information-line information-card"></i></a>
+                </div>
+
+                <div class="d-flex align-items-center">
+                    <i class="bx bx-poll text-success"></i>
+                    <h6 class="ms-2 mb-0 fs-14">QA Qualified</h6>
+                </div>
+                <div class="row align-items-end g-0">
+                    <div class="col-6">
+                        <h5 class="mb-1 mt-4" id="qaQualifiedTotal">0</h5>
+                        <p class="text-success fs-13 fw-medium mb-0" id="qaQualifiedRatio">
+                            0.00%<span class="text-muted ms-2 fs-10 text-uppercase">(Ratio)</span>
+                        </p>
+                    </div><!-- end col -->
+                    <div class="col-6">
+                        <div class="apex-charts crypto-widget"
+                             data-colors='["--vz-success", "--vz-transparent"]' dir="ltr"
+                             id="qaQualified_sparkline_charts"></div>
+                    </div><!-- end col -->
+                </div><!-- end row -->
+            </div><!-- end card body -->
+        </div>
+        </div>
+    </div>
+@* <div class="col-xxl-3 col-lg-3 col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="float-end">
+                    <a class="dropdown-item" title="Details" href="#" onclick="SnjCrm.ProductionDashboard.OnClickStatusDetail('','','','15;14')"><i class="ri-information-line information-card"></i></a>
+                </div>
+
+                <div class="d-flex align-items-center">
+                    <i class="bx bx-poll text-success"></i>
+                    <h6 class="ms-2 mb-0 fs-14">Not Qualified</h6>
+                </div>
+                <div class="row align-items-end g-0">
+                    <div class="col-6">
+                        <h5 class="mb-1 mt-4" id="notQualifiedTotal">0</h5>
+                        <p class="text-danger fs-13 fw-medium mb-0" id="notQualifiedRatio">
+                            0.00%<span class="text-muted ms-2 fs-10 text-uppercase">(Ratio)</span>
+                        </p>
+                    </div><!-- end col -->
+                    <div class="col-6">
+                        <div class="apex-charts crypto-widget"
+                             data-colors='["--vz-danger", "--vz-transparent"]' dir="ltr"
+                             id="notQualified_sparkline_charts"></div>
+                    </div><!-- end col -->
+                </div><!-- end row -->
+            </div><!-- end card body -->
+        </div>
+
+    </div>
+    <div class="col-xxl-3 col-lg-3 col-md-6">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="float-end">
+                    <a class="dropdown-item" title="Details" href="#" onclick="SnjCrm.ProductionDashboard.OnClickStatusDetail('','','','')"><i class="ri-information-line information-card"></i></a>
+                </div>
+
+                <div class="d-flex align-items-center">
+                    <i class="bx bx-poll text-success"></i>
+                    <h6 class="ms-2 mb-0 fs-14">Total</h6>
+                </div>
+                <div class="row align-items-end g-0">
+                    <div class="col-6">
+                        <h5 class="mb-1 mt-4" id="totalLeadTotal">0</h5>
+                        <p class="text-success fs-13 fw-medium mb-0" id="totalLeadRatio">
+                            0.00%<span class="text-muted ms-2 fs-10 text-uppercase">(Ratio)</span>
+                        </p>
+                    </div><!-- end col -->
+                    <div class="col-6">
+                        <div class="apex-charts crypto-widget"
+                             data-colors='["--vz-success", "--vz-transparent"]' dir="ltr"
+                             id="totalLead_sparkline_charts"></div>
+                    </div><!-- end col -->
+                </div><!-- end row -->
+            </div><!-- end card body -->
+        </div>
+    </div> *@
 

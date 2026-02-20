@@ -71,13 +71,28 @@
                     </div>
                 </div> *@
                 <!-- end Lodaer -->
-                    <partial name="_Sidebar" />
+
+                    <div class="row">
+
+                        <!-- Sidebar -->
+                        @* <div class="col-xl-2 col-lg-2 col-md-3 p-0"> *@
+                            <partial name="_Sidebar" />
+                        @* </div> *@
+
+                        <!-- Main Content -->
+                        <div class="col-xl-10 col-lg-10 col-md-12">
+                            @RenderBody()
+                        </div>
+
+                    </div>
+
+                    @* <partial name="_Sidebar" /> *@
 
                 @RenderBody()
                 <!-- Modal Code Start-->
             @await Html.PartialAsync("_ModalPopupPartial") 
                 <!-- Modal Code End-->
-            </div>
+            </div> 
 
         </div>
         @await Html.PartialAsync("_FooterPartial")
