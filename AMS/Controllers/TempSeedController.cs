@@ -13,7 +13,6 @@ public class SeedController : Controller
     }
 
 
-
     public IActionResult CreateSuperAdmin()
     {
         var forcefully = _context.Database.BeginTransaction();
@@ -27,11 +26,9 @@ public class SeedController : Controller
             _context.SaveChanges();
         }
 
-        // 2️⃣ User exists check
         if (_context.UserMasters.Any(u => u.Username == "admin@ims.com"))
             return Content("Admin already exists");
 
-        // 3️⃣ Password hash
         var hasher = new PasswordHasher<UserMaster>();
 
         var user = new UserMaster
