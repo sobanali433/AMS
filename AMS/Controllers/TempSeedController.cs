@@ -57,6 +57,7 @@ public class SeedController : Controller
 
         forcefully.Commit();
 
+
         return Content("SuperAdmin created");
     }
 
