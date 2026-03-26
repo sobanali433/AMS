@@ -115,7 +115,12 @@ namespace AMS.Repository
 
             return (true, message);
         }
-
+        public int GetTotalProducts()
+        {
+            return _context.Products
+                .Where(u => u.IsActive == true)
+                .Count();
+        }
 
     }
 }

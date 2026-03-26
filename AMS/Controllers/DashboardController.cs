@@ -15,10 +15,15 @@ namespace AMS.Controllers
     {
         private readonly IDashboardRepository _dashboardRepository;
         private readonly IAccountRepository _accountRepository;
-        public DashboardController(IDashboardRepository dashboardRepository,IAccountRepository accountRepository)
+        private readonly IUserRepository _userRepository;
+        private readonly IProductRepository _productRepository;
+
+        public DashboardController(IDashboardRepository dashboardRepository,IAccountRepository accountRepository, IUserRepository userRepository, IProductRepository productRepository  )
         {
             _dashboardRepository = dashboardRepository;
             _accountRepository = accountRepository;
+            _userRepository = userRepository;
+            _productRepository = productRepository;
         }
         [Authorize]
         public IActionResult Index()
@@ -27,8 +32,14 @@ namespace AMS.Controllers
         }
         [Authorize]
 
+
+
         public async Task<IActionResult> AdminDashboard()
         {
+            var totalUsers = _userRepository.GetTotalUsers();
+            var totalProducts = _productRepository.GetTotalProducts();
+            ViewBag.totalUsers = totalUsers;
+            ViewBag.totalProducts = totalProducts;
             var username = User.Identity?.Name;
             var user = await _dashboardRepository.HeaderlayoutAsync(username);
             if (user == null)

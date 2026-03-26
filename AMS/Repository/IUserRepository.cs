@@ -7,7 +7,8 @@ namespace AMS.Repository
     {
         //List<UserMaster> GetAllUsersWithoutSuperAdmin();
         (bool isSuccess, string message) Delete(int id);
-
+        //IQueryable<UserMaster> GetAll();
+        int GetTotalUsers();
         List<object> GetList();
         UserMaster GetById(int id);
         //UserMaster GetByUserId(int id);

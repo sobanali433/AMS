@@ -21,19 +21,19 @@ namespace AMS.Repository
         //        .Where(u => u.Role != null && u.Role.RoleName != "SuperAdmin")
         //        .ToListAsync();
         //}
-      
+
         public UserMaster GetById(int id)
         {
             return _context.UserMasters.Include(u => u.Roles).Include(u => u.BranchMasters).FirstOrDefault(x => x.UserMasterId == id);
 
         }
-      
+
         //public UserMaster GetByUserId(int id)
         //{
         //    return _context.UserMasters.FirstOrDefault(x => x.UserMasterId == id);
 
         //}
-        
+
         public IEnumerable<Role> GetRoles()
         {
             return _context.Roles.AsNoTracking().Where(u => u.RoleName != "SuperAdmin").ToList();
@@ -53,7 +53,7 @@ namespace AMS.Repository
             _context.UserMasters.Update(user);
             return await _context.SaveChangesAsync() > 0;
         }
-        
+
 
         public async Task<UserMaster?> GetByIdAsync(int UserId)
         {
@@ -82,7 +82,7 @@ namespace AMS.Repository
 
         public List<object> GetList()
         {
-           
+
             //return _context.UserMasters.Include(b => b.BranchMasters).Select(b => {new BranchName = b.BranchMasters.BranchName}).ToList<object>();
             return _context.UserMasters
               .Include(p => p.BranchMasters)
@@ -105,7 +105,7 @@ namespace AMS.Repository
                   p.Ip,
                   p.UpdatedBy,
                   p.UpdatedOn,
-                  CreatedOn = p.CreatedOn.ToString("MM/dd/yyyy hh:mm tt"), 
+                  CreatedOn = p.CreatedOn.ToString("MM/dd/yyyy hh:mm tt"),
                   //p.CreatedOn = p.CreatedOn.ToString("MM/dd/yyyy hh:mm tt"), 
                   p.CreatedBy
 
@@ -113,6 +113,16 @@ namespace AMS.Repository
               .ToList<object>();
 
         }
+
+        public int GetTotalUsers()
+        {
+            return _context.UserMasters
+                .Include(u => u.Roles)
+                .Where(u => u.Roles.RoleName != "SuperAdmin" && u.IsActive == true)
+                .Count();
+        }
+        
     }
 }
+
 

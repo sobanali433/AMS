@@ -8,7 +8,8 @@ namespace AMS.Repository
         //List<Product> GetAll();
         List<object> GetProductList();
         List<Category> GetCategories();
-        
+        int GetTotalProducts();
+
         Task<bool> AddproductAsync(Product model);
         Task<Product?> GetByIdAsync(int id);
         Task<bool> UpdateAsync(Product product);
