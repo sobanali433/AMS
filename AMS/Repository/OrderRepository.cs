@@ -39,6 +39,12 @@ namespace AMS.Repository
             return order;
         }
 
+        public int GetStocksIn()
+        {
+            return _context.Orders
+               .Count(u => u.OrderType == "IN");
+                
+        }
 
 
     }

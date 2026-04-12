@@ -14,8 +14,9 @@ namespace AMS.Repository
         Task AddAsync(Stock stock);
         Task UpdateAsync(Stock stock);
         //Task GetById(UserMaster user);
-
         
+
+
 
     }
 }

@@ -60,6 +60,7 @@ namespace AMS.Repository
         {
             return _context.Products.ToList();
         }
+        
     }
 
 

@@ -6,6 +6,7 @@ namespace AMS.Repository
    {
         //Task<UserMaster?> HeaderlayoutAsync(string fullname, string rolename, string lastname);   
         Task<UserMaster?> HeaderlayoutAsync(string username);
+        
     }
 }
     
