@@ -39,9 +39,11 @@ namespace AMS.Controllers
             var totalUsers = _userRepository.GetTotalUsers();
             var totalProducts = _productRepository.GetTotalProducts();
             var stockIn = _orderRepository.GetStocksIn();
+            var stockOut = _orderRepository.GetStocksOut();
             ViewBag.totalUsers = totalUsers;
             ViewBag.totalProducts = totalProducts;
             ViewBag.stockIn = stockIn;
+            ViewBag.stockOut = stockOut;
             var username = User.Identity?.Name;
             var user = await _dashboardRepository.HeaderlayoutAsync(username);
             if (user == null)

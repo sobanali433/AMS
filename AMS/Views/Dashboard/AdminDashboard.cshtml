@@ -74,13 +74,13 @@
                 </div>
 
                 <div class="d-flex align-items-center">
-                    <i class="bx bx-poll text-success"></i>
-                    <h6 class="ms-2 mb-0 fs-14">ng</h6>
+                    <i class="ri-pie-chart-2-line text-success"></i>
+                    <h4 class="ms-2 mb-0 fs-14">Stock In</h4>
                 </div>
                 <div class="row align-items-end g-0">
                     <div class="col-6">
                         <h5 class="mb-1 mt-4">@ViewBag.stockIn</h5>
-                        <p class="text-primary fs-13 fw-medium mb-0" id="qaPendingRatio">
+                        <p class="text-success fs-13 fw-medium mb-0" id="qaPendingRatio">
                             0.00%<span class="text-muted ms-2 fs-10 text-uppercase">(Ratio)</span>
                         </p>
                     </div><!-- end col -->
@@ -102,12 +102,12 @@
                 </div>
 
                 <div class="d-flex align-items-center">
-                    <i class="bx bx-poll text-success"></i>
-                    <h6 class="ms-2 mb-0 fs-14">QA Qualified</h6>
+                    <i class="ri-pie-chart-2-line text-danger"></i>
+                    <h6 class="ms-2 mb-0 fs-14">Stock Out</h6>
                 </div>
                 <div class="row align-items-end g-0">
                     <div class="col-6">
-                        <h5 class="mb-1 mt-4" id="qaQualifiedTotal">0</h5>
+                        <h5 class="mb-1 mt-4">@ViewBag.stockOut</h5>
                         <p class="text-success fs-13 fw-medium mb-0" id="qaQualifiedRatio">
                             0.00%<span class="text-muted ms-2 fs-10 text-uppercase">(Ratio)</span>
                         </p>

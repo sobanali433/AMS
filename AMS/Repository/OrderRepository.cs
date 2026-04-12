@@ -42,7 +42,13 @@ namespace AMS.Repository
         public int GetStocksIn()
         {
             return _context.Orders
-               .Count(u => u.OrderType == "IN");
+               .Count(u => u.OrderType == "IN" || u.OrderType == "In");
+                
+        }
+        public int GetStocksOut()
+        {
+            return _context.Orders
+               .Count(u => u.OrderType == "OUT" || u.OrderType == "Out" );
                 
         }
 

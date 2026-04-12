@@ -9,5 +9,6 @@ namespace AMS.Repository
         Task<List<Order>> GetOrdersByRoleAsync(string role, int branchId);
 
         int GetStocksIn();
+        int GetStocksOut();
     }
 }
