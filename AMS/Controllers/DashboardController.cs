@@ -57,7 +57,6 @@ namespace AMS.Controllers
                 LastName = user.LastName,
                 RoleName = user.Roles.RoleName
             };
-
             return View(model);
         }
 
